@@ -42,7 +42,7 @@
       <input class="price" placeholder="套餐价格" placeholder-class='price-placeholder'/>
     </view>
     <view class="send_order">
-      <button bindtap="sendOrder" class="btn_send_order" type="primary" >保存</button>
+      <button bindtap="sendOrder" class="btn_send_order" type="primary" size='10px'>保存</button>
     </view>
   </view>
 </view>

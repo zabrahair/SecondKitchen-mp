@@ -47,60 +47,91 @@
 					"id": -1,
 					"name": "pages/index-demo/index",
 					"pathName": "pages/index-demo/index",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/userConsole-demo/userConsole",
 					"pathName": "pages/userConsole-demo/userConsole",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/storageConsole-demo/storageConsole",
 					"pathName": "pages/storageConsole-demo/storageConsole",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/index/index",
 					"pathName": "pages/index/index",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/editMealCombo/editMealCombo",
 					"pathName": "pages/editMealCombo/editMealCombo",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/profile/profile",
 					"pathName": "pages/profile/profile",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/logs/logs",
 					"pathName": "pages/logs/logs",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/menu/menu",
 					"pathName": "pages/menu/menu",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/orders/orders",
 					"pathName": "pages/orders/orders",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/selectMealCombo/selectMealCombo",
 					"pathName": "pages/selectMealCombo/selectMealCombo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/dishes/dishes",
+					"pathName": "pages/dishes/dishes",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/editMealCombo/editMealCombo",
+					"pathName": "pages/editMealCombo/editMealCombo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/testComponent/testComponent",
+					"pathName": "pages/testComponent/testComponent",
+					"query": "",
 					"scene": null
 				}
 			]

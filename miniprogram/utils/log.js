@@ -1,4 +1,4 @@
-const debug = function (object, message, tabs) {
+const debug = function (message, object,  tabs) {
   if (tabs == undefined) {
     tabs = 4
   }
@@ -6,7 +6,18 @@ const debug = function (object, message, tabs) {
   if (message == undefined) {
     message = 'object'
   }
-  console.log(message + ':' + JSON.stringify(object, tabs))
+  console.log(message + ':' + JSON.stringify(object, {}, tabs))
+}
+
+const error = function (message, object, tabs) {
+  if (tabs == undefined) {
+    tabs = 4
+  }
+
+  if (message == undefined) {
+    message = 'object'
+  }
+  console.error(message + ':' + JSON.stringify(object, {}, tabs))
 }
 
 module.exports = {

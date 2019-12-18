@@ -1,29 +1,18 @@
-// pages/dishes/dishes.js
-const app = getApp()
-const debugLog = require('../../utils/log.js').debug;
-const errorLog = require('../../utils/log.js').error;
-const dishes = require('../../mockupData/dish.js').dishes;
-const apiDish = require('../../api/dish.js')
+// miniprogram/pages/testComponent/testComponent.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dishes: dishes,
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this
-    apiDish.queryDishes({}, result=>{
-      debugLog('Dish Page onLoad', JSON.stringify(result), 2);
-      that.setData({
-        dishes: result
-      })
-    })
+
   },
 
   /**

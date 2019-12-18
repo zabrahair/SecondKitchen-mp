@@ -1,0 +1,6 @@
+<!--miniprogram/pages/testComponent/testComponent.wxml-->
+<view class='container'>
+  <button type='warn' class='button'>
+  TEST
+  </button>
+</view>

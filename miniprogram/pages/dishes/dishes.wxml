@@ -16,28 +16,28 @@
         </input>  
       </view>   
       <view class='operators'>           
-        <button class='edit_dish' bindtap='onAddDish' type='primary'>
+        <button class='edit_dish' size='mini' bindtap='onAddDish' type='primary'>
           添加
         </button>
       </view>
     </view>  
     <view class='dishes_list'>
-      <view class='dish' wx:for-items='{{dishes}}' wx:key="id" wx:for-item='dish'>
-        <image class="dish_image" src="{{dish.image_url}}">
+      <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish'>
+        <image class="dish_image" mode='aspectFill' src="{{dish.imageUrl}}">
         </image>      
         <view class='dish_info'>
           <view class='dish_name'>
             菜名：{{dish.name}}
           </view>
           <view class='dish_price'>
-            价格：{{dish.price}}
+            价格：{{dish.price}} 元
           </view>     
         </view>
         <view class='operators'>           
-          <button class='edit_dish' bindtap='onDeleteDish' type='warn'>
+          <button class='edit_dish' size='mini' bindtap='onDeleteDish' type='warn' data-dish-id='dish._id'>
             删除
           </button>
-          <button class='edit_dish' bindtap='onEditDish' type='normal'>
+          <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='dish._id'>
             编辑
           </button>               
         </view> 
