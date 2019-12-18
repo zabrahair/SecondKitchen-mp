@@ -1,0 +1,53 @@
+/**index.wxss**/
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-size: 120vh;
+  background-image: url('https://wx2.sinaimg.cn/large/006Nm6ZJgy1fhfzwnrvpvj30p00owdsx.jpg');
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  color: white;
+  font-size: 10vw;
+  font-stretch: expanded;
+  font-style: italic;
+  margin-bottom: 5vh;
+}
+
+.guide_buttons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 80vw;
+  height: 80vh;
+
+}
+
+.goto_button{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  width: 48vw;
+  height: 10vw;
+}

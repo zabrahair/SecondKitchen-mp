@@ -1,0 +1,109 @@
+{
+	"miniprogramRoot": "miniprogram/",
+	"cloudfunctionRoot": "cloudfunctions/",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"enhance": true
+	},
+	"appid": "wx96ce9c05c11ec78d",
+	"projectname": "SecondKitchen-mp",
+	"libVersion": "2.8.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "pages/index-demo/index",
+					"pathName": "pages/index-demo/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userConsole-demo/userConsole",
+					"pathName": "pages/userConsole-demo/userConsole",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/storageConsole-demo/storageConsole",
+					"pathName": "pages/storageConsole-demo/storageConsole",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/editMealCombo/editMealCombo",
+					"pathName": "pages/editMealCombo/editMealCombo",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/profile/profile",
+					"pathName": "pages/profile/profile",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/logs/logs",
+					"pathName": "pages/logs/logs",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/menu/menu",
+					"pathName": "pages/menu/menu",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/orders/orders",
+					"pathName": "pages/orders/orders",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/selectMealCombo/selectMealCombo",
+					"pathName": "pages/selectMealCombo/selectMealCombo",
+					"scene": null
+				}
+			]
+		}
+	}
+}

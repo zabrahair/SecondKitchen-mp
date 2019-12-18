@@ -1,0 +1,296 @@
+/* pages/statistics/statistics.wxss */
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.header {
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.conditions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100vw;
+  height: 5vh;
+}
+
+.date_picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 49vw;
+  height: 5vh;  
+  border: 1px solid black;
+  padding-left: 5px;
+  font-size: 4vw;
+}
+
+.tabs_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  /* background: darkgray; */
+  width: 100vw;
+  height: 5vh;
+  margin-top: 2px;
+}
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid black;  
+  width: 100vw;
+  height: 90vh;
+}
+
+.tab {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 33vw;
+  height: 5vh;
+  border: 1px solid black;  
+}
+
+.tabs_list .unselected {
+  background-color: darkgray;
+}
+
+.tabs_list .selected {
+  background-color: white;
+  box-shadow: 5px 0px 3px darkgray;
+}
+
+.statistics .unselected {
+  display: none; 
+}
+
+.statistics .selected {
+  display: block;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 89.5vh;
+  margin-top: -0.4vh;
+
+}
+
+.summary {
+
+}
+
+.orders_info {
+
+}
+
+.dishes_info {
+
+}
+
+
+
+.order_wise {
+
+}
+
+.dish_wise {
+
+}
+
+.total_info {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 10vh;    
+}
+
+.orders_count {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 5vh; 
+}
+
+.orders_company_picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 5vh; 
+
+  border-bottom: 1px solid black;
+}
+
+.list_area {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 80vh;  
+
+  overflow-y: scroll;
+}
+
+.orders_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow-y: scroll;
+
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom: 1px solid grey;
+  padding-bottom: 1vh;
+}
+
+.order_info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100vw;
+  height: 6vh;
+
+  font-size: 3vw;
+  font-weight: bold;
+
+  border-bottom: 1px solid azure;
+}
+
+.order_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_date {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+order_status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100vw;  
+
+  font-size: 2.5vw;
+}
+
+.dish_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;  
+}
+
+.dish_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 45vw;  
+}
+

@@ -1,0 +1,26 @@
+<!--pages/menuList/menuList.wxml-->
+<view class='container'>
+  <view class='header'>
+    <view class='company_name'>
+    </view>
+  </view>
+  <view class='content'>
+    <view class='menus_list'>
+      <view class='menu' wx:for-items='{{menus}}' wx:key="id" wx:for-item='menu'>
+        <view class='menu_name' bindtap='onClickMenu'>
+          {{menu.name}}
+        </view>
+        <view class='next_page'>
+        》
+        </view>        
+      </view>
+      <view class='menu'>
+        <input class='add_menu_input' placeholder='输入套餐名'>
+        </input>
+        <button class='add_menu' bindtap='onAddMenu' type='primary'>
+          添加
+        </button>
+      </view>      
+    </view>
+  </view>
+</view>

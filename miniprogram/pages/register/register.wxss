@@ -1,0 +1,117 @@
+/* pages/register/register.wxss */
+/**index.wxss**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  /* background-size: 120vh;
+  background-image: url('https://wx2.sinaimg.cn/large/006Nm6ZJgy1fhfzwnrvpvj30p00owdsx.jpg'); */
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  color: black;
+  font-size: 10vw;
+  font-stretch: expanded;
+  font-style: italic;
+  margin-bottom: 5vh;
+
+  width: 100vw;
+  height: 15vh;
+
+}
+
+.input_area {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 80vh;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 8vh;   
+}
+
+.field input{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 80vw;
+  height: 5vh;  
+  border: 1px solid black;
+  border-radius: 2vw;
+  
+}
+
+.field .field_placeholder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 10vw;
+  color: grey;
+}
+
+.company_name {
+
+}
+
+.contact_name {
+
+}
+
+.contact_mobile {
+ 
+}
+
+.register {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 30vh;  
+}
+
+.register button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 40vw;
+  height: 6vh;  
+}
+
+

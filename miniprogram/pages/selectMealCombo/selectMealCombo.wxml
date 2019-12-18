@@ -1,0 +1,41 @@
+<!--pages/selectMealCombo/selectMealCombo.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="combo_title">
+      {{combo.name}}
+    </view>
+  </view>
+  <view class="combo_options">
+    <view class="dish" wx:for-items="{{combo.dishs}}" wx:key="id" wx:for-item='dish'>
+      <view class="dish_title">
+        {{dish.name}}
+      </view>
+      <radio-group class="options" bindchange="radioChange">
+        <view class="dish_option dish_{{item.id}}" 
+              wx:for-items="{{dish.options}}" wx:key="id" wx:for-item='option' 
+              value="{{item.id}}" checked="{{item.isSelect}}">
+          <image class="dish_image" src="{{option.image_url}}">
+          </image>
+          <view class="dish_capital">
+            {{option.name}}
+          </view>
+          <radio  class="dish_radio">
+          </radio>
+        </view>
+      </radio-group> 
+    </view>
+  </view>
+  <view class="order_summary">
+    <view class="total_price">
+      <view class="capital">
+        合计 ￥
+      </view>
+      <view class="price">
+        {{total_price}}
+      </view>
+    </view>
+    <view class="send_order">
+      <button bindtap="sendOrder" class="btn_send_order" type="primary" >下订单</button>
+    </view>
+  </view>
+</view>

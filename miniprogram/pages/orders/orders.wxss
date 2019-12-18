@@ -1,0 +1,147 @@
+/* pages/orders/orders.wxss */
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.conditions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100vw;
+  height: 5vh;
+}
+
+.date_picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 50vw;
+  height: 5vh;  
+  border: 1px solid black;
+
+  font-size: 4vw;
+}
+
+.orders_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow-y: scroll;
+
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom: 1px solid grey;
+  padding-bottom: 1vh;
+}
+
+.order_info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100vw;
+  height: 6vh;
+
+  font-size: 3vw;
+  font-weight: bold;
+
+  border-bottom: 1px solid azure;
+}
+
+.order_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_date {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+order_status {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;
+}
+
+.order_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100vw;  
+
+  font-size: 2.5vw;
+}
+
+.dish_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 45vw;  
+}
+
+.dish_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 45vw;  
+}

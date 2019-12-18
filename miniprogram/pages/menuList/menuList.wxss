@@ -1,0 +1,97 @@
+/* pages/menuList/menuList.wxss */
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 30vh;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('https://wx2.sinaimg.cn/large/006Nm6ZJgy1fhfzwnrvpvj30p00owdsx.jpg');
+
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 70vh;
+}
+
+.menus_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  align-items: flex-end;
+
+  width: 90vw;
+  height: 7vh; 
+  margin-left: 1vw;
+  padding-left: 1vw;
+  margin-right: 1vw;
+  padding-bottom: 0.5vh;
+  border-bottom: 1px solid gray;   
+}
+
+.add_menu_input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:flex-start;
+  align-items: center;
+}
+
+.add_menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:center;
+  align-items: center;
+  
+  width: 20vw;
+  height: 4vh;
+}
+
+.next_page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:center;
+  align-items: center;
+
+  width: 10vw;
+  height: 4vh;  
+}
+

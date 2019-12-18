@@ -1,0 +1,48 @@
+<!--pages/editMealCombo/editMealCombo.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="combo_title">
+      <input class='combo_title_input' placeholder="{{combo.name}}" placeholder-class='combo_title_placeholder'/>
+    </view>
+  </view>
+  <view class="combo_options">
+    <view class="dish" wx:for-items="{{combo.dishs}}" wx:key="id" wx:for-item='dish'>
+      <view class="dish_title">
+        {{dish.name}}
+      </view>      
+      <view class="options" bindchange="radioChange" bindtap="onClickAddOptioin" dish-id='{{dish.id}}'>
+        <view class='add_option'>
+          <view class="dish_image">
+            +
+          </view>
+          <view class="dish_capital">
+            添加
+          </view>
+        </view>
+        <view class="dish_option dish_{{item.id}}" 
+              wx:for-items="{{dish.options}}" wx:key="id" wx:for-item='option' 
+              value="{{item.id}}" checked="{{item.isSelect}}">
+          <image class="dish_image" src="{{option.image_url}}">
+            <view class='dish_delete' bindtap='onRemoveOption' dish-option-id='{{item.id}}'>
+              删除
+            </view>
+          </image>
+          <view class="dish_capital">
+            {{option.name}}
+          </view>
+        </view>
+      </view> 
+    </view>
+  </view>
+  <view class="order_summary">
+    <view class="total_price">
+      <view class="capital">
+        合计 ￥
+      </view>
+      <input class="price" placeholder="套餐价格" placeholder-class='price-placeholder'/>
+    </view>
+    <view class="send_order">
+      <button bindtap="sendOrder" class="btn_send_order" type="primary" >保存</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,41 @@
+<!--pages/orders/orders.wxml-->
+<view class="container">
+  <view class="conditions">
+    <picker mode="date" value="{{startDate}}" start="2019-10-01" end="2030-10-01" bindchange="selStartDate">
+      <view class="date_picker" >
+        开始日期: {{startDate}}
+      </view>
+    </picker>
+    <picker mode="date" value="{{endStart}}" start="2019-10-01" end="2030-10-01" bindchange="selEndDate">
+      <view class="date_picker">
+        结束日期: {{endDate}}
+      </view>
+    </picker>
+  </view>
+  <view class="orders_list">
+    <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
+      <view class='order_info'>
+        <view class="order_name">
+          {{order.combo.name}}
+        </view>
+        <view class='order_date'>
+          {{order.createTime}}
+        </view>
+        <view class='order_price'>
+          总价： ￥{{order.totalPrice}}
+        </view>
+        <view class='order_status'>
+          {{order.status}}
+        </view>        
+      </view>
+      <view class="order_content" wx:for-items="{{order.combo.dishs}}" wx:key="id" wx:for-item="dish">
+        <view class='dish_name'>
+          {{dish.name}}
+        </view>
+        <view class='dish_price'>
+          ￥{{dish.price}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

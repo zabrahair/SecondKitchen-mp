@@ -1,0 +1,20 @@
+<!--pages/companies/companies.wxml-->
+<view class='container'>
+  <view class='header'>
+    <view class='company_name'>
+    </view>
+  </view>
+  <view class='content'>
+    <view class='companys_list'>
+      <view class='company' wx:for-items='{{companies}}' wx:key="id" wx:for-item='company'>
+        <view class='company_name' bindtap='onClickCompany'>
+          {{company.name}}
+        </view>
+        <view class='next_page'>
+        》
+        </view>
+      </view>     
+    </view>
+  </view>
+</view>
+
