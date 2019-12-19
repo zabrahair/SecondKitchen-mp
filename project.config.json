@@ -133,6 +133,18 @@
 					"pathName": "pages/testComponent/testComponent",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/register",
+					"pathName": "pages/register/register",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/menuList/menuList",
+					"pathName": "pages/menuList/menuList",
+					"scene": null
 				}
 			]
 		}

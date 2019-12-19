@@ -3,7 +3,7 @@
   <view class="title">
     用户注册
   </view>
-  <form class="input_area"  bindsubmit="formSubmit" bindreset="formReset">
+  <form class="input_area"  bindsubmit="onRegister" bindreset="formReset">
     <view class="field company_name">
       <input name="companyName" auto-focus placeholder="输入公司名称" placeholder-class="field_placeholder"/>
     </view>
@@ -14,8 +14,8 @@
       <input name="contactMobile" auto-focus placeholder="输入联系人电话" placeholder-class="field_placeholder"/>
     </view>
     <view class="field register">
-      <button class="btn_auth" type="primary">微信授权</button>
-      <button class="btn_register"formType="submit" type="primary">注册</button>
+      <button class="btn_auth" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type='primary'>获取手机</button>
+      <button class="btn_register" formType="submit" type="primary">注册</button>
     </view>
   </form>
 </view>

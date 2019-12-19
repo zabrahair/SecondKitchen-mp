@@ -28,7 +28,8 @@
     "pages/register/register",
     "pages/statistics/statistics",
     "pages/userManage/userManage",
-    "pages/testComponent/testComponent"
+    "pages/testComponent/testComponent",
+    "pages/firstLogin/firstLogin"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -40,10 +41,10 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/menuList/menuList",
         "selectedIconPath": "images/home_selected.png",
         "iconPath": "images/home.png",
-        "text": "首页"
+        "text": "菜单"
       },
       {
         "pagePath": "pages/orders/orders",

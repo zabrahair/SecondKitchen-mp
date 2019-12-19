@@ -1,0 +1,16 @@
+
+<view class="container">
+  <view class="title">首次登陆</view>
+  <view class="guide_buttons">
+    <button class="goto_button" 
+    type="primary" bindtap="onClickRoleButton"
+    data-user-role='{{USER_ROLE.ADMIN}}'>中心厨房</button>
+
+    <button class="goto_button" type="primary" bindtap="onClickRoleButton" data-user-role='{{USER_ROLE.RESTAURANT}}'>饭店用户</button>
+
+    <button class="goto_button" type="primary" 
+    bindtap="onClickRoleButton" data-user-role='{{USER_ROLE.COMPANY}}'>企业用户</button>
+
+    <button class="goto_button" type="primary" bindtap="onClickRoleButton" data-user-role='{{USER_ROLE.NORMAL}}'>个人用户</button>
+  </view>
+</view>

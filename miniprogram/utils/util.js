@@ -41,7 +41,12 @@ const resetStatus = function(object, key, defaultValue, setValue){
   debug(object);
 }
 
+const cloneObj = function(source, target){
+  return Object.assign(target, source);
+}
+
 module.exports = {
   formatTime: formatTime,
-  resetStatus: resetStatus
+  resetStatus: resetStatus,
+  cloneObj: cloneObj
 }

@@ -1,4 +1,13 @@
 //app.js
+const debugLog = require('./utils/log.js').debug;
+const errorLog = require('./utils/log.js').error;
+const gConst = require('./const/global.js');
+const storeKeys = require('./const/global.js').storageKeys;
+const utils = require('./utils/util.js');
+
+const USER_ROLE = require('./const/userRole.js')
+const userApi = require('./api/user');
+
 App({
   onLaunch: function () {
     
@@ -16,5 +25,50 @@ App({
     }
 
     this.globalData = {}
-  }
+    this.login();
+  },
+
+  login: function(){
+    var that = this;
+    var userInfo = {};
+    var hasUserInfo = false;
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          // 在没有 open-type=getUserInfo 版本的兼容处理
+          wx.getUserInfo({
+            success: res => {
+              userInfo = res.userInfo;
+              hasUserInfo = true;
+              that.globalData['userInfo'] = userInfo
+              that.globalData['hasUserInfo'] = true
+              wx.setStorageSync(storeKeys.userInfo, userInfo)
+              // 登陆当前用户
+              // 调用云函数
+              wx.cloud.callFunction({
+                name: 'login',
+                data: {},
+                success: res => {
+                  // debugLog('', res)
+                  // debugLog('[云函数] [login] user openid: ', res.result.openid)
+                  that.globalData['openid'] = res.result.openid
+                  let userInfo = that.globalData['userInfo'];
+                  userInfo['openId'] = res.result.openid;
+                  userInfo['appId'] = res.result.appid;
+                  wx.setStorageSync(storeKeys.userInfo, userInfo)
+                  that.globalData['userInfo'] = userInfo
+
+                },
+                fail: err => {
+                  // console.error('[云函数] [login] 调用失败', err)
+                }
+              })
+            }
+          })
+
+        }
+      }
+    })    
+  },
 })

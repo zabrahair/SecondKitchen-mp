@@ -1,6 +1,7 @@
 
 module.exports = {
-  ADMIN: 'admin',
-  USER: 'user',
-  COMPANY: 'company'
+  ADMIN: 'ADMIN',
+  NORMAL: 'NORMAL',
+  COMPANY: 'COMPANY',
+  RESTAURANT: 'RESTAURANT'
 }

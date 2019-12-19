@@ -2,9 +2,6 @@
 <view class="container">
   <view class="title">第二御厨房</view>
   <view class="guide_buttons">
-    <button class="goto_button" type="primary" bindtap="gotoCenterKitchen">中心厨房</button>
-    <button class="goto_button" type="primary" bindtap="gotoResturant">饭店用户</button>
-    <button class="goto_button" type="primary" bindtap="gotoCompany">企业用户</button>
-    <button class="goto_button" type="primary" bindtap="gotoCustomer">个人用户</button>
+
   </view>
 </view>

@@ -1,13 +1,18 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const debugLog = require('../../utils/log.js').debug;
+const errorLog = require('../../utils/log.js').error;
+const gConst = require('../../const/global.js');
+const storeKeys = require('../../const/global.js').storageKeys;
+const utils = require('../../utils/util.js');
+
+const USER_ROLE = require('../../const/userRole.js')
+const userApi = require('../../api/user');
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    USER_ROLE: USER_ROLE,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -15,40 +20,47 @@ Page({
       url: '../logs/logs'
     })
   },
+
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    this.checkUserExisted()
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+
+
+
+  onClickRoleButton: function(e){
+
+
+  },
+  /**
+   * 判断用户是否存在于数据库
+   */
+  checkUserExisted: function () {
+    let userInfo = wx.getStorageSync(storeKeys.userInfo)
+    userApi.queryUser({
+      _id: userInfo.openId
+    }, result => {
+      // debugLog('queryUserResult', result)
+      // If not found the user insert a new one.
+      if (result.length <= 0) {
+        wx.navigateTo({
+          url: '../firstLogin/firstLogin'
+        })
+      } else {
+        userInfo = result[0]
+        // else update the user info with login time
+        userApi.updateUser(result[0]._id,
+          {},
+          result => {
+            // debugLog('updateResult', result)
+            debugLog(storeKeys.userInfo)
+            debugLog('', userInfo)
+            wx.setStorageSync(storeKeys.userInfo, userInfo)
+            wx.switchTab({
+              url: '../menuList/menuList'
+            })
+          })
+      }
     })
-  }
+  },
+
 })
