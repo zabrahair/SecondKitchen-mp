@@ -138,12 +138,21 @@
 					"id": -1,
 					"name": "pages/register/register",
 					"pathName": "pages/register/register",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/menuList/menuList",
 					"pathName": "pages/menuList/menuList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "pages/selectMealCombo/selectMealCombo",
+					"pathName": "pages/selectMealCombo/selectMealCombo",
+					"query": "comboId=463ebf46-6387-4348-a834-a21eb0b45a0c",
 					"scene": null
 				}
 			]

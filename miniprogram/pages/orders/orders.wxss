@@ -89,9 +89,9 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
 
-  width: 45vw;
+  width: 50vw;
 }
 
 .order_price {

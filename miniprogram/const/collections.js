@@ -2,5 +2,8 @@
 
 module.exports = {
   DISH: 'dish',
-  USER: 'user'
+  USER: 'user',
+  MENU: 'menu',
+  ORDER: 'order',
+  COMBO: 'combo',
 }

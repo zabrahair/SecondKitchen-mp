@@ -1,0 +1,2 @@
+<!--components/dateFormat/dateFormat.wxml-->
+<view>{{formatedDate}}</view>

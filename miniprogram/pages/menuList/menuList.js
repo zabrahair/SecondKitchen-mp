@@ -1,5 +1,13 @@
 // pages/menuList/menuList.js
-const menus = require('../../mockupData/menu.js').menus;
+const debugLog = require('../../utils/log.js').debug;
+const errorLog = require('../../utils/log.js').error;
+const gConst = require('../../const/global.js');
+const storeKeys = require('../../const/global.js').storageKeys;
+const utils = require('../../utils/util.js');
+const TABLES = require('../../const/collections.js')
+
+const USER_ROLE = require('../../const/userRole.js')
+const dbApi = require('../../api/db.js')
 
 Page({
 
@@ -7,14 +15,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    menus: menus,
+    combos: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    dbApi.query(TABLES.COMBO, {
+      menuId: 'affa7136-7026-4d08-b64c-756966bf9610'
+    }, res=>{
+      // debugLog('res:', res)
+      this.setData({
+        combos: res
+      })
+    })
   },
 
   /**
@@ -66,9 +81,11 @@ Page({
 
   },
 
-  onClickMenu: function(){
+  onClickMenu: function(e){
+    let comboId = e.target.dataset.comboId;
+    // debugLog('comboId', comboId);
     wx.navigateTo({
-      url: '../selectMealCombo/selectMealCombo',
+      url: '../selectMealCombo/selectMealCombo?comboId=' + comboId,
     })
   }
 })

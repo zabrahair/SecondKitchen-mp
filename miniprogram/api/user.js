@@ -31,9 +31,9 @@ const createUser = function (insertData, callback) {
   })
   let now = new Date();
   let nowTimeString = now.toString();
-  let nowTimestamp = Date.parse(now)
+
   Object.assign(insertData, {
-    createTimestamp: nowTimestamp,
+    createTimestamp: now,
     createLocalTime: nowTimeString
   })  
   debugLog('insertData', insertData)
@@ -59,9 +59,9 @@ const updateUser = function (id, updateObj, callback) {
   const db = wx.cloud.database()
   let now = new Date();
   let nowTimeString = now.toString();
-  let nowTimestamp = Date.parse(now)
+
   Object.assign(updateObj, {
-    updateTimestamp: nowTimestamp,
+    updateTimestamp: now,
     updateLocalTime: nowTimeString
   })
   delete updateObj._id

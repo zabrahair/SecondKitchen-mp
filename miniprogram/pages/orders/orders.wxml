@@ -16,19 +16,19 @@
     <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
       <view class='order_info'>
         <view class="order_name">
-          {{order.combo.name}}
+          {{order.comboName}}
         </view>
         <view class='order_date'>
-          {{order.createTime}}
+          <view>送餐时间:</view><view><formatDate date='{{order.shipDate}}'/></view>
         </view>
         <view class='order_price'>
-          总价： ￥{{order.totalPrice}}
+          总价： ￥{{order.price}}
         </view>
         <view class='order_status'>
           {{order.status}}
         </view>        
       </view>
-      <view class="order_content" wx:for-items="{{order.combo.dishs}}" wx:key="id" wx:for-item="dish">
+      <view class="order_content" wx:for-items="{{order.dishes}}" wx:key="id" wx:for-item="dish">
         <view class='dish_name'>
           {{dish.name}}
         </view>

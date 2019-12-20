@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "formatDate": "../../components/dateFormat/dateFormat"
+  },
   "navigationBarTitleText": "订单一览"
 }

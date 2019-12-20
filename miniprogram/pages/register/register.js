@@ -21,6 +21,7 @@ Page({
    */
   onLoad: function (options) {
     debugLog('options', options)
+    this.data.userRole=options.userRole;
   },
 
   /**

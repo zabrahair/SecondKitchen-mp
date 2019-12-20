@@ -6,9 +6,9 @@
   </view>
   <view class='content'>
     <view class='menus_list'>
-      <view class='menu' wx:for-items='{{menus}}' wx:key="id" wx:for-item='menu'>
-        <view class='menu_name' bindtap='onClickMenu'>
-          {{menu.name}}
+      <view class='menu' wx:for-items='{{combos}}' wx:key="id" wx:for-item='combo' bindtap='onClickMenu' data-combo-id='{{combo._id}}'>
+        <view class='menu_name' >
+          {{combo.name}}
         </view>
         <view class='next_page'>
         》
