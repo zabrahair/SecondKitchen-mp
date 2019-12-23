@@ -9,6 +9,7 @@ const TABLES = require('../../const/collections.js')
 
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
+const orderApi = require('../../api/order.js')
 const defaultShipDate = new Date()
 defaultShipDate.setDate(defaultShipDate.getDate()+1)
 
@@ -44,9 +45,6 @@ Page({
     let comboId = options.comboId
     let userInfo = wx.getStorageSync(storeKeys.userInfo)
 
-    dbApi.groupCount(TABLES.COMBO, {}, res => {
-      debugLog('res', res)
-    });
 
     dbApi.query(
       TABLES.COMBO

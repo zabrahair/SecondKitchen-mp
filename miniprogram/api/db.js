@@ -3,9 +3,10 @@ const errorLog = require('../utils/log.js').error;
 const gConst = require('../const/global.js');
 const storeKeys = require('../const/global.js').storageKeys;
 const utils = require('../utils/util.js');
-const COLLECTIONS = require('../const/collections.js');
+const TABLES = require('../const/collections.js');
 const db = wx.cloud.database()
 const $ = db.command.aggregate
+const _ = db.command
 
 const query = function (table, filters, callback) {
   
@@ -68,7 +69,7 @@ const update = function (table, id, updateObj, callback) {
   // debugLog('id', id)
   // debugLog('updateObj', updateObj)
   // 根据条件更新所有Records
-  db.collection(COLLECTIONS.USER).doc(id).update({
+  db.collection(table).doc(id).update({
     data: updateObj,
     success: res => {
       let result = res;
@@ -85,39 +86,16 @@ const update = function (table, id, updateObj, callback) {
   })
 }
 
-const groupCount = function(table, group, callback){
-  // db.collection('order').aggregate()
-  //   .match({
-  //     comboName: '振瀚A套餐'
-  //   })
-  //   .count('comboCount')
-  //   .end().then(res=>{
-  //     debugLog('res',res)
-  //   })
-
-  // db.collection('order')
-  //   .where({
-  //     dishes: {
-  //       name: '葱油鸡'
-  //     }
-  //   })
-  //   .count().then(res=>{
-  //     debugLog('res', res)
-  //   })  
-
-  db.collection('order').aggregate()
-    .group({
-      _id: '$(dishes.category)',
-      count: $.sum(1),
-    })
-    .project({
-      _id: 1,
-      count: 1,
-    })
-    .end().then(res => {
-      debugLog('res', res)
+const groupCount = function(table, matchObj, unwindObj, groupObj, projectObj, callback){
+  db.collection('order')
+    .aggregate()
+    .match(matchObj)
+    .unwind(unwindObj)
+    .group(groupObj)
+    .project(projectObj)
+    .end().then(res=>{
+      callback(res)
     })  
-  
 }
 
 module.exports = {

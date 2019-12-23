@@ -1,4 +1,4 @@
-const debug = require('log.js').debug;
+const debugLog = require('log.js').debug;
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -39,8 +39,8 @@ const log = function(object, message, tabs){
 }
 
 const resetStatus = function(object, key, defaultValue, setValue){
-  debug(object);
-  debug(setValue);
+  debugLog(object);
+  debugLog(setValue);
   for(let i in object){
     if(i == key){
       object[i] = setValue;
@@ -49,16 +49,36 @@ const resetStatus = function(object, key, defaultValue, setValue){
     }
     
   }
-  debug(object);
+  debugLog(object);
 }
 
 const cloneObj = function(source, target){
   return Object.assign(target, source);
 }
 
+const pickerMaker = function(array, selectProperty){
+  // debugLog('array', array);
+  let res = {
+    pickerObjs: {},
+    pickerList: []
+  }
+  for(let i in array){
+    // debugLog('i', i);
+    let obj = array[i]
+    // debugLog('obj',obj);
+    // If not exist, append one
+    if (!res.pickerObjs[obj[selectProperty]]){
+      res.pickerObjs[obj[selectProperty]] = obj
+      res.pickerList.push(obj[selectProperty])
+    }
+  }
+  return res;
+}
+
 module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
   resetStatus: resetStatus,
-  cloneObj: cloneObj
+  cloneObj: cloneObj,
+  pickerMaker: pickerMaker
 }

@@ -3,12 +3,12 @@ const errorLog = require('../utils/log.js').error;
 const gConst = require('../const/global.js');
 const storeKeys = require('../const/global.js').storageKeys;
 const utils = require('../utils/util.js');
-const COLLECTIONS = require('../const/collections.js');
+const TABLES = require('../const/collections.js');
 
 const queryUser = function (filters, callback) {
   const db = wx.cloud.database()
   // 根据条件查询所有用户
-  db.collection(COLLECTIONS.USER).where(filters).get({
+  db.collection(TABLES.USER).where(filters).get({
     success: res => {
       let result = res.data;
       debugLog('user', result);
@@ -38,7 +38,7 @@ const createUser = function (insertData, callback) {
   })  
   debugLog('insertData', insertData)
   // 根据条件插入所有用户
-  db.collection(COLLECTIONS.USER).add({
+  db.collection(TABLES.USER).add({
     data: insertData,
     success: res => {
       let result = res;
@@ -68,7 +68,7 @@ const updateUser = function (id, updateObj, callback) {
   debugLog('id', id)
   debugLog('updateObj', updateObj)
   // 根据条件更新所有用户
-  db.collection(COLLECTIONS.USER).doc(id).update({
+  db.collection(TABLES.USER).doc(id).update({
     data: updateObj,
     success: res => {
       let result = res;

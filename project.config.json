@@ -154,6 +154,12 @@
 					"pathName": "pages/selectMealCombo/selectMealCombo",
 					"query": "comboId=463ebf46-6387-4348-a834-a21eb0b45a0c",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/statistics/statistics",
+					"pathName": "pages/statistics/statistics",
+					"scene": null
 				}
 			]
 		}

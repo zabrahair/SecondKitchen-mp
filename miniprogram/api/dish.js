@@ -1,11 +1,11 @@
 const debugLog = require('../utils/log.js').debug;
 const errorLog = require('../utils/log.js').error;
-const COLLECTIONS = require('../const/collections.js');
+const TABLES = require('../const/collections.js');
 
 const queryDishes = function(filters, callback){
   const db = wx.cloud.database()
   // 根据条件查询所有菜品
-  db.collection(COLLECTIONS.DISH).where(filters).get({
+  db.collection(TABLES.DISH).where(filters).get({
     success: res => {
       let result = res.data;
       debugLog('dishes', result, 4);

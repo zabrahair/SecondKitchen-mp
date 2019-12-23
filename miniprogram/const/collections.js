@@ -6,4 +6,5 @@ module.exports = {
   MENU: 'menu',
   ORDER: 'order',
   COMBO: 'combo',
+  COMPANY: 'company'
 }

@@ -28,5 +28,6 @@ module.exports = {
   userInfoObj: userInfoObj,
   pageParams: pageParams,
   maxOrdersPerDay: 10,
-  orderStatus: orderStatus
+  orderStatus: orderStatus,
+  ALL_COMPANIES: '所有企业'
 }

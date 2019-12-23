@@ -15,50 +15,50 @@
           结束日期: {{endDate}}
         </view>
       </picker>
+      <picker class="orders_company_picker" bindchange="onOrdersCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
+        <view class="picker">
+          当前企业：{{companiesPicker[selectCompanyIndex]}}
+        </view>
+      </picker>
     </view>  
     <view class="tabs_list">
-      <view class="tab summary {{status.SUMMARY}}" bindtap="onClickTab" data-tab-name='SUMMARY'>
+      <!-- <view class="tab summary {{tabStatus.SUMMARY}}" bindtap="onClickTab" data-tab-name='SUMMARY'>
         总体统计
-      </view>
-      <view class="tab orders_info {{status.ORDERS}}" bindtap='onClickTab' data-tab-name='ORDERS'>
+      </view> -->
+      <view class="tab orders_info {{tabStatus.ORDERS}}" bindtap='onClickTab' data-tab-name='ORDERS'>
         订单统计
       </view>
-      <view class='tab dishes_info {{status.DISHES}}' bindtap="onClickTab" data-tab-name='DISHES'>
+      <view class='tab dishes_info {{tabStatus.DISHES}}' bindtap="onClickTab" data-tab-name='DISHES'>
         菜品统计
       </view>
     </view>
     <view class='statistics'>
-      <view class='summary {{status.SUMMARY}}'>
+      <!-- <view class='summary {{tabStatus.SUMMARY}}'>
         <view class="total_info">
           总体情况
         </view>      
-      </view>
-      <view class='order_wise {{status.ORDERS}}'>
+      </view> -->
+      <view class='order_wise {{tabStatus.ORDERS}}'>
         <view class="total_info">
-          <view class='orders_count'>订单总数： 1000单</view>
-          <picker class="orders_company_picker" bindchange="onOrdersCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
-            <view class="picker">
-              当前企业：{{companiesPicker[selectCompanyIndex]}}
-            </view>
-          </picker>
+          <view class='orders_count'>订单总数： {{orders.length}}单</view>
         </view>  
         <view class="list_area">
           <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
             <view class='order_info'>
               <view class="order_name">
-                {{order.combo.name}}
+                {{order.comboName}}
               </view>
               <view class='order_date'>
-                {{order.createTime}}
+                {{order.createLocalTime}}
               </view>
               <view class='order_price'>
-                总价： ￥{{order.totalPrice}}
+                总价： ￥{{order.price}}
               </view>
               <view class='order_status'>
                 {{order.status}}
               </view>        
             </view>
-            <view class="order_content" wx:for-items="{{order.combo.dishs}}" wx:key="id" wx:for-item="dish">
+            <view class="order_content" wx:for-items="{{order.dishes}}" wx:key="id" wx:for-item="dish">
               <view class='dish_name'>
                 {{dish.name}}
               </view>
@@ -69,11 +69,28 @@
           </view>        
         </view>
       </view>
-      <view class='dish_wise {{status.DISHES}}'>
+      <view class='dish_wise {{tabStatus.DISHES}}'>
         <view class="total_info">
-          菜品统计
+          一共{{countDishes.length}}种菜被预定。
         </view>      
         <view class="list_area">
+          <view class='dishes_list'>
+                <view class='dish' wx:for-items='{{countDishes}}' wx:key="_id" wx:for-item='dish'>
+                  <image class="dish_image" mode='aspectFill' src="{{dish._id.imageUrl}}">
+                  </image>      
+                  <view class='dish_info'>
+                    <view class='dish_name'>
+                      菜名：{{dish._id.name}}
+                    </view>
+                    <view class='dish_price'>
+                      价格：{{dish._id.price}} 元
+                    </view>     
+                  </view>
+                  <view class='dishes_count'>           
+                      {{dish.count}} 份              
+                  </view> 
+                </view>    
+              </view>
         </view>
       </view>     
     </view> 

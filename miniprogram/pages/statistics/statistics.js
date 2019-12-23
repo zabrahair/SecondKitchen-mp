@@ -1,12 +1,22 @@
 // pages/statistics/statistics.js
-const util = require('../../utils/util');
-const debug = require('../../utils/log').debug;
-const constant = require('../../const/global.js');
-const orders = require('../../mockupData/orders.js').orders
-const companies = require('../../mockupData/company.js').companies;
-const companiesPicker = require('../../mockupData/company.js').companiesPicker
+const MSG = require('../../const/message.js')
+const debugLog = require('../../utils/log.js').debug;
+const errorLog = require('../../utils/log.js').error;
+const gConst = require('../../const/global.js');
+const storeKeys = require('../../const/global.js').storageKeys;
+const utils = require('../../utils/util.js');
+const TABLES = require('../../const/collections.js')
 
 
+const dbApi = require('../../api/db.js')
+const orderApi = require('../../api/order.js')
+const companyApi = require('../../api/company.js')
+const db = wx.cloud.database()
+const $ = db.command.aggregate
+const _ = db.command
+
+const startDate = new Date("2019-10-01")
+const endDate = new Date("2030-10-01")
 
 Page({
 
@@ -14,13 +24,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    status: {
+    startDate: utils.formatDate(startDate),
+    endDate: utils.formatDate(endDate),
+    tabStatus: {
       SUMMARY: 'unselected',
       ORDERS: 'selected',
       DISHES: 'unselected'
     },
-    orders: orders,
-    companiesPicker: companiesPicker,
+    orders: [],
+    countDishes: [],
+    companiesPickerObj: {},
+    companiesPicker: [],
     selectCompanyIndex: 0,
   },
 
@@ -28,7 +42,58 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.refreshStatistics();
 
+  },
+
+  refreshStatistics: function(){
+    // Clear last data
+    debugLog('endDate', this.data.startDate)
+    debugLog('endDate', this.data.endDate)
+    this.setData({
+      orders: [],
+      countDishes: []
+    })
+
+    // Company Picker List Get
+    companyApi.query({}, res => {
+      let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
+      // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
+      this.setData({
+        companiesPickerObj: companiesPickerAllInfo.pickerObjs,
+        companiesPicker: companiesPickerAllInfo.pickerList
+      })
+    })
+
+    let whereFilters = {
+      shipDateString: _.and(_.gt(this.data.startDate), _.lt(this.data.endDate))
+    }
+
+
+    // debugLog('whereFilters-1', whereFilters)
+    let curCompany = this.data.companiesPicker[this.data.selectCompanyIndex]
+    if (curCompany != gConst.ALL_COMPANIES){
+      whereFilters['companyName'] = curCompany
+    }
+    // debugLog('whereFilters-2', whereFilters)
+
+    // Order List 
+    orderApi.query(whereFilters, res => {
+      // debugLog('orders', res)
+      let orders = res
+      this.setData({
+        orders: orders
+      })
+    })
+
+    // Dishes Count aggregate
+    orderApi.countDishes(whereFilters, res => {
+      // debugLog('countDishes', res)
+      let countDishes = res.list
+      this.setData({
+        countDishes: countDishes
+      })
+    })
   },
 
   /**
@@ -84,17 +149,52 @@ Page({
    * 点击Tab标签
    */
   onClickTab: function (event, data){
+    debugLog('event', event);
+    debugLog('data', data);
     let tabName = event.target.dataset.tabName;
-    util.resetStatus(this.data.status, tabName, constant.UNSELECT, constant.SELECTED)
+    utils.resetStatus(this.data.tabStatus, tabName, gConst.UNSELECT, gConst.SELECTED)
     this.setData({
-      status: this.data.status
+      tabStatus: this.data.tabStatus
     })
   },
 
   onOrdersCompanyChange: function (e) {
-    
     this.setData({
       selectCompanyIndex: e.detail.value
     })
+    this.refreshStatistics()
+  },
+
+  selStartDate: function(e){
+    let startDate = e.detail.value;
+    if (startDate <= this.data.endDate){
+      this.setData({
+        startDate: e.detail.value
+      })
+      this.refreshStatistics()
+    } else {
+      wx.showToast({
+        title: '时间不合理',
+        icon: 'success',
+        duration: 1500
+      })
+    }
+
+  },
+
+  selEndDate: function (e) {
+    let endDate = e.detail.value;
+    if (this.data.startDate <= endDate) {
+      this.setData({
+        endDate: e.detail.value
+      })
+      this.refreshStatistics()
+    }else{
+      wx.showToast({
+        title: '时间不合理',
+        icon: 'success',
+        duration: 1500
+      })
+    }
   },
 })
