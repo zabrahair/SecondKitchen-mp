@@ -1,4 +1,7 @@
 // pages/orders/orders.js
+const app = getApp()
+const globalData = app.globalData
+
 const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
@@ -38,7 +41,7 @@ Page({
    * 刷新订单内容
    */
   refreshOrders: function(){
-    let userInfo = wx.getStorageSync(storeKeys.userInfo)
+    let userInfo = globalData.userInfo
     dbApi.query(TABLES.ORDER,
       {
         userId: userInfo._id ? userInfo._id : userInfo.openId,
@@ -64,7 +67,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let that = this
+    this.refreshOrders();
   },
 
   /**

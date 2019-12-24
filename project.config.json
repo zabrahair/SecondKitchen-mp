@@ -4,14 +4,27 @@
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"enhance": true
+		"coverView": true,
+		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"nodeModules": true
 	},
 	"appid": "wx96ce9c05c11ec78d",
 	"projectname": "SecondKitchen-mp",
-	"libVersion": "2.8.1",
+	"libVersion": "2.9.4",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
@@ -108,10 +121,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "pages/selectMealCombo/selectMealCombo",
 					"pathName": "pages/selectMealCombo/selectMealCombo",
-					"query": "",
+					"query": "comboId=463ebf46-6387-4348-a834-a21eb0b45a0c",
 					"scene": null
 				},
 				{
@@ -160,6 +173,7 @@
 					"id": -1,
 					"name": "pages/statistics/statistics",
 					"pathName": "pages/statistics/statistics",
+					"query": "",
 					"scene": null
 				},
 				{
@@ -167,6 +181,13 @@
 					"name": "pages/profile/profile",
 					"pathName": "pages/profile/profile",
 					"query": "userRole=ADMIN",
+					"scene": null
+				},
+				{
+					"id": 19,
+					"name": "pages/firstLogin/firstLogin",
+					"pathName": "pages/firstLogin/firstLogin",
+					"query": "",
 					"scene": null
 				}
 			]

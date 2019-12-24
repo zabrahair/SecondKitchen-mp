@@ -1,4 +1,7 @@
 // pages/statistics/statistics.js
+const app = getApp()
+const globalData = app.globalData
+
 const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
@@ -120,7 +123,7 @@ Page({
    */
   onShow: function () {
     this.setData({
-      userInfo: wx.getStorageSync(storeKeys.userInfo),
+      userInfo: globalData.userInfo,
     })
     this.refreshStatistics();
   },

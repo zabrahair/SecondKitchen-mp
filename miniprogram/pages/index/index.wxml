@@ -2,6 +2,12 @@
 <view class="container">
   <view class="title">第二御厨房</view>
   <view class="guide_buttons">
-
+  <button 
+      class='userinfo-avatar'
+      open-type="getUserInfo" 
+      bindgetuserinfo="getUserInfo"
+      style="background-image: url({{avatarUrl}})"
+      size="default"
+    >授权</button>
   </view>
 </view>

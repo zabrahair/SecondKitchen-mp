@@ -10,10 +10,10 @@
         </view>
     </picker>
     <view class="field company_name">
-      <input name="companyVertify" auto-focus placeholder="输入验证码" placeholder-class="field_placeholder"/>
+      <input name="companyVertify" placeholder="输入验证码" placeholder-class="field_placeholder"/>
     </view>
     <view class="field contact_name">
-      <input name="contactName" class='{{isValueCorrect}}' auto-focus placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>
+      <input name="contactName" class='{{isValueCorrect}}' placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>
     </view>
     <view class="field contact_mobile">
       <input name="contactMobile" placeholder="输入联系人电话" placeholder-class="field_placeholder" value="{{phoneNumber}}"/>

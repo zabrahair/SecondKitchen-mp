@@ -36,7 +36,18 @@
 
   width: 80vw;
   height: 80vh;
+  /* border: 1px solid black; */
 
+}
+
+
+.userinfo-avatar {
+  width: 50vw;
+  height: 50vw;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
 }
 
 .goto_button{

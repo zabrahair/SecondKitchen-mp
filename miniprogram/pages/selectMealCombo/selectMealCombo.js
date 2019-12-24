@@ -1,4 +1,7 @@
 // pages/selectMealCombo/selectMealCombo.js
+const app = getApp()
+const globalData = app.globalData
+
 const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
@@ -36,14 +39,16 @@ Page({
       "status": gConst.orderStatus.ORDERED 
     },
     isOrderFinished: false,
+    startDate: utils.formatDate(defaultShipDate)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    debugLog('options', options)
     let comboId = options.comboId
-    let userInfo = wx.getStorageSync(storeKeys.userInfo)
+    let userInfo = globalData.userInfo
 
 
     dbApi.query(

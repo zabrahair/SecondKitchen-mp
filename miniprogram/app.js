@@ -24,8 +24,10 @@ App({
       })
     }
 
-    this.globalData = {}
-    this.login();
+    this.globalData = {
+      
+    }
+    // this.login();
   },
 
   login: function(){
@@ -43,7 +45,7 @@ App({
               hasUserInfo = true;
               that.globalData['userInfo'] = userInfo
               that.globalData['hasUserInfo'] = true
-              wx.setStorageSync(storeKeys.userInfo, userInfo)
+              wx.setStorageSync('userInfo', userInfo)
               // 登陆当前用户
               // 调用云函数
               wx.cloud.callFunction({
@@ -62,10 +64,10 @@ App({
                   }, result => {
                     debugLog('result',result)
                     if (result.length >= 0) {
-                      wx.setStorageSync(storeKeys.userInfo, result[0])
+                      wx.setStorageSync('userInfo', result[0])
                       that.globalData['userInfo'] = result[0]
                     } else {
-                      wx.setStorageSync(storeKeys.userInfo, userInfo)
+                      wx.setStorageSync('userInfo', userInfo)
                       that.globalData['userInfo'] = userInfo
                     }
                   })

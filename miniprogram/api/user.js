@@ -26,17 +26,18 @@ const queryUser = function (filters, callback) {
 
 const createUser = function (insertData, callback) {
   const db = wx.cloud.database()
+  debugLog('insertData1', insertData)
   insertData = Object.assign(insertData, {
     _id: insertData.openId
   })
   let now = new Date();
   let nowTimeString = now.toString();
-
+  debugLog('insertData2', insertData)
   Object.assign(insertData, {
-    createTimestamp: now,
+    createTimestamp: now.getTime(),
     createLocalTime: nowTimeString
   })  
-  debugLog('insertData', insertData)
+  debugLog('insertData3', insertData)
   // 根据条件插入所有用户
   db.collection(TABLES.USER).add({
     data: insertData,
@@ -50,7 +51,7 @@ const createUser = function (insertData, callback) {
         icon: 'none',
         title: '插入记录失败'
       })
-      errorLog('[数据库USER] [插入记录] 失败：', err)
+      debugLog('[数据库USER] [插入记录] 失败：', err)
     }
   })
 }
@@ -61,8 +62,8 @@ const updateUser = function (id, updateObj, callback) {
   let nowTimeString = now.toString();
 
   Object.assign(updateObj, {
-    updateTimestamp: now,
-    updateLocalTime: nowTimeString
+    createTimestamp: now.getTime(),
+    createLocalTime: nowTimeString
   })
   delete updateObj._id
   debugLog('id', id)

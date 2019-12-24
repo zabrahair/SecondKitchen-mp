@@ -1,5 +1,7 @@
 // pages/dishes/dishes.js
 const app = getApp()
+const globalData = app.globalData
+
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
 const dishes = require('../../mockupData/dish.js').dishes;

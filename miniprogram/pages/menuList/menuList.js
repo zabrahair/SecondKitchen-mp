@@ -1,4 +1,7 @@
 // pages/menuList/menuList.js
+const app = getApp()
+const globalData = app.globalData
+
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
 const gConst = require('../../const/global.js');
@@ -37,18 +40,30 @@ Page({
    */
   onShow: function () {
     this.setData({
-      userInfo: wx.getStorageSync(storeKeys.userInfo),
-      userRole: wx.getStorageSync(storeKeys.userInfo).userRole,
+      userInfo: globalData.userInfo,
+      userRole: globalData.userInfo.userRole,
     })
-    let companyId = wx.getStorageSync(storeKeys.userInfo).companyId;
-    dbApi.query(TABLES.COMBO, {
-      companyId: companyId
-    }, res => {
-      // debugLog('res:', res)
-      this.setData({
-        combos: res
+    let companyId = globalData.userInfo.companyId;
+    let companyName = globalData.userInfo.companyName
+    if (companyName == gConst.ALL_COMPANIES){
+      dbApi.query(TABLES.COMBO, {
+      }, res => {
+        // debugLog('res:', res)
+        this.setData({
+          combos: res
+        })
       })
-    })
+    }else{
+      dbApi.query(TABLES.COMBO, {
+        companyId: companyId
+      }, res => {
+        // debugLog('res:', res)
+        this.setData({
+          combos: res
+        })
+      })
+    }
+
   },
 
   /**

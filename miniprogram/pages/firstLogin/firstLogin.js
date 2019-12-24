@@ -1,5 +1,7 @@
 //获取应用实例
 const app = getApp()
+const globalData = app.globalData
+
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
 const gConst = require('../../const/global.js');
@@ -7,10 +9,12 @@ const storeKeys = require('../../const/global.js').storageKeys;
 const utils = require('../../utils/util.js');
 
 const USER_ROLE = require('../../const/userRole.js')
+const userApi = require('../../api/user');
 
 Page({
   data: {
     USER_ROLE: USER_ROLE,
+    userInfo: ''
   },
   //事件处理函数
   bindViewTap: function () {
@@ -20,6 +24,7 @@ Page({
   },
 
   onLoad: function () {
+    
   },
 
 

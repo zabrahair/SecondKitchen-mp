@@ -1,4 +1,7 @@
 // pages/profile/profile.js
+const app = getApp()
+const globalData = app.globalData
+
 const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
@@ -45,8 +48,8 @@ Page({
    */
   onShow: function () {
     this.setData({
-      userInfo: wx.getStorageSync(storeKeys.userInfo),
-      userRole: wx.getStorageSync(storeKeys.userInfo).userRole,
+      userInfo: globalData.userInfo,
+      userRole: globalData.userInfo.userRole,
     })
   },
 
@@ -89,7 +92,7 @@ Page({
    * 
    */
   onChangeProfile: function(e){
-    let userInfo = wx.getStorageSync(storeKeys.userInfo)
+    let userInfo = globalData.userInfo
     let userRole = userInfo.userRole
     wx.navigateTo({
       url: '../../pages/register/register?userRole=' + userRole,
@@ -100,7 +103,7 @@ Page({
    * 跳转到统计页面
    */
   onClickStatistic: function(e) {
-    let userInfo = wx.getStorageSync(storeKeys.userInfo)
+    let userInfo = globalData.userInfo
     let userRole = userInfo.userRole
     wx.navigateTo({
       url: '../../pages/statistics/statistics',

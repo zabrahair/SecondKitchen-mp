@@ -1,4 +1,7 @@
 // pages/register/register.js
+const app = getApp()
+const globalData = app.globalData
+
 const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
@@ -16,13 +19,15 @@ const _ = db.command
 
 const USER_ROLE = require('../../const/userRole.js')
 const userApi = require('../../api/user');
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: wx.getStorageSync(storeKeys.userInfo),
+    userInfo: {},
     userRole: USER_ROLE.NORMAL,
     phoneNumber: '',
     companiesPickerObj: {},
@@ -37,6 +42,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    debugLog('globalData.userInfo', globalData.userInfo)
+    debugLog('this.data.userInfo', this.data.userInfo)
+    this.setData({userInfo: globalData.userInfo})
     // debugLog('options', options)
     this.setData({
       userRole: options.userRole
@@ -114,11 +122,16 @@ Page({
     // Show form values
     let formValues = e.detail.value
     // debugLog('onRegister.formValue', formValues);
-    let userInfo = wx.getStorageSync(storeKeys.userInfo)
-    // debugLog('userInfo', userInfo)
+    var userInfo = globalData[storeKeys.userInfo]
+    debugLog('userInfo', userInfo)
     formValues['userRole'] = that.data.userRole
     Object.assign(userInfo, formValues)
-    wx.setStorageSync(storeKeys.userInfo, userInfo)
+    delete userInfo['_openid']
+    globalData.userInfo = userInfo
+    wx.setStorageSync('userInfo', userInfo)
+    this.setData({
+      userInfo: userInfo
+    })
     // debugLog('userInfo', userInfo)
 
     let companyName = this.data.companiesPicker[this.data.selectCompanyIndex];
@@ -129,15 +142,18 @@ Page({
     this.vertifyCompany(companyName, formValues.companyVertify, res => {
       delete formValues['companyVertify']
       if (res.isVertified == true) {
+        debugLog('openId', userInfo.openId)
         // create or update user
         userApi.queryUser({
           _id: userInfo.openId
         }, result => {
-          // debugLog('queryUserResult', result)
+          debugLog('queryUserResult', result)
           // If not found the user insert a new one.
           if (result.length <= 0) {
+            userInfo = globalData[storeKeys.userInfo]
+            debugLog('create a new user', userInfo)
             userApi.createUser(userInfo, result => {
-              // debugLog('insertResult', result)
+              debugLog('insertResult', result)
               wx.switchTab({
                 url: '../menuList/menuList'
               })
@@ -150,6 +166,7 @@ Page({
               formValues,
               result => {
                 // debugLog('updateResult', result)
+                // globalData.userInfo = userInfo
                 // wx.setStorageSync(storeKeys.userInfo, userInfo)
                 wx.switchTab({
                   url: '../menuList/menuList'
@@ -158,13 +175,13 @@ Page({
           }
 
           // set storage
-          let userInfo = wx.getStorageSync(storeKeys.userInfo)
+          let userInfo = globalData[storeKeys.userInfo]
           userInfo['userRole'] = that.data.userRole
           userInfo['companyName'] = formValues['companyName']
           userInfo['companyId'] = formValues['companyId']
           userInfo['contactName'] = formValues['contactName']
           userInfo['contactMobile'] = formValues['contactMobile']
-          wx.setStorageSync(storeKeys.userInfo, userInfo)
+          globalData[storeKeys.userInfo] = userInfo
 
         })
       }else{
@@ -251,6 +268,5 @@ Page({
 
   formReset: function () {
     console.log('form发生了reset事件')
-  }
-
+  },
 })

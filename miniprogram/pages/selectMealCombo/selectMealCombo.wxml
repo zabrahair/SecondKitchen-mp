@@ -4,32 +4,38 @@
     <view class="combo_title">
       {{combo.name}}
     </view>
-    <picker class="shipping_date" mode="date" value="{{shipDate}}" start="2019-10-01" end="2030-10-01" bindchange="selShipDate">
+    <picker class="shipping_date" mode="date" value="{{shipDate}}" start="{{startDate}}" end="2030-10-01" bindchange="selShipDate">
       <view class="date_picker" >
         送餐日期: {{shipDate}}
       </view>
     </picker>
   </view>
-  <view class="combo_options">
+  <scroll-view class="combo_options" scroll-y="true">
     <view class="dish" wx:for-items="{{combo.dishes}}" wx:for-index="dishIdx" wx:key='{{enName}}'wx:for-item='dish'>
       <view class="dish_title">
         {{dish.name}}
       </view>
-      <radio-group class="options" bindchange="onDishSelect" data-dish-idx='{{dish.enName}}' data-dish-idx='{{dishIdx}}'>
-        <view class="dish_option dish_{{item.id}}" 
-              wx:for-items="{{dish.options}}" wx:for-index="optionIdx" wx:key="_id" wx:for-item='option' 
-              value="{{item.id}}" checked="{{item.isSelect}}">
-          <image class="dish_image" src="{{option.imageUrl}}" mode='aspectFill'>
-          </image>
-          <view class="dish_capital">
-            {{option.name}}
-          </view>
-          <radio  class="dish_radio" value='{{optionIdx}}'>
-          </radio>
-        </view>
-      </radio-group> 
+        <scroll-view  class="options" scroll-x="true" >
+        <radio-group  class="options" bindchange="onDishSelect" data-dish-idx='{{dish.enName}}' data-dish-idx='{{dishIdx}}'>
+          
+            <view class="dish_option dish_{{item.id}}"
+                  wx:for-items="{{dish.options}}" wx:for-index="optionIdx" wx:key="_id" wx:for-item='option' 
+                  value="{{item.id}}" checked="{{item.isSelect}}">
+              <image class="dish_image" src="{{option.imageUrl}}" mode='aspectFill'>
+              </image>
+              <view class="dish_capital">
+                {{option.name}}
+              </view>
+              <radio  class="dish_radio" value='{{optionIdx}}'>
+              </radio>
+            </view>
+          
+
+        </radio-group> 
+        </scroll-view>
+      
     </view>
-  </view>
+  </scroll-view>
   <view class="order_summary">
     <view class="total_price">
       <view class="capital">

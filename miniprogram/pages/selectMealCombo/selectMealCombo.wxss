@@ -35,7 +35,7 @@
 
   width: 100vw;
   height: 80vh;    
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   
 }
 
@@ -136,7 +136,7 @@
   height: 30vh;
 
   border-bottom: 1px solid grey;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 
 .dish_option {
