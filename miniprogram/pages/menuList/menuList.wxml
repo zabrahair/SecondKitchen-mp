@@ -7,10 +7,10 @@
   <view class='content'>
     <view class='menus_list'>
       <view class='menu' wx:for-items='{{combos}}' wx:key="id" wx:for-item='combo' bindtap='onClickMenu' data-combo-id='{{combo._id}}'>
-        <view class='menu_name' >
+        <view class='menu_name' data-combo-id='{{combo._id}}'>
           {{combo.name}}
         </view>
-        <view class='next_page'>
+        <view class='next_page' data-combo-id='{{combo._id}}'>
         》
         </view>        
       </view>

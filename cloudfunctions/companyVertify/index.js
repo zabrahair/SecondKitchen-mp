@@ -22,14 +22,16 @@ exports.main = async (event, context) => {
   let result = null;
   if (event.userRole == USER_ROLE.NORMAL){
     // Normal User Vertify
+    console.log('Normal User Vertify')
     result = await db.collection(COMPANY_TABLE).where({
       _id: event.companyId,
       userVertify: event.vertifyCode
     }).get()
   } else if (event.userRole == USER_ROLE.ADMIN 
-    && event.userRole == USER_ROLE.COMPANY 
-    && event.userRole == USER_ROLE.RESTAURANT){
+    || event.userRole == USER_ROLE.COMPANY 
+    || event.userRole == USER_ROLE.RESTAURANT){
     // Company User Vertify
+    console.log('Company User Vertify')
     result = await db.collection(COMPANY_TABLE).where({
       _id: event.companyId,
       companyVertify: event.vertifyCode
@@ -37,7 +39,8 @@ exports.main = async (event, context) => {
     
   }
   try{
-    if(result.data.length && result.data.length > 0){
+    console.log('result', JSON.stringify(result, null, 4))
+    if(result && result.data && result.data.length && result.data.length > 0){
       return {
         isVertified: true
       }

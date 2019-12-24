@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/index-demo/index",
     "pages/userConsole-demo/userConsole",
     "pages/storageConsole-demo/storageConsole",
@@ -13,7 +14,6 @@
     "pages/openapi-demo/cloudid/cloudid",
     "pages/im-demo/im",
     "pages/im-demo/room/room",
-    "pages/index/index",
     "pages/editMealCombo/editMealCombo",
     "pages/profile/profile",
     "pages/logs/logs",

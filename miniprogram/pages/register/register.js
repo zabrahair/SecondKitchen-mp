@@ -128,52 +128,52 @@ Page({
 
     this.vertifyCompany(companyName, formValues.companyVertify, res => {
       delete formValues['companyVertify']
-      if (that.data.isVertified == false) {
+      if (res.isVertified == true) {
+        // create or update user
+        userApi.queryUser({
+          _id: userInfo.openId
+        }, result => {
+          // debugLog('queryUserResult', result)
+          // If not found the user insert a new one.
+          if (result.length <= 0) {
+            userApi.createUser(userInfo, result => {
+              // debugLog('insertResult', result)
+              wx.switchTab({
+                url: '../menuList/menuList'
+              })
+            })
+          } else {
+            userInfo = result[0]
+            // else updat the user info with login time
+            // debugLog('else updat the user info with login time','')
+            userApi.updateUser(userInfo._id,
+              formValues,
+              result => {
+                // debugLog('updateResult', result)
+                // wx.setStorageSync(storeKeys.userInfo, userInfo)
+                wx.switchTab({
+                  url: '../menuList/menuList'
+                })
+              })
+          }
+
+          // set storage
+          let userInfo = wx.getStorageSync(storeKeys.userInfo)
+          userInfo['userRole'] = that.data.userRole
+          userInfo['companyName'] = formValues['companyName']
+          userInfo['companyId'] = formValues['companyId']
+          userInfo['contactName'] = formValues['contactName']
+          userInfo['contactMobile'] = formValues['contactMobile']
+          wx.setStorageSync(storeKeys.userInfo, userInfo)
+
+        })
+      }else{
         wx.showToast({
           icon: 'none',
           title: '验证码不正确'
         })
         return
       }
-
-      // create or update user
-      userApi.queryUser({
-        _id: userInfo.openId
-      }, result => {
-        // debugLog('queryUserResult', result)
-        // If not found the user insert a new one.
-        if (result.length <= 0) {
-          userApi.createUser(userInfo, result => {
-            // debugLog('insertResult', result)
-            wx.switchTab({
-              url: '../menuList/menuList'
-            })
-          })
-        } else {
-          userInfo = result[0]
-          // else updat the user info with login time
-          // debugLog('else updat the user info with login time','')
-          userApi.updateUser(userInfo._id,
-            formValues,
-            result => {
-              // debugLog('updateResult', result)
-              // wx.setStorageSync(storeKeys.userInfo, userInfo)
-              wx.switchTab({
-                url: '../menuList/menuList'
-              })
-            })
-        }
-
-        // set storage
-        let userInfo = wx.getStorageSync(storeKeys.userInfo)
-        userInfo['userRole'] = that.data.userRole
-        userInfo['companyName'] = formValues['companyName']
-        userInfo['companyId'] = formValues['companyId']
-        userInfo['contactName'] = formValues['contactName']
-        userInfo['contactMobile'] = formValues['contactMobile']
-        wx.setStorageSync(storeKeys.userInfo, userInfo)
-
-      })
     })
   },
 
@@ -237,11 +237,11 @@ Page({
         userRole: that.data.userRole
       }
       ,success: res => {
-        // debugLog('companyVertify', res)
+        debugLog('companyVertify', res)
         that.setData({
-          isVertified: res.isVertified
+          isVertified: res.result.isVertified
         })
-        callback(res)
+        callback(res.result)
       }
       ,fail: err => {
 

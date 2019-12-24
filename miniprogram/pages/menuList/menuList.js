@@ -22,14 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    dbApi.query(TABLES.COMBO, {
-      menuId: 'affa7136-7026-4d08-b64c-756966bf9610'
-    }, res=>{
-      // debugLog('res:', res)
-      this.setData({
-        combos: res
-      })
-    })
+
   },
 
   /**
@@ -43,7 +36,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      userInfo: wx.getStorageSync(storeKeys.userInfo),
+      userRole: wx.getStorageSync(storeKeys.userInfo).userRole,
+    })
+    let companyId = wx.getStorageSync(storeKeys.userInfo).companyId;
+    dbApi.query(TABLES.COMBO, {
+      companyId: companyId
+    }, res => {
+      // debugLog('res:', res)
+      this.setData({
+        combos: res
+      })
+    })
   },
 
   /**
@@ -83,9 +88,11 @@ Page({
 
   onClickMenu: function(e){
     let comboId = e.target.dataset.comboId;
-    // debugLog('comboId', comboId);
-    wx.navigateTo({
-      url: '../selectMealCombo/selectMealCombo?comboId=' + comboId,
-    })
+    debugLog('comboId', comboId);
+    if (comboId){
+      wx.navigateTo({
+        url: '../selectMealCombo/selectMealCombo?comboId=' + comboId,
+      })
+    }
   }
 })
