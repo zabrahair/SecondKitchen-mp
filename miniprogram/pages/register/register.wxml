@@ -4,18 +4,59 @@
     用户注册
   </view>
   <form class="input_area"  bindsubmit="onRegister" bindreset="formReset">
+    <picker class="company_picker" bindchange="onCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
+        <view class="picker">
+          选择企业：{{companiesPicker[selectCompanyIndex]}}
+        </view>
+    </picker>
     <view class="field company_name">
-      <input name="companyName" auto-focus placeholder="输入公司名称" placeholder-class="field_placeholder"/>
+      <input name="companyVertify" auto-focus placeholder="输入验证码" placeholder-class="field_placeholder"/>
     </view>
     <view class="field contact_name">
-      <input name="contactName"  auto-focus placeholder="输入联系人"  placeholder-class="field_placeholder"/>
+      <input name="contactName" class='{{isValueCorrect}}' auto-focus placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>
     </view>
     <view class="field contact_mobile">
-      <input name="contactMobile" auto-focus placeholder="输入联系人电话" placeholder-class="field_placeholder"/>
+      <input name="contactMobile" placeholder="输入联系人电话" placeholder-class="field_placeholder" value="{{phoneNumber}}"/>
     </view>
     <view class="field register">
       <button class="btn_auth" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type='primary'>获取手机</button>
       <button class="btn_register" formType="submit" type="primary">注册</button>
     </view>
   </form>
+<!-- <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">switch</view>
+    <switch name="switch"/>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">slider</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+
+  <view class="section">
+    <view class="section__title">input</view>
+    <input name="input" placeholder="please input here" />
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">radio</view>
+    <radio-group name="radio-group">
+      <label><radio value="radio1"/>radio1</label>
+      <label><radio value="radio2"/>radio2</label>
+    </radio-group>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">checkbox</view>
+    <checkbox-group name="checkbox">
+      <label><checkbox value="checkbox1"/>checkbox1</label>
+      <label><checkbox value="checkbox2"/>checkbox2</label>
+    </checkbox-group>
+  </view>
+  <view class="btn-area">
+    <button formType="submit">Submit</button>
+    <button formType="reset">Reset</button>
+  </view>
+</form> -->
+
+
 </view>
+

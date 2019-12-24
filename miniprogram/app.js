@@ -56,8 +56,20 @@ App({
                   let userInfo = that.globalData['userInfo'];
                   userInfo['openId'] = res.result.openid;
                   userInfo['appId'] = res.result.appid;
-                  wx.setStorageSync(storeKeys.userInfo, userInfo)
-                  that.globalData['userInfo'] = userInfo
+
+                  userApi.queryUser({
+                    _id: userInfo.openId
+                  }, result => {
+                    debugLog('result',result)
+                    if (result.length >= 0) {
+                      wx.setStorageSync(storeKeys.userInfo, result[0])
+                      that.globalData['userInfo'] = result[0]
+                    } else {
+                      wx.setStorageSync(storeKeys.userInfo, userInfo)
+                      that.globalData['userInfo'] = userInfo
+                    }
+                  })
+
 
                 },
                 fail: err => {

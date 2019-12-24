@@ -2,15 +2,18 @@
 <view class="container">
   <view class="summary">
     <view class="left">
-      <view class="avatar">
-      </view>
+      <image src='{{userInfo.avatarUrl}}' class="avatar">
+      </image>
     </view>
     <view class="middle">
       <view class="contact_name">
-        {{userInfo.username}}
+        {{userInfo.nickName}}
       </view>
       <view class="contact_mobile">
-        手机： {{userInfo.mobile}}
+        手机： {{userInfo.contactMobile}}
+      </view>
+      <view class="contact_mobile">
+        公司： {{userInfo.companyName}}
       </view>
     </view>
     <view class="right">
@@ -18,27 +21,28 @@
   </view>
   <view class="content">
     <view class='features'>
-      <view class="feature">
-        <view class='left'>修改资料</view>
+      <view class="feature" bindtap="onChangeProfile">
+        <view class='left' >修改资料</view>
         <view class='right'>></view>
       </view>
-      <view class="feature">
-        <view class='left'>统计当日订餐</view>
+      <view class="feature" 
+      bindtap="onClickStatistic"
+      style="display: {{userRole == USER_ROLE.NORMAL? 'none': 'flex'}};">
+        <view class='left' >统计订餐</view>
         <view class='right'>></view>
-      </view>   
-      <view class="feature">
-        <view class='left'>统计历史订餐</view>
-        <view class='right'>></view>
-      </view>        
-      <view class="feature">
+      </view>         
+      <view class="feature" 
+      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
         <view class='left'>查看订餐公司</view>
         <view class='right'>></view>
       </view>
-      <view class="feature">
+      <view class="feature" 
+      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
         <view class='left'>查看店铺</view>
         <view class='right'>></view>
       </view>                
-      <view class="feature">
+      <view class="feature" 
+      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
         <view class='left'>编辑菜品库</view>
         <view class='right'>></view>
       </view>      
@@ -47,9 +51,9 @@
         <view class='right'>></view>
       </view>      
     </view>
-    <view class="login_buttons">
+    <!-- <view class="login_buttons">
       <button type='warn' class='btn_logout' bindtap="logout">登出</button>
       <button type='primary' class='btn_login' bindtap='login'>登陆</button>
-    </view>
+    </view> -->
   </view>
 </view>

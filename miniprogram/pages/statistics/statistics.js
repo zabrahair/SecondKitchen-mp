@@ -3,6 +3,7 @@ const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
 const gConst = require('../../const/global.js');
+const USER_ROLE = require('../../const/userRole.js');
 const storeKeys = require('../../const/global.js').storageKeys;
 const utils = require('../../utils/util.js');
 const TABLES = require('../../const/collections.js')
@@ -24,6 +25,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userInfo: null,
     startDate: utils.formatDate(startDate),
     endDate: utils.formatDate(endDate),
     tabStatus: {
@@ -42,7 +44,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.refreshStatistics();
 
   },
 
@@ -56,14 +57,25 @@ Page({
     })
 
     // Company Picker List Get
-    companyApi.query({}, res => {
-      let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
-      // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
+    let userRole = this.data.userInfo.userRole
+    if (userRole != USER_ROLE.ADMIN) {
+      let companyName = this.data.userInfo.companyName
+      let companiesPicker = new Array(1);
+      companiesPicker[0] = companyName
+      debugLog('companiesPicker', companiesPicker)
       this.setData({
-        companiesPickerObj: companiesPickerAllInfo.pickerObjs,
-        companiesPicker: companiesPickerAllInfo.pickerList
+        companiesPicker: companiesPicker
       })
-    })
+    }else{
+      companyApi.query({}, res => {
+        let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
+        // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
+        this.setData({
+          companiesPickerObj: companiesPickerAllInfo.pickerObjs,
+          companiesPicker: companiesPickerAllInfo.pickerList
+        })
+      })
+    }
 
     let whereFilters = {
       shipDateString: _.and(_.gt(this.data.startDate), _.lt(this.data.endDate))
@@ -100,7 +112,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({
+      userInfo: wx.getStorageSync(storeKeys.userInfo),
+    })
+    this.refreshStatistics();
   },
 
   /**

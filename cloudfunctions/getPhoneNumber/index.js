@@ -7,10 +7,12 @@ cloud.init()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   console.log('event', JSON.stringify(event, {}, 4))
+  console.log('unionId', JSON.stringify(wxContext.UNIONID, {}, 4))
   return {
-    event,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
+    appId: event.userInfo.appId,
+    openId: event.userInfo.openId,
+    phoneNumber: event.phoneNumber.data.phoneNumber,
+    purePhoneNumber: event.phoneNumber.data.purePhoneNumber,
     unionid: wxContext.UNIONID,
   }
 }

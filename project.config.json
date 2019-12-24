@@ -14,6 +14,7 @@
 	"libVersion": "2.8.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -135,10 +136,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "pages/register/register",
 					"pathName": "pages/register/register",
-					"query": "",
+					"query": "userRole=COMPANY",
 					"scene": null
 				},
 				{
@@ -159,6 +160,13 @@
 					"id": -1,
 					"name": "pages/statistics/statistics",
 					"pathName": "pages/statistics/statistics",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/profile/profile",
+					"pathName": "pages/profile/profile",
+					"query": "userRole=ADMIN",
 					"scene": null
 				}
 			]

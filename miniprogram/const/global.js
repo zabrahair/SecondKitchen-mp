@@ -21,6 +21,11 @@ const orderStatus = {
   SHIPPING: 'shipping'
 }
 
+const valueCSS = {
+  CORRECT: 'value_correct',
+  INCORRECT: 'value_incorrect'
+}
+
 module.exports = {
   UNSELECT: UNSELECT,
   SELECTED: SELECTED,
@@ -29,5 +34,6 @@ module.exports = {
   pageParams: pageParams,
   maxOrdersPerDay: 10,
   orderStatus: orderStatus,
-  ALL_COMPANIES: '所有企业'
+  ALL_COMPANIES: '所有企业',
+  valueCSS: valueCSS,
 }
