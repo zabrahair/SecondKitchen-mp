@@ -42,7 +42,7 @@
         <view class="total_info">
           <view class='orders_count'>订单总数： {{orders.length}}单</view>
         </view>  
-        <view class="list_area">
+        <scroll-view class="list_area" scroll-y='true'>
           <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
             <view class='order_info'>
               <view class="order_name">
@@ -67,14 +67,14 @@
               </view>
             </view>
           </view>        
-        </view>
+        </scroll-view>
       </view>
       <view class='dish_wise {{tabStatus.DISHES}}'>
         <view class="total_info">
           一共{{countDishes.length}}种菜被预定。
         </view>      
-        <view class="list_area">
-          <view class='dishes_list'>
+        <view class="list_area" >
+          <scroll-view class='dishes_list' scroll-y='true'>
                 <view class='dish' wx:for-items='{{countDishes}}' wx:key="_id" wx:for-item='dish'>
                   <image class="dish_image" mode='aspectFill' src="{{dish._id.imageUrl}}">
                   </image>      
@@ -90,7 +90,7 @@
                       {{dish.count}} 份              
                   </view> 
                 </view>    
-              </view>
+              </scroll-view>
         </view>
       </view>     
     </view> 

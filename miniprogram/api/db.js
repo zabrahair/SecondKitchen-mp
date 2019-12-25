@@ -66,8 +66,8 @@ const update = function (table, id, updateObj, callback) {
     updateLocalTime: nowTimeString
   })
   delete updateObj._id
-  // debugLog('id', id)
-  // debugLog('updateObj', updateObj)
+  debugLog('id', id)
+  debugLog('updateObj', updateObj)
   // 根据条件更新所有Records
   db.collection(table).doc(id).update({
     data: updateObj,

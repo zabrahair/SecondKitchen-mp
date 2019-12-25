@@ -34,10 +34,10 @@
           </view>     
         </view>
         <view class='operators'>           
-          <button class='edit_dish' size='mini' bindtap='onDeleteDish' type='warn' data-dish-id='dish._id'>
+          <button class='edit_dish' size='mini' bindtap='onDeleteDish' type='warn' data-dish-id='dish._id' lang='zh_CN'>
             删除
           </button>
-          <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='dish._id'>
+          <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='dish._id' lang='zh_CN'>
             编辑
           </button>               
         </view> 

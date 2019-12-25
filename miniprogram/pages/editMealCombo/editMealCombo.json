@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "dish-selector": "../../components/dishSelector/dishSelector"
+  },
   "navigationBarTitleText": "编辑套餐名称"
 }

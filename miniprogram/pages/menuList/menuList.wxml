@@ -17,7 +17,7 @@
       <view class='menu'>
         <input class='add_menu_input' placeholder='输入套餐名'>
         </input>
-        <button class='add_menu' bindtap='onAddMenu' type='primary'>
+        <button class='add_menu' bindtap='onAddMenu' size='mini' type='primary'>
           添加
         </button>
       </view>      

@@ -42,9 +42,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    debugLog('globalData.userInfo', globalData.userInfo)
+    let userInfo = utils.getUserInfo(globalData)
+    debugLog('globalData.userInfo', userInfo);
+    this.setData({ userInfo: userInfo })
+    
     debugLog('this.data.userInfo', this.data.userInfo)
-    this.setData({userInfo: globalData.userInfo})
+    
     // debugLog('options', options)
     this.setData({
       userRole: options.userRole
@@ -122,7 +125,7 @@ Page({
     // Show form values
     let formValues = e.detail.value
     // debugLog('onRegister.formValue', formValues);
-    var userInfo = globalData[storeKeys.userInfo]
+    var userInfo = utils.getUserInfo(globalData)
     debugLog('userInfo', userInfo)
     formValues['userRole'] = that.data.userRole
     Object.assign(userInfo, formValues)
@@ -136,13 +139,17 @@ Page({
 
     let companyName = this.data.companiesPicker[this.data.selectCompanyIndex];
     let companyId = this.data.companiesPickerObj[companyName]._id
-    formValues['companyName'] = companyName
-    formValues['companyId'] = companyId
+
 
     this.vertifyCompany(companyName, formValues.companyVertify, res => {
       delete formValues['companyVertify']
       if (res.isVertified == true) {
         debugLog('openId', userInfo.openId)
+        formValues['companyName'] = res.vertifiedCompany.name
+        formValues['companyId'] = res.vertifiedCompany._id
+        formValues['userRole'] = res.userRole
+        Object.assign(userInfo, formValues)
+        utils.setUserInfo(userInfo, globalData)
         // create or update user
         userApi.queryUser({
           _id: userInfo.openId
@@ -150,10 +157,14 @@ Page({
           debugLog('queryUserResult', result)
           // If not found the user insert a new one.
           if (result.length <= 0) {
-            userInfo = globalData[storeKeys.userInfo]
+            userInfo = utils.getUserInfo(globalData);
+            userInfo['companyName'] = formValues['companyName']
+            userInfo['companyId'] = formValues['companyId']
+            userInfo['userRole'] = formValues['userRole']
             debugLog('create a new user', userInfo)
             userApi.createUser(userInfo, result => {
               debugLog('insertResult', result)
+              utils.setUserInfo(userInfo, globalData)
               wx.switchTab({
                 url: '../menuList/menuList'
               })
@@ -162,6 +173,7 @@ Page({
             userInfo = result[0]
             // else updat the user info with login time
             // debugLog('else updat the user info with login time','')
+            debugLog('updateUser', formValues)
             userApi.updateUser(userInfo._id,
               formValues,
               result => {
@@ -241,7 +253,7 @@ Page({
 
   vertifyCompany: function(companyName, vertifyCode, callback){
     let that = this
-    let companyId = this.data.companiesPickerObj[companyName]._id
+    // let companyId = this.data.companiesPickerObj[companyName]._id
     // debugLog('companyName', companyName)
     // debugLog('vertifyCode', vertifyCode)
     // debugLog('companyId', companyId)
@@ -249,14 +261,15 @@ Page({
     wx.cloud.callFunction({
       name: 'companyVertify',
       data: {
-        companyId: companyId,
+        // companyId: companyId,
         vertifyCode: vertifyCode,
-        userRole: that.data.userRole
+        // userRole: that.data.userRole
       }
       ,success: res => {
         debugLog('companyVertify', res)
         that.setData({
-          isVertified: res.result.isVertified
+          isVertified: res.result.isVertified,
+          vertifiedCompany: res.result.vertifiedCompany
         })
         callback(res.result)
       }

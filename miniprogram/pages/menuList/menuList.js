@@ -39,12 +39,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let userInfo = utils.getUserInfo(globalData)
     this.setData({
-      userInfo: globalData.userInfo,
-      userRole: globalData.userInfo.userRole,
+      userInfo: userInfo,
+      userRole: userInfo.userRole,
     })
-    let companyId = globalData.userInfo.companyId;
-    let companyName = globalData.userInfo.companyName
+    let companyId = userInfo.companyId;
+    let companyName = userInfo.companyName
     if (companyName == gConst.ALL_COMPANIES){
       dbApi.query(TABLES.COMBO, {
       }, res => {
@@ -104,10 +105,19 @@ Page({
   onClickMenu: function(e){
     let comboId = e.target.dataset.comboId;
     debugLog('comboId', comboId);
-    if (comboId){
-      wx.navigateTo({
-        url: '../selectMealCombo/selectMealCombo?comboId=' + comboId,
-      })
+    if(this.data.userRole == USER_ROLE.ADMIN){
+      if (comboId) {
+        wx.navigateTo({
+          url: '../editMealCombo/editMealCombo?comboId=' + comboId,
+        })
+      }
+    }else{
+      if (comboId) {
+        wx.navigateTo({
+          url: '../selectMealCombo/selectMealCombo?comboId=' + comboId,
+        })
+      }
     }
+
   }
 })

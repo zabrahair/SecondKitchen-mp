@@ -94,6 +94,7 @@
 
   width: 15vh;
   height: 15vh; 
+  border: 1px solid darkgrey; 
 }
 
 .dish_info {
@@ -103,19 +104,20 @@
   justify-content: flex-start;
   align-items: flex-start;   
 
+  padding-top: 0vh;
   width: 27vw;
-  height: 15vh;
+  height: 12vh;
 }
 
 .operators {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-end; 
 
   width: 20vw;
-  height: 13vh;
+  height: 15vh;
   margin-left: 0vw;
 }
 
@@ -159,9 +161,9 @@
   justify-content:center;
   align-items: center;
   
-  width: 15vw;
-  height: 4vh;
-  font-size: 1vw;
+  /* width: 15vw; */
+  /* height: 5vh;  */
+  /* font-size: 1px; */
   border: 1px solid grey;
 
 }

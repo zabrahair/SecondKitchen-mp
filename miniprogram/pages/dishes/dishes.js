@@ -4,15 +4,14 @@ const globalData = app.globalData
 
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
-const dishes = require('../../mockupData/dish.js').dishes;
-const apiDish = require('../../api/dish.js')
+const dishApi = require('../../api/dish.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dishes: dishes,
+    dishes: null,
   },
 
   /**
@@ -20,7 +19,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    apiDish.queryDishes({}, result=>{
+    dishApi.queryDishes({}, result=>{
       debugLog('Dish Page onLoad', JSON.stringify(result), 2);
       that.setData({
         dishes: result

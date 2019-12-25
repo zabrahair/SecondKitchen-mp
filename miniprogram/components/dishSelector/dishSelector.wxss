@@ -1,0 +1,163 @@
+/* components/dishSelector/dishSelector.wxss */
+/* pages/dishes/dishes.wxss */
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(100,100,100,0.5);
+  z-index: 10;
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;  
+
+  margin-top: 5vh;
+  width: 90vw;
+  height: 7vh;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  box-shadow: 1vw 1vw 1vw grey;
+  background-color: #46bf66;
+
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 90vw;
+  height: 72vh;
+
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+  box-shadow: 1vw 1vw 1vw grey;
+  background-color: whitesmoke;
+}
+
+.dishes_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 90vw;
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.dish {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  align-items: center;
+
+  width: 85vw;
+  height: 20vh; 
+  margin-left: 1vw;
+  padding-left: 1vw;
+  margin-right: 1vw;
+  border-bottom: 1px solid gray;  
+
+  font-size: 4vw;
+
+}
+
+.dish_image {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 15vh;
+  height: 15vh; 
+  margin-left: 2vw;
+  border: 1px solid darkgrey; 
+}
+
+.dish_info {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;   
+
+  margin-left: 2vw;
+  padding-top: 0vh;
+  width: 50vw;
+  height: 12vh;
+}
+
+.operators {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end; 
+
+  width: 20vw;
+  height: 15vh;
+  margin-left: 0vw;
+}
+
+.dish_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.dish_catalog {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.dish_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.close_button {
+  position: absolute;
+
+  bottom: 5vh;
+  width: 10vw;
+  height: 10vw;
+}
+
+
+
+
+
+
+

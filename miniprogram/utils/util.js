@@ -75,10 +75,29 @@ const pickerMaker = function(array, selectProperty){
   return res;
 }
 
+const getUserInfo = function(globalData){
+  let userInfo = {}
+  if (globalData.userInfo && globalData.userInfo != ''){
+    userInfo = globalData.userInfo;
+  }else{
+    userInfo = wx.getStorageSync('userInfo')
+  }
+
+  return userInfo
+}
+
+const setUserInfo = function (userInfo, globalData) {
+  globalData.userInfo = userInfo
+  wx.setStorageSync('userInfo', userInfo)
+  debugLog('setUserInfo', wx.getStorageSync('userInfo'))
+}
+
 module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
   resetStatus: resetStatus,
   cloneObj: cloneObj,
-  pickerMaker: pickerMaker
+  pickerMaker: pickerMaker,
+  getUserInfo: getUserInfo,
+  setUserInfo: setUserInfo,
 }

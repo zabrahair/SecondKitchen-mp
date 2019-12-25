@@ -20,33 +20,46 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   console.log('event', JSON.stringify(event, null, 4))
   let result = null;
-  if (event.userRole == USER_ROLE.NORMAL){
+  let userRole = ''
+  let vertifiedCompany = null
+  try {
     // Normal User Vertify
     console.log('Normal User Vertify')
     result = await db.collection(COMPANY_TABLE).where({
-      _id: event.companyId,
+      // _id: event.companyId,
       userVertify: event.vertifyCode
     }).get()
-  } else if (event.userRole == USER_ROLE.ADMIN 
-    || event.userRole == USER_ROLE.COMPANY 
-    || event.userRole == USER_ROLE.RESTAURANT){
-    // Company User Vertify
-    console.log('Company User Vertify')
-    result = await db.collection(COMPANY_TABLE).where({
-      _id: event.companyId,
-      companyVertify: event.vertifyCode
-    }).get()
+
+    if (result && result.data && result.data.length && result.data.length > 0){
+      userRole = 'NORMAL'
+      vertifiedCompany = result.data[0]
+
+    }else{
+      // Company User Vertify
+      console.log('Company User Vertify')
+      result = await db.collection(COMPANY_TABLE).where({
+        // _id: event.companyId,
+        companyVertify: event.vertifyCode
+      }).get()
+      if (result && result.data && result.data.length && result.data.length > 0){
+        userRole = result.data[0].type
+        vertifiedCompany = result.data[0]
+      }
+    }
+
     
-  }
-  try{
     console.log('result', JSON.stringify(result, null, 4))
     if(result && result.data && result.data.length && result.data.length > 0){
       return {
-        isVertified: true
+        isVertified: true,
+        userRole: userRole,
+        vertifiedCompany: vertifiedCompany
       }
     }else{
       return {
-        isVertified: false
+        isVertified: false,
+        userRole: '',
+        vertifiedCompany: ''
       }
     }
 

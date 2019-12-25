@@ -4,22 +4,25 @@
     用户注册
   </view>
   <form class="input_area"  bindsubmit="onRegister" bindreset="formReset">
-    <picker class="company_picker" bindchange="onCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
-        <view class="picker">
-          选择企业：{{companiesPicker[selectCompanyIndex]}}
-        </view>
-    </picker>
+    <!-- <view class="field">
+      <picker class="company_picker" bindchange="onCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
+          <view class="picker">
+            选择企业：{{companiesPicker[selectCompanyIndex]}}
+          </view>
+      </picker>
+    </view> -->
     <view class="field company_name">
-      <input name="companyVertify" placeholder="输入验证码" placeholder-class="field_placeholder"/>
+      <input class='input' name="companyVertify" placeholder="输入验证码" placeholder-class="field_placeholder"/>
     </view>
     <view class="field contact_name">
-      <input name="contactName" class='{{isValueCorrect}}' placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>
+      <input name="contactName" class='input {{isValueCorrect}}' placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>
     </view>
-    <view class="field contact_mobile">
-      <input name="contactMobile" placeholder="输入联系人电话" placeholder-class="field_placeholder" value="{{phoneNumber}}"/>
+    <view class="mobile_field">
+      <view class="btn_auth" ><button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type='primary' size='mini'>获取手机</button></view>
+      
+      <input name="contactMobile" class='contact_mobile' placeholder="输入联系人电话" placeholder-class="mobile_placeholder" value="{{phoneNumber}}"/>
     </view>
     <view class="field register">
-      <button class="btn_auth" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type='primary'>获取手机</button>
       <button class="btn_register" formType="submit" type="primary">注册</button>
     </view>
   </form>

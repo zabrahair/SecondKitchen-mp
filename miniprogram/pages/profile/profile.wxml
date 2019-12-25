@@ -27,22 +27,17 @@
       </view>
       <view class="feature" 
       bindtap="onClickStatistic"
-      style="display: {{userRole == USER_ROLE.NORMAL? 'none': 'flex'}};">
+      style="display: {{userRole == USER_ROLE.ADMIN || userRole == userRole == USER_ROLE.COMPANY || userRole == USER_ROLE.RESTAURANT? 'flex': 'none'}};">
         <view class='left' >统计订餐</view>
         <view class='right'>></view>
       </view>         
       <view class="feature" 
-      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
+      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};" bindtap="onClickMenuEdit">
         <view class='left'>查看订餐公司</view>
         <view class='right'>></view>
-      </view>
+      </view>               
       <view class="feature" 
-      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
-        <view class='left'>查看店铺</view>
-        <view class='right'>></view>
-      </view>                
-      <view class="feature" 
-      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};">
+      style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};" bindtap="onClickDishEdit">
         <view class='left'>编辑菜品库</view>
         <view class='right'>></view>
       </view>      

@@ -48,7 +48,7 @@ Page({
       // If not found the user insert a new one.
       if (result.length <= 0) {
         wx.navigateTo({
-          url: '../firstLogin/firstLogin'
+          url: '../register/register'
         })
       } else {
         userInfo = result[0]
@@ -81,9 +81,16 @@ Page({
     this.login()
   },
 
+  /**
+   * 
+   */
   login: function(){
     let that = this
-    let userInfo = {}
+    let userInfo = utils.getUserInfo(globalData)
+    this.setData({
+      userInfo: userInfo,
+      avatarUrl: userInfo.avatarUrl
+    })
     wx.getSetting({
       success: res => {
         debugLog('getSetting', res)
@@ -122,13 +129,14 @@ Page({
                     if (result.length > 0) {
                       debugLog('1')
                       app.globalData.userInfo = result[0]
+                      wx.setStorageSync('userInfo', result[0])
                       debugLog('2')
                       that.setData({
                         userInfo: result[0]
                       })
                     } else {
                       globalData.userInfo = userInfo
-
+                      wx.setStorageSync('userInfo', userInfo)
                       that.setData({
                         userInfo: userInfo
                       })

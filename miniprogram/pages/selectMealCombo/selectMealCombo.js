@@ -46,6 +46,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
     debugLog('options', options)
     let comboId = options.comboId
     let userInfo = globalData.userInfo
@@ -71,7 +72,7 @@ Page({
         orderObj.price = combo.price
         orderObj.shipDate = defaultShipDate.getTime()
         orderObj.shipDateString = utils.formatDate(new Date(defaultShipDate))
-        this.setData({
+        that.setData({
           combo: combo,
           orderObj: orderObj
         })

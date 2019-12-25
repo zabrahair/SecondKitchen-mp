@@ -81,7 +81,7 @@
   align-items: center;
   
   width: 20vw;
-  height: 4vh;
+  height: 6vh;
 }
 
 .next_page {

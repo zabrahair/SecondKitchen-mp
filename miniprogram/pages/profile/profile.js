@@ -33,7 +33,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      userInfo: utils.getUserInfo(globalData),
+      userRole: utils.getUserInfo(globalData).userRole,
+    })
   },
 
   /**
@@ -47,10 +50,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      userInfo: globalData.userInfo,
-      userRole: globalData.userInfo.userRole,
-    })
+
   },
 
   /**
@@ -92,10 +92,9 @@ Page({
    * 
    */
   onChangeProfile: function(e){
-    let userInfo = globalData.userInfo
-    let userRole = userInfo.userRole
+
     wx.navigateTo({
-      url: '../../pages/register/register?userRole=' + userRole,
+      url: '../../pages/register/register',
     })
   },
 
@@ -103,10 +102,23 @@ Page({
    * 跳转到统计页面
    */
   onClickStatistic: function(e) {
-    let userInfo = globalData.userInfo
-    let userRole = userInfo.userRole
+
     wx.navigateTo({
       url: '../../pages/statistics/statistics',
+    })
+  },
+
+  onClickDishEdit: function(e){
+
+    wx.navigateTo({
+      url: '../../pages/dishes/dishes',
+    })    
+  },
+
+  onClickMenuEdit: function (e) {
+
+    wx.navigateTo({
+      url: '../../pages/menuList/menuList',
     })
   }
 })

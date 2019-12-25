@@ -1,0 +1,32 @@
+<!--components/dishSelector/dishSelector.wxml-->
+<view class='container' hidden='{{!isShown}}'>
+  <view class='header'>
+    <view class='company_name'>
+      选择菜品
+    </view>
+  </view>
+  <view class='content'>
+    <scroll-view class='dishes_list' scroll-y='true'>
+      <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish' wx:for-index='optionIdx' bindtap='onTapDish' data-option-idx='{{optionIdx}}'>
+        <image class="dish_image" mode='aspectFill' src="{{dish.imageUrl}}">
+        </image>      
+        <view class='dish_info'>
+          <view class='dish_name'>
+            菜名：{{dish.name}}
+          </view>
+          <view class='dish_price'>
+            价格：{{dish.price}} 元
+          </view>     
+        </view>
+        <view class='operators'>           
+              
+        </view> 
+      </view>    
+    </scroll-view>
+  </view>
+  <image src='../../images/close.png' class='close_button' bindtap="onClose">
+  </image>
+</view>
+
+
+

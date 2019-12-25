@@ -55,7 +55,7 @@
   height: 8vh;   
 }
 
-.field input{
+.field .input {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -70,6 +70,57 @@
   
 }
 
+.company_picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 80vw;
+  height: 6vh;  
+  border: 1px solid black;
+  border-radius: 2vw;
+  padding-left: 5vw;
+}
+
+.mobile_field {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100vw;
+  height: 8vh;  
+  margin-left: 0vw;  
+}
+
+.btn_auth {
+  width: 24.8vw;
+  height: 6vh;
+  margin-left: 7vw;
+  border: 1px solid #46bf66;
+  background-color: #46bf66;
+  border-top-left-radius: 2vw;
+  border-bottom-left-radius: 2vw;
+}
+
+.contact_mobile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 60vw;
+  height: 6vh;  
+  border: 1px solid black;
+  border-top-right-radius: 2vw;
+  border-bottom-right-radius: 2vw;
+  padding-left: 0vw;
+}
+
 .field .field_placeholder {
   display: flex;
   flex-direction: row;
@@ -77,7 +128,18 @@
   justify-content: flex-start;
   align-items: center;
 
-  padding-left: 10vw;
+  padding-left: 1vw;
+  color: grey;
+}
+
+.mobile_placeholder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 1vw;
   color: grey;
 }
 
@@ -113,19 +175,6 @@
 
   width: 40vw;
   height: 6vh;  
-}
-
-.company_picker {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-
-  width: 48vw;
-  height: 5vh; 
-
-  border-bottom: 1px solid black;
 }
 
 .value_correct {

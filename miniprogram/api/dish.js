@@ -8,7 +8,7 @@ const queryDishes = function(filters, callback){
   db.collection(TABLES.DISH).where(filters).get({
     success: res => {
       let result = res.data;
-      debugLog('dishes', result, 4);
+      // debugLog('dishes', result, 4);
       callback(result)
     },
     fail: err => {

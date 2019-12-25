@@ -2,16 +2,26 @@
 <view class="container">
   <view class="header">
     <view class="combo_title">
-      <input class='combo_title_input' placeholder="{{combo.name}}" placeholder-class='combo_title_placeholder'/>
+      <input class='combo_title_input' 
+      placeholder="{{combo.name}}" 
+      placeholder-class='combo_title_placeholder' 
+      value='{{combo.name}}' bindblur='onTitleChange'/>
     </view>
   </view>
-  <view class="combo_options">
-    <view class="dish" wx:for-items="{{combo.dishs}}" wx:key="id" wx:for-item='dish'>
+  <scroll-view class="combo_dishes" scroll-y='true'>
+    <view class="dish" 
+      wx:for-items="{{combo.dishes}}" 
+      wx:key="id" wx:for-item='dish'
+      wx:for-index="dishIdx"
+      >
       <view class="dish_title">
         {{dish.name}}
       </view>      
-      <view class="options" bindchange="radioChange" bindtap="onClickAddOptioin" dish-id='{{dish.id}}'>
-        <view class='add_option'>
+      <view class="options">
+        <view class='add_option' 
+          bindtap="onClickAddOption" 
+          data-dish-idx='{{dishIdx}}'
+          data-dish-en-name='{{dish.enName}}'>
           <view class="dish_image">
             +
           </view>
@@ -19,30 +29,46 @@
             添加
           </view>
         </view>
-        <view class="dish_option dish_{{item.id}}" 
-              wx:for-items="{{dish.options}}" wx:key="id" wx:for-item='option' 
-              value="{{item.id}}" checked="{{item.isSelect}}">
-          <image class="dish_image" src="{{option.image_url}}">
-            <view class='dish_delete' bindtap='onRemoveOption' dish-option-id='{{item.id}}'>
-              删除
+        <scroll-view class='options_group' scroll-x='true'>
+          <view class='options_group'>
+            <view class="dish_option dish_{{option.enName}}" 
+                  wx:for-items="{{dish.options}}" 
+                  wx:key="id" wx:for-item='option' wx:for-index="optionIdx"
+                  value="{{option._id}}" checked="{{option._isSelect}}">
+              <image class="dish_image" src="{{option.imageUrl}}"                            bindtap='onRemoveOption' 
+                data-dish-idx='{{dishIdx}}'
+                data-option-idx='{{optionIdx}}'
+                >
+                <view class='dish_delete'>
+                  删除
+                </view>
+              </image>
+              <view class="dish_capital">
+                {{option.name}}
+              </view>
             </view>
-          </image>
-          <view class="dish_capital">
-            {{option.name}}
           </view>
-        </view>
+        </scroll-view>
       </view> 
     </view>
-  </view>
+  </scroll-view>
   <view class="order_summary">
     <view class="total_price">
-      <view class="capital">
+      <view class="title">
         合计 ￥
       </view>
-      <input class="price" placeholder="套餐价格" placeholder-class='price-placeholder'/>
+      <input class="price" placeholder="套餐价格" placeholder-class='price-placeholder' value='{{combo.price}}' bindblur='onPriceChange'/>
     </view>
     <view class="send_order">
-      <button bindtap="sendOrder" class="btn_send_order" type="primary" size='10px'>保存</button>
+      <button bindtap="onSaveCombo" class="btn_send_order" type="primary" size='10px'>保存</button>
     </view>
   </view>
 </view>
+<dish-selector 
+  class='dish_selector' 
+  bindclose='closeDishSelector'
+  bindtapNewDishOption='addNewOption'
+  isShown="{{isShownDishSelector}}"
+  dishEnName="{{curDishEnName}}"
+  dishIdx="{{curDishIdx}}">
+</dish-selector>

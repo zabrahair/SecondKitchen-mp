@@ -86,10 +86,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "pages/editMealCombo/editMealCombo",
 					"pathName": "pages/editMealCombo/editMealCombo",
-					"query": "",
+					"query": "comboId=463ebf46-6387-4348-a834-a21eb0b45a0c",
 					"scene": null
 				},
 				{
@@ -152,7 +152,7 @@
 					"id": 14,
 					"name": "pages/register/register",
 					"pathName": "pages/register/register",
-					"query": "userRole=COMPANY",
+					"query": "",
 					"scene": null
 				},
 				{

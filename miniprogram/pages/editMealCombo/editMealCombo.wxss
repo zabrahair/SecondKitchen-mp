@@ -10,6 +10,7 @@
   width: 100vw;
   height: 100vh;  
 
+  z-index: 0;
 }
 
 .header {
@@ -27,7 +28,7 @@
   background-size: 100vw 30vh;
 }
 
-.combo_options {
+.combo_dishes {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -36,7 +37,7 @@
 
   width: 100vw;
   height: 80vh;    
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   
 }
 
@@ -81,6 +82,7 @@
   border: 1px solid grey;
   width: 60vw;
   height: 7vh;
+  padding-left: 3vw;
 }
 
 .combo_title_placeholder {
@@ -127,7 +129,7 @@
   height: 30vh;
 
   border-bottom: 1px solid grey;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 
 
@@ -143,6 +145,17 @@
   margin-left: 2vw;
   margin-right: 4vw;
 
+}
+
+.options_group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 70vw;
+  height: 30vh;
 }
 
 .dish_option {
@@ -239,6 +252,7 @@
   justify-content: flex-start;
   align-items: center;
 
+  width: 15vw;
   margin-left: 3vw;
 }
 
@@ -252,12 +266,13 @@
   margin-left: 1vw;
   font-size: 4vw;
   border: 1px solid darkgray;
-  width: 32vw;
+  width: 25vw;
   height: 6vh;
+  padding-left: 3vw;
 }
 
 .total_price .price-placeholder {
-  margin-left: 3vw;
+  padding-left: 0vw;
 }
 
 .send_order {
@@ -285,3 +300,8 @@
   font-size: 5vw;
 }
 
+.dish_selector {
+  position: absolute;
+  top: 0vh;
+  left: 0vw;
+}

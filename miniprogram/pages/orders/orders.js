@@ -41,7 +41,7 @@ Page({
    * 刷新订单内容
    */
   refreshOrders: function(){
-    let userInfo = globalData.userInfo
+    let userInfo = utils.getUserInfo(globalData)
     dbApi.query(TABLES.ORDER,
       {
         userId: userInfo._id ? userInfo._id : userInfo.openId,
