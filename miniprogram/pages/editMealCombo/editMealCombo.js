@@ -14,6 +14,34 @@ const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 const orderApi = require('../../api/order.js')
 
+const NEW_COMBO = {
+  name: '',
+  price: '',
+  companyId: '',
+  companyName: '',
+  menuId: '',
+  dishes: [{
+    name: '大荤',
+    enName: 'meat',
+    price: 15,
+    options: new Array()
+  },
+  {
+    name: '小荤',
+    enName: 'meat-vege-1',
+    price: 9,
+    options: new Array()
+  },
+  {
+    name: '小荤',
+    enName: 'meat-vege-2',
+    price: 9,
+    options: new Array()
+  }],
+  menuId: '',
+}
+
+
 Page({
 
   /**
@@ -26,6 +54,7 @@ Page({
     isShownDishSelector: false,
     curDishEnName: '',
     curDishIdx: '',
+    operation: gConst.OPERATION.UPDATE
   },
 
   /**
@@ -34,23 +63,34 @@ Page({
   onLoad: function (options) {
     let that = this
     let comboId = options.comboId
-    let userInfo = utils.getUserInfo(globalData)
-    this.setData({
-      comboId: comboId,
-      userInfo: userInfo
-    })
-    // // debugLog('editMealCombo', this.data)
 
-    dbApi.query(
-      TABLES.COMBO
-      , { _id: comboId }
-      , res => {
-        let combo = res[0]
-        // // debugLog('dbApi.query', combo)
-        that.setData({
-          combo: combo,
-        })
+    if(comboId != undefined && comboId != ''){
+      // update combo
+      let userInfo = utils.getUserInfo(globalData)
+      this.setData({
+        comboId: comboId,
+        userInfo: userInfo
       })
+      // // debugLog('editMealCombo', this.data)
+
+      dbApi.query(
+        TABLES.COMBO
+        , { _id: comboId }
+        , res => {
+          let combo = res[0]
+          // // debugLog('dbApi.query', combo)
+          that.setData({
+            combo: combo,
+          })
+        })
+    } else{
+      // create new combo
+      that.setData({
+        combo: NEW_COMBO,
+        operation: gConst.OPERATION.INSERT
+      })
+    }
+
   },
 
   /**
@@ -169,25 +209,58 @@ Page({
     let comboId = this.data.comboId
     let combo = this.data.combo
     delete combo._id
-    wx.cloud.callFunction({
-      name: 'updateCombo',
-      data: {
-        comboId: comboId,
-        combo: combo
-      },
-      success: res => {
-        // debugLog('updateCombo.success.res', res)
-        wx.showToast({
-          title: '套餐更新成功',
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          title: '套餐更新失败',
-        })
-        console.error('[云函数] [sum] 调用失败：', err)
-      }
-    })
+
+    if(this.data.operation == gConst.OPERATION.UPDATE){
+      wx.cloud.callFunction({
+        name: 'updateCombo',
+        data: {
+          comboId: comboId,
+          combo: combo
+        },
+        success: res => {
+          // debugLog('updateCombo.success.res', res)
+          wx.showToast({
+            title: '套餐更新成功',
+            duration: 1500,
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '套餐更新失败',
+            duration: 1500,
+          })
+          console.error('[云函数]调用失败：', err)
+        }
+      })
+    }else if(this.data.operation == gConst.OPERATION.INSERT){
+      wx.cloud.callFunction({
+        name: 'createCombo',
+        data: {
+          combo: combo
+        },
+        success: res => {
+          debugLog('createCombo.success.res', res)
+          wx.showToast({
+            title: '套餐插入成功',
+            duration: 1500,
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '套餐插入失败',
+            duration: 1500,
+          })
+          console.error('[云函数] 调用失败：', err)
+        }
+      })
+    }
+
   },
   /**
    * 套餐名称发生变化
@@ -202,6 +275,35 @@ Page({
     }) 
 
 
+  },
+  
+  /**
+   * 删除当前Combno
+   */
+  onDeleteCombo: function(e){
+    let that = this
+    wx.cloud.callFunction({
+      name: 'removeCombo',
+      data: {
+        comboId: that.data.comboId
+      },
+      success: res => {
+        debugLog('removeCombo.success.res', res)
+        wx.showToast({
+          title: '套餐删除成功',
+          duration: 1500,
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '套餐删除失败',
+        })
+        console.error('[云函数] 调用失败：', err)
+      }
+    })
   },
 
   /**

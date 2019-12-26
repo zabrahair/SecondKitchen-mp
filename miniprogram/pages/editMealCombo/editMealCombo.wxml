@@ -59,8 +59,9 @@
       </view>
       <input class="price" placeholder="套餐价格" placeholder-class='price-placeholder' value='{{combo.price}}' bindblur='onPriceChange'/>
     </view>
-    <view class="send_order">
-      <button bindtap="onSaveCombo" class="btn_send_order" type="primary" size='10px'>保存</button>
+    <view class="operators">
+      <button bindtap="onDeleteCombo" class="btn_delete_combo" type="warn" size='mini'> 删除 </button>
+      <button bindtap="onSaveCombo" class="btn_save_combo" type="primary" size='mini'> 保存 </button>
     </view>
   </view>
 </view>

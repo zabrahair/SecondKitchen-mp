@@ -26,6 +26,12 @@ const valueCSS = {
   INCORRECT: 'value_incorrect'
 }
 
+const OPERATION = {
+  INSERT: 'INSERT',
+  UPDATE: 'UPDATE',
+  SELECT: 'SELECT',
+}
+
 module.exports = {
   UNSELECT: UNSELECT,
   SELECTED: SELECTED,
@@ -36,4 +42,5 @@ module.exports = {
   orderStatus: orderStatus,
   ALL_COMPANIES: '所有企业',
   valueCSS: valueCSS,
+  OPERATION: OPERATION
 }

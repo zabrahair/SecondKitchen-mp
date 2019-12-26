@@ -13,14 +13,10 @@ const COMBO_TABLE = 'combo'
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   let id = event.comboId
-  let combo = event.combo
-  console.log('event', JSON.stringify(event,null,4))
+  console.log('event', JSON.stringify(event, null, 4))
   try {
-    let result = await db.collection(COMBO_TABLE).doc(id).update({
-      // data 传入需要局部更新的数据
-      data: combo
-    })
-    console.log('updateComboResult:', JSON.stringify(result, null, 4))
+    let result = await db.collection(COMBO_TABLE).doc(id).remove()
+    console.log('removeComboResult:', JSON.stringify(result, null, 4))
     return result;
   } catch (e) {
     console.error(e)

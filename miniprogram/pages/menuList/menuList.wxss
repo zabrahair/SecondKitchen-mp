@@ -34,7 +34,7 @@
   align-items: center;  
 
   width: 100vw;
-  height: 70vh;
+  height: 60vh;
 }
 
 .menus_list {
@@ -45,7 +45,7 @@
   align-items: center;  
 
   width: 100vw;
-  height: 70vh;
+  height: 60vh;
   overflow-y: scroll;
 }
 
@@ -65,13 +65,6 @@
   border-bottom: 1px solid gray;   
 }
 
-.add_menu_input {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content:flex-start;
-  align-items: center;
-}
 
 .add_menu {
   display: flex;
@@ -80,7 +73,18 @@
   justify-content:center;
   align-items: center;
   
-  width: 20vw;
+  width: 100vw;
+  height: 10vh;
+}
+
+.add_menu_button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:center;
+  align-items: center;
+  
+  width: 50vw;
   height: 6vh;
 }
 

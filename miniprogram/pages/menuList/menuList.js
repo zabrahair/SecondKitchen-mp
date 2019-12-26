@@ -19,13 +19,22 @@ Page({
    */
   data: {
     combos: null,
+    userRole: USER_ROLE,
+    userInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this
+    let userInfo = utils.getUserInfo(globalData)
+    if(userInfo){
+      that.setData({
+        userInfo: userInfo,
+        userRole: userInfo.userRole,
+      })
+    }
   },
 
   /**
@@ -118,6 +127,14 @@ Page({
         })
       }
     }
+  },
 
+  /**
+   * 添加新的菜单
+   */
+  onAddMenu: function(e){
+    wx.navigateTo({
+      url: '../../pages/editMealCombo/editMealCombo',
+    })
   }
 })
