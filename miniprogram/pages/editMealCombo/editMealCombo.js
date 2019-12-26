@@ -146,7 +146,7 @@ Page({
    * 关闭DishSelector
    */
   closeDishSelector: function(e){
-    // // debugLog('closeDishSelector.event', e)
+    // debugLog('closeDishSelector.event', e)
     this.setData({
       isShownDishSelector: false
     })
@@ -168,7 +168,6 @@ Page({
       combo: combo,
       isShownDishSelector: false,
     })
-
   },
 
   /**

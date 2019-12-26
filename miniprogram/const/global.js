@@ -30,6 +30,7 @@ const OPERATION = {
   INSERT: 'INSERT',
   UPDATE: 'UPDATE',
   SELECT: 'SELECT',
+  DELETE: 'DELETE'
 }
 
 module.exports = {

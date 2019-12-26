@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "dish-editor": "../../components/dishEditor/dishEditor"
+  },
   "navigationBarTitleText": "菜品清单"
 }

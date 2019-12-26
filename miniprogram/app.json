@@ -29,7 +29,8 @@
     "pages/statistics/statistics",
     "pages/userManage/userManage",
     "pages/testComponent/testComponent",
-    "pages/firstLogin/firstLogin"
+    "pages/firstLogin/firstLogin",
+    "components/dishEditor/dishEditor"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

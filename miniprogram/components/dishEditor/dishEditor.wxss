@@ -45,60 +45,50 @@
   background-color: whitesmoke;
 }
 
-.dishes_list {
+.dish_editor {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  align-items: center;  
+  align-items: center;   
 
-  width: 90vw;
-  height: 70vh;
-  overflow-y: scroll;
+  margin-left: 2vw;
+  padding-top: 1vh;
+  width: 80vw;
+  height: 60vh;
 }
 
-.dish {
+.add_dish_image {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
-  justify-content:space-between;
+  justify-content: center;
   align-items: center;
 
-  width: 85vw;
-  height: 20vh; 
-  margin-left: 1vw;
-  padding-left: 1vw;
-  margin-right: 1vw;
-  border-bottom: 1px solid gray;  
+  width: 20vh;
+  height: 20vh;
 
-  font-size: 4vw;
-
+  color: darkgrey;
+  border: 1px solid darkgrey; 
+  font-size: 10vw;
+  position: relative; 
 }
 
-.dish_image {
+.add_dish_input {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-end; 
-
-  width: 15vh;
-  height: 15vh; 
-  margin-left: 2vw;
-  border: 1px solid darkgrey; 
+  justify-content:flex-start;
+  align-items: center;
+  
+  margin-top: 1vh;
+  border: 1px solid gainsboro;
+  width: 80vw;
+  height: 7vh;
 }
 
-.dish_info {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;   
-
-  margin-left: 2vw;
-  padding-top: 0vh;
-  width: 50vw;
-  height: 12vh;
+.add_dish_input_ph {
+  padding-left: 2vw;
 }
 
 .operators {
@@ -113,39 +103,6 @@
   margin-left: 0vw;
 }
 
-.dish_name {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-end; 
-
-  width: 40vw;
-  height: 5vh; 
-}
-
-.dish_catalog {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-end; 
-
-  width: 40vw;
-  height: 5vh; 
-}
-
-.dish_price {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-end; 
-
-  width: 40vw;
-  height: 5vh; 
-}
-
 .close_button {
   position: absolute;
 
@@ -153,10 +110,3 @@
   width: 10vw;
   height: 10vw;
 }
-
-
-
-
-
-
-

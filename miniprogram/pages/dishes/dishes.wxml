@@ -4,23 +4,7 @@
     <view class='company_name'>
     </view>
   </view>
-  <view class='content'>
-    <view class='dish'>
-      <view class="add_dish_image">
-        +
-      </view>    
-      <view class='dish_info'>
-        <input class='dish_name add_dish_input' placeholder='输入套餐名'>
-        </input>
-        <input class='dish_price add_dish_input' placeholder='输入价格'>
-        </input>  
-      </view>   
-      <view class='operators'>           
-        <button class='edit_dish' size='mini' bindtap='onAddDish' type='primary'>
-          添加
-        </button>
-      </view>
-    </view>  
+  <scroll-view class='content' scroll-y='true'> 
     <view class='dishes_list'>
       <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish'>
         <image class="dish_image" mode='aspectFill' src="{{dish.imageUrl}}">
@@ -34,15 +18,26 @@
           </view>     
         </view>
         <view class='operators'>           
-          <button class='edit_dish' size='mini' bindtap='onDeleteDish' type='warn' data-dish-id='dish._id' lang='zh_CN'>
-            删除
-          </button>
           <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='dish._id' lang='zh_CN'>
             编辑
           </button>               
         </view> 
       </view>    
     </view>
-  </view>
+  </scroll-view>
+  <view class='operators' style='width: 100vw;'>           
+  <button class='edit_dish' size='default' bindtap='onAddDish' type='primary'>
+    添加
+  </button>
+</view> 
 </view>
-
+<dish-editor
+  class='dish_editor' 
+  bindclose='closeDishEditor'
+  bindtapUpdateDish='onDishUpdate'
+  bindtapCreateDish='onDishCreate'
+  bindtapRemoveDish='onDishRemove'
+  isShown="{{isShownDishEditor}}"
+  operatorType="{{operatorType}}"
+  dishId="{{curDishId}}">
+</dish-editor>

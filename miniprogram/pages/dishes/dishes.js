@@ -2,9 +2,18 @@
 const app = getApp()
 const globalData = app.globalData
 
+const MSG = require('../../const/message.js')
 const debugLog = require('../../utils/log.js').debug;
 const errorLog = require('../../utils/log.js').error;
+const gConst = require('../../const/global.js');
+const storeKeys = require('../../const/global.js').storageKeys;
+const utils = require('../../utils/util.js');
+const TABLES = require('../../const/collections.js')
+
+const USER_ROLE = require('../../const/userRole.js')
+const dbApi = require('../../api/db.js')
 const dishApi = require('../../api/dish.js')
+
 Page({
 
   /**
@@ -12,6 +21,8 @@ Page({
    */
   data: {
     dishes: null,
+    isShownDishEditor: false,
+    operatorType: gConst.OPERATION.UPDATE
   },
 
   /**
@@ -74,5 +85,60 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * on click add dish button
+   */
+  onAddDish: function(e){
+    this.setData({
+      dishId: '',
+      isShownDishEditor: true,
+      operatorType: gConst.OPERATION.INSERT
+    })
+  },
+
+  /**
+   * on click edit dish button
+   */
+  onEditDish: function(e){
+    debugLog('onEditDish.e', e)
+    let dishId = e.currentTarget.dataset.dishId
+    this.setData({
+      curDishIdx: dishId,
+      isShownDishEditor: true,
+      operatorType: gConst.OPERATION.UPDATE
+    })
+  },
+
+  /**
+   * Update Dish
+   */
+  onDishUpdate: function(e){
+
+  },
+
+  /**
+ * Create Dish
+ */
+  onDishUpdate: function (e) {
+
+  },
+
+  /**
+   * Delete Dish
+   */
+  onDishRemove: function (e) {
+
+  },
+
+  /**
+   * Close Dish Editor
+   */
+  closeDishEditor: function (e) {
+    // debugLog('closeDishEditor.event', e)
+    this.setData({
+      isShownDishEditor: false
+    })
+  },
 })

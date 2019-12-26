@@ -1,0 +1,41 @@
+<!--components/dishSelector/dishSelector.wxml-->
+<view class='container' hidden='{{!isShown}}'>
+  <view class='header'>
+    <view class='company_name'>
+      编辑菜品
+    </view>
+  </view>
+  <view class='content'>
+    <view class='dish_editor'>
+      <view class="add_dish_image">
+        +
+      </view>    
+        <input class='dish_name add_dish_input' name='name' placeholder='输入菜名' placeholder-class="add_dish_input_ph">
+        </input>
+        <input class='dish_name add_dish_input' name='category'placeholder='输入分类' placeholder-class="add_dish_input_ph">
+        </input>
+        <input class='dish_price add_dish_input' name='price' placeholder='输入价格' placeholder-class="add_dish_input_ph">
+        </input>      
+    </view>
+    <view class='dish_operators'>
+      <view wx:if="{{operatorType == OPERATION.INSERT}}">  
+        <button class='edit_dish' size='default' bindtap='onAddDish' type='primary'>
+          添加
+        </button>
+      </view>
+      <view wx:if="{{operatorType == OPERATION.UPDATE}}">  
+        <button class='edit_dish' style='border: 1px solid red;' size='default' bindtap='onRemoveDish' type='warn'>
+          删除
+        </button>
+        <button class='edit_dish' size='default' bindtap='onUpdateDish' type='primary'>
+          保存
+        </button>
+      </view>
+    </view>
+  </view>
+  <image src='../../images/close.png' class='close_button' bindtap="onClose">
+  </image>
+</view>
+
+
+
