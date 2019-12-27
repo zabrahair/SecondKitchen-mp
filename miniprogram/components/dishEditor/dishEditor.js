@@ -13,6 +13,7 @@ const TABLES = require('../../const/collections.js')
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 const dishApi = require('../../api/dish.js')
+const DISH_PREFIX = 'dish_image_'
 
 Component({
   /**
@@ -38,7 +39,12 @@ Component({
    */
   data: {
     OPERATION: gConst.OPERATION,
-    dishes: {},
+    dish: {
+      name: '',
+      category: '',
+      imageUrl: '',
+      price: 0,
+    },
   },
 
   lifetimes: {
@@ -65,8 +71,8 @@ Component({
   },
 
   observers: {
-    'dishEnName, dishIdx': function (dishEnName, dishIdx) {
-      debugLog('observers.dishEnName', dishEnName)
+    'dishId': function (dishId) {
+      debugLog('observers.dishId', dishId)
     }
   },
 
@@ -101,7 +107,106 @@ Component({
     },
     tapDeleteDish: function (e) {
 
+    },
+    upLoadDishImage: function () {
+      let that = this
+      let dish = this.data.dish
+      if(dish.name != undefined && dish.name != ''){
+        // 选择图片
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['original'],
+          sourceType: ['album', 'camera'],
+          success: function (res) {
+            console.log('image:' + JSON.stringify(res, 4));
+            wx.showLoading({
+              title: '上传中',
+            })
+
+            const filePath = res.tempFilePaths[0]
+            const fileInfo = utils.extractFileInfo(filePath)
+            const cloudPath = DISH_PREFIX + dish.name + "_" + utils.formatDate(new Date(),'-') + fileInfo.extension
+            debugLog('cloudPath', cloudPath)
+            // 上传图片
+            wx.cloud.uploadFile({
+              cloudPath,
+              filePath,
+              success: res => {
+                debugLog('uploadFile', res)
+                wx.cloud.getTempFileURL({
+                  fileList: [res.fileID]
+                }).then(res => {
+                  // get temp file URL
+                  debugLog('upload http url', res)
+                  const dishImageUrl = res.fileList[0].tempFileURL
+                  dish.imageUrl = dishImageUrl
+                  debugLog('dishImageUrl', dishImageUrl)
+                  that.setData({
+                    dish: dish
+                  })
+                  debugLog('data.dish', that.data.dish)
+                }).catch(error => {
+                  // handle error
+                })
+
+            //     app.globalData.fileID = res.fileID
+            //     app.globalData.cloudPath = cloudPath
+            //     app.globalData.imagePath = filePath
+
+            //     wx.navigateTo({
+            //       url: '../storageConsole-demo/storageConsole'
+            //     })
+              },
+              fail: e => {
+            //     console.error('[上传文件] 失败：', e)
+            //     wx.showToast({
+            //       icon: 'none',
+            //       title: '上传失败',
+            //     })
+              },
+              complete: () => {
+                wx.hideLoading()
+              }
+            })
+            }
+            ,fail: e => {
+              console.error(e)
+            }
+        })
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: '请先输入单品信息',
+          duration: 1500,
+        })
+      }
+    },
+    onNameInputBlur: function(e){
+      debugLog('onNameInputBlur.e', e)
+      let dish = this.data.dish
+      dish.name = e.detail.value
+      this.setData({
+        dish: dish
+      })
+      debugLog('onNameInputBlur.NOW.DISH', this.data.dish)
+    },
+    onCategoryInputBlur: function(e){
+      debugLog('onCategoryInputBlur.e', e)
+      let dish = this.data.dish
+      dish.category = e.detail.value
+      this.setData({
+        dish: dish
+      })
+      debugLog('onCategoryInputBlur.NOW.DISH', this.data.dish)
+    },
+    onPriceInputBlur: function(e){
+      debugLog('onPriceInputBlur.e', e)
+      let dish = this.data.dish
+      dish.price = e.detail.value
+      this.setData({
+        dish: dish
+      })
+      debugLog('onPriceInputBlur.NOW.DISH', this.data.dish)
     }
   },
-
 })

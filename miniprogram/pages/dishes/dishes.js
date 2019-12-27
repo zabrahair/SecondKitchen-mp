@@ -31,7 +31,7 @@ Page({
   onLoad: function (options) {
     let that = this
     dishApi.queryDishes({}, result=>{
-      debugLog('Dish Page onLoad', JSON.stringify(result), 2);
+      // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
       that.setData({
         dishes: result
       })

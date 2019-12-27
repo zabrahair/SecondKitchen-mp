@@ -11,15 +11,14 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-const formatDate = date => {
+const formatDate = (date,seperator='/') => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/')
+  return [year, month, day].map(formatNumber).join(seperator)
 }
 
 const formatNumber = n => {
@@ -92,6 +91,35 @@ const setUserInfo = function (userInfo, globalData) {
   debugLog('setUserInfo', wx.getStorageSync('userInfo'))
 }
 
+const extractFileInfo = function(filePath){
+  debugLog('extractFileInfo.filePath', filePath)
+  let fileInfo = {
+    path: filePath,
+    directory: '',
+    filename: '',
+    fileMajorName: '',
+    fileExtension: ''
+  }
+  let regex = new RegExp("(.+/)(([^/]+)(\\.[^.]+))","gim")
+  let regexGroups = regex.exec(filePath)
+  debugLog('extractFileInfo.regexGroups', regexGroups)
+  if(regexGroups != undefined && regexGroups[1]){
+    fileInfo.directory = regexGroups[1]
+  }
+  if (regexGroups != undefined && regexGroups[2]) {
+    fileInfo.filename = regexGroups[2]
+  }
+  if (regexGroups != undefined && regexGroups[3]) {
+    fileInfo.majorName = regexGroups[3]
+  }
+  if (regexGroups != undefined && regexGroups[4]) {
+    fileInfo.extension = regexGroups[4]
+  }
+  debugLog('extractFileInfo.fileInfo', fileInfo)
+  return fileInfo
+  
+}
+
 module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
@@ -100,4 +128,5 @@ module.exports = {
   pickerMaker: pickerMaker,
   getUserInfo: getUserInfo,
   setUserInfo: setUserInfo,
+  extractFileInfo: extractFileInfo
 }

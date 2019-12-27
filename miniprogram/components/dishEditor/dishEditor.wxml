@@ -7,14 +7,14 @@
   </view>
   <view class='content'>
     <view class='dish_editor'>
-      <view class="add_dish_image">
+      <view class="add_dish_image" bindtap='upLoadDishImage'>
         +
       </view>    
-        <input class='dish_name add_dish_input' name='name' placeholder='输入菜名' placeholder-class="add_dish_input_ph">
+        <input class='dish_name add_dish_input' name='name' placeholder='输入菜名' placeholder-class="add_dish_input_ph" bindblur="onNameInputBlur">
         </input>
-        <input class='dish_name add_dish_input' name='category'placeholder='输入分类' placeholder-class="add_dish_input_ph">
+        <input class='dish_name add_dish_input' name='category'placeholder='输入分类' placeholder-class="add_dish_input_ph" bindblur="onCategoryInputBlur">
         </input>
-        <input class='dish_price add_dish_input' name='price' placeholder='输入价格' placeholder-class="add_dish_input_ph">
+        <input class='dish_price add_dish_input' name='price' placeholder='输入价格' placeholder-class="add_dish_input_ph" bindblur="onPriceInputBlur">
         </input>      
     </view>
     <view class='dish_operators'>

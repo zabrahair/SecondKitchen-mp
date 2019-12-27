@@ -85,6 +85,7 @@
   border: 1px solid gainsboro;
   width: 80vw;
   height: 7vh;
+  padding-left: 2vw;
 }
 
 .add_dish_input_ph {
