@@ -4,8 +4,8 @@
     <view class='company_name'>
     </view>
   </view>
-  <scroll-view class='content' scroll-y='true'> 
-    <view class='dishes_list'>
+  <view class='content' > 
+    <scroll-view view class='dishes_list' scroll-y='true'>
       <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish' wx:for-index='dishIdx'>
         <image class="dish_image" mode='aspectFill' src="{{dish.imageUrl}}">
         </image>      
@@ -23,8 +23,8 @@
           </button>               
         </view> 
       </view>    
-    </view>
-  </scroll-view>
+    </scroll-view>
+  </view>
   <view class='operators' style='width: 100vw;'>           
   <button class='edit_dish' size='default' bindtap='onAddDish' type='primary'>
     添加
