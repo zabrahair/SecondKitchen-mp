@@ -72,6 +72,8 @@
   border: 1px solid darkgrey; 
   font-size: 10vw;
   position: relative; 
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .add_dish_input {
@@ -94,13 +96,13 @@
 
 .operators {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-end; 
+  justify-content: space-evenly;
+  align-items: center; 
 
-  width: 20vw;
-  height: 15vh;
+  width: 90vw;
+  height: 30vh;
   margin-left: 0vw;
 }
 
@@ -110,4 +112,16 @@
   bottom: 5vh;
   width: 10vw;
   height: 10vw;
+}
+
+.edit_dish{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center; 
+
+  width:  30vw;
+  height: 5vh;
+  padding-top: 2vw;
 }

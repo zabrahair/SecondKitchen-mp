@@ -33,6 +33,13 @@ const OPERATION = {
   DELETE: 'DELETE'
 }
 
+const EMPTY_DISH = {
+  name: '',
+  category: '',
+  imageUrl: '',
+  price: null,
+}
+
 module.exports = {
   UNSELECT: UNSELECT,
   SELECTED: SELECTED,
@@ -43,5 +50,6 @@ module.exports = {
   orderStatus: orderStatus,
   ALL_COMPANIES: '所有企业',
   valueCSS: valueCSS,
-  OPERATION: OPERATION
+  OPERATION: OPERATION,
+  EMPTY_DISH: EMPTY_DISH
 }

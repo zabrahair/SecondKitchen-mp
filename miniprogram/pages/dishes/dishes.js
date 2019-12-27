@@ -22,22 +22,24 @@ Page({
   data: {
     dishes: null,
     isShownDishEditor: false,
-    operatorType: gConst.OPERATION.UPDATE
+    operatorType: gConst.OPERATION.UPDATE,
+    curDishId: '',
+    curDish: {},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this
-    dishApi.queryDishes({}, result=>{
-      // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
-      that.setData({
-        dishes: result
-      })
-    })
+    this.onShow();
   },
 
+  /**
+   * 刷新菜品列表
+   */
+  refreshDishes: function(){
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -49,7 +51,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let that = this
+    dishApi.queryDishes({}, result => {
+      debugLog('refresh dishes count', result.length);
+      that.setData({
+        dishes: result
+      })
+    })
   },
 
   /**
@@ -92,9 +100,10 @@ Page({
    */
   onAddDish: function(e){
     this.setData({
-      dishId: '',
+      curDishId: '',
       isShownDishEditor: true,
-      operatorType: gConst.OPERATION.INSERT
+      operatorType: gConst.OPERATION.INSERT,
+      curDish: gConst.EMPTY_DISH,
     })
   },
 
@@ -104,8 +113,11 @@ Page({
   onEditDish: function(e){
     debugLog('onEditDish.e', e)
     let dishId = e.currentTarget.dataset.dishId
+    let dishIdx = e.currentTarget.dataset.dishIdx
+    let curDish = this.data.dishes[dishIdx]
     this.setData({
-      curDishIdx: dishId,
+      curDishId: dishId,
+      curDish: curDish,
       isShownDishEditor: true,
       operatorType: gConst.OPERATION.UPDATE
     })
@@ -115,21 +127,33 @@ Page({
    * Update Dish
    */
   onDishUpdate: function(e){
-
+    debugLog('onDishUpdate', e)
+    this.onShow();
+    this.setData({
+      isShownDishEditor: false
+    })
   },
 
   /**
  * Create Dish
  */
-  onDishUpdate: function (e) {
-
+  onDishCreate: function (e) {
+    debugLog('onDishCreate', e)
+    this.onShow();
+    this.setData({
+      isShownDishEditor: false
+    })
   },
 
   /**
    * Delete Dish
    */
-  onDishRemove: function (e) {
-
+  onDishDelete: function (e) {
+    debugLog('onDishDelete', e)
+    this.onShow();
+    this.setData({
+      isShownDishEditor: false
+    })
   },
 
   /**

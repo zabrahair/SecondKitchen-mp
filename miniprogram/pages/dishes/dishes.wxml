@@ -6,7 +6,7 @@
   </view>
   <scroll-view class='content' scroll-y='true'> 
     <view class='dishes_list'>
-      <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish'>
+      <view class='dish' wx:for-items='{{dishes}}' wx:key="_id" wx:for-item='dish' wx:for-index='dishIdx'>
         <image class="dish_image" mode='aspectFill' src="{{dish.imageUrl}}">
         </image>      
         <view class='dish_info'>
@@ -18,7 +18,7 @@
           </view>     
         </view>
         <view class='operators'>           
-          <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='dish._id' lang='zh_CN'>
+          <button class='edit_dish' size='mini' bindtap='onEditDish' type='normal' data-dish-id='{{dish._id}}' data-dish-idx='{{dishIdx}}' lang='zh_CN'>
             编辑
           </button>               
         </view> 
@@ -34,10 +34,11 @@
 <dish-editor
   class='dish_editor' 
   bindclose='closeDishEditor'
-  bindtapUpdateDish='onDishUpdate'
-  bindtapCreateDish='onDishCreate'
-  bindtapRemoveDish='onDishRemove'
+  bindupdateDish='onDishUpdate'
+  bindcreateDish='onDishCreate'
+  binddeleteDish='onDishDelete'
   isShown="{{isShownDishEditor}}"
   operatorType="{{operatorType}}"
-  dishId="{{curDishId}}">
+  dishId="{{curDishId}}"
+  dish='{{curDish}}'>
 </dish-editor>

@@ -7,29 +7,39 @@
   </view>
   <view class='content'>
     <view class='dish_editor'>
-      <view class="add_dish_image" bindtap='upLoadDishImage'>
+      <view class="add_dish_image" style="background-image: url('{{dish.imageUrl}}')" bindtap='upLoadDishImage'>
         +
       </view>    
-        <input class='dish_name add_dish_input' name='name' placeholder='输入菜名' placeholder-class="add_dish_input_ph" bindblur="onNameInputBlur">
+        <input class='dish_name add_dish_input' name='name' 
+        placeholder='输入菜名' placeholder-class="add_dish_input_ph" 
+        bindblur="onNameInputBlur" value='{{dish.name}}'>
         </input>
-        <input class='dish_name add_dish_input' name='category'placeholder='输入分类' placeholder-class="add_dish_input_ph" bindblur="onCategoryInputBlur">
+        <input class='dish_name add_dish_input' name='category' 
+        placeholder='输入分类' placeholder-class="add_dish_input_ph" 
+        bindblur="onCategoryInputBlur" value='{{dish.category}}'>
         </input>
-        <input class='dish_price add_dish_input' name='price' placeholder='输入价格' placeholder-class="add_dish_input_ph" bindblur="onPriceInputBlur">
+        <input class='dish_price add_dish_input' name='price' 
+        placeholder='输入价格' placeholder-class="add_dish_input_ph" 
+        bindblur="onPriceInputBlur" value='{{dish.price}}'>
         </input>      
     </view>
     <view class='dish_operators'>
       <view wx:if="{{operatorType == OPERATION.INSERT}}">  
-        <button class='edit_dish' size='default' bindtap='onAddDish' type='primary'>
+        <button class='edit_dish' size='default' bindtap='onDishCreate' type='primary'>
           添加
         </button>
       </view>
-      <view wx:if="{{operatorType == OPERATION.UPDATE}}">  
-        <button class='edit_dish' style='border: 1px solid red;' size='default' bindtap='onRemoveDish' type='warn'>
+      <view class='operators' wx:if="{{operatorType == OPERATION.UPDATE}}">  
+        <view class='edit_dish'><button  style='border: 1px solid red;' size='default' bindtap='onDishDelete' type='warn'>
           删除
         </button>
-        <button class='edit_dish' size='default' bindtap='onUpdateDish' type='primary'>
+        </view>
+        <view class='edit_dish'>
+          <button size='default' bindtap='onDishUpdate' type='primary'>
           保存
-        </button>
+          </button>
+        </view>
+
       </view>
     </view>
   </view>

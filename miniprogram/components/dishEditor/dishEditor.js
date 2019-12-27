@@ -28,6 +28,10 @@ Component({
       type: String,
       value: ''
     },
+    dish: {
+      type: Object,
+      value: {},
+    },
     operatorType: {
       type: String,
       value: ''
@@ -39,40 +43,42 @@ Component({
    */
   data: {
     OPERATION: gConst.OPERATION,
-    dish: {
-      name: '',
-      category: '',
-      imageUrl: '',
-      price: 0,
-    },
+    dish: gConst.EMPTY_DISH,
   },
 
   lifetimes: {
     attached: function () {
-      debugLog('lifetimes.attached', this.properties)
+      // debugLog('lifetimes.attached', this.properties)
       let that = this
-      dishApi.queryDishes({}, result => {
-        // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
-        that.setData({
-          dishes: result
-        })
-      })
+      // dishApi.queryDishes({}, result => {
+      //   // // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
+      //   // that.setData({
+      //   //   dishes: result
+      //   // })
+      // })
     },
 
     show: function () {
-      debugLog('lifetimes.show')
+      // debugLog('lifetimes.show')
     }
   },
 
   pageLifetimes: {
     show: function () {
-      debugLog('pageLifetimes.show')
+      // debugLog('pageLifetimes.show')
     }
   },
 
   observers: {
+    'isShown': function(isShown){
+      debugLog('observers.isShown', isShown)
+      // debugLog('observers.properties', this.properties)
+    },
     'dishId': function (dishId) {
-      debugLog('observers.dishId', dishId)
+      // debugLog('observers.dishId', dishId)
+    },
+    'dish': function (dish) {
+      // debugLog('observers.dish', dish)
     }
   },
 
@@ -82,35 +88,99 @@ Component({
   methods: {
     onClose: function (e) {
       // debugLog('onClose.event', e)
-      this.triggerEvent('close', { a: 1 }, { b: 2 }, { c: 3 })
+      this.triggerEvent('close')
     },
 
-    onTapDish: function (e) {
-      let that = this
-      debugLog('onTapDish.event', e)
-      let optionIdx = e.currentTarget.dataset.optionIdx
-      let dishOption = this.data.dishes[optionIdx]
-      debugLog('onTapDish.optionIdx', optionIdx)
-      debugLog('onTapDish.dishOption', dishOption)
-      this.triggerEvent('tapNewDishOption', {
-        dishIdx: that.properties.dishIdx,
-        dishEnName: that.properties.dishEnName,
-        dishOption: dishOption,
+    /**
+     * 菜品更新
+     */
+    onDishUpdate: function(e){
+      this.triggerEvent('updateDish', { a: 1 })
+      wx.cloud.callFunction({
+        name: 'updateDish',
+        data: {
+          dishId: this.properties.dishId,
+          dish: this.properties.dish
+        },
+        success: res => {
+          debugLog('updateDish.success.res', res)
+          wx.showToast({
+            title: '菜品更新成功',
+            duration: 1500,
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '菜品更新失败',
+          })
+          console.error('[云函数] 调用失败：', err)
+        }
+      })      
+    },
+
+    /**
+     * 菜品添加
+     */
+    onDishCreate: function (e) {
+      this.triggerEvent('createDish', { a: 2 })
+      wx.cloud.callFunction({
+        name: 'createDish',
+        data: {
+          dish: this.properties.dish
+        },
+        success: res => {
+          debugLog('createDish.success.res', res)
+          wx.showToast({
+            title: '菜品创建成功',
+            duration: 1500,
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '菜品创建失败',
+          })
+          console.error('[云函数] 调用失败：', err)
+        }
       })
     },
 
-    tapUpdateDish: function(e){
-
-    },
-    tapCreateDish: function (e) {
-
-    },
-    tapDeleteDish: function (e) {
-
+    /**
+     * 菜品删除
+     */
+    onDishDelete: function (e) {
+      this.triggerEvent('deleteDish', { a: 3 })
+      wx.cloud.callFunction({
+        name: 'removeDish',
+        data: {
+          dishId: this.properties.dishId
+        },
+        success: res => {
+          debugLog('removeDish.success.res', res)
+          wx.showToast({
+            title: '菜品删除成功',
+            duration: 1500,
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '菜品删除失败',
+          })
+          console.error('[云函数] 调用失败：', err)
+        }
+      })
     },
     upLoadDishImage: function () {
       let that = this
-      let dish = this.data.dish
+      let dish = this.properties.dish
       if(dish.name != undefined && dish.name != ''){
         // 选择图片
         wx.chooseImage({
@@ -148,21 +218,13 @@ Component({
                 }).catch(error => {
                   // handle error
                 })
-
-            //     app.globalData.fileID = res.fileID
-            //     app.globalData.cloudPath = cloudPath
-            //     app.globalData.imagePath = filePath
-
-            //     wx.navigateTo({
-            //       url: '../storageConsole-demo/storageConsole'
-            //     })
               },
               fail: e => {
-            //     console.error('[上传文件] 失败：', e)
-            //     wx.showToast({
-            //       icon: 'none',
-            //       title: '上传失败',
-            //     })
+                console.error('DISH[上传文件] 失败：', e)
+                wx.showToast({
+                  icon: 'none',
+                  title: '上传失败',
+                })
               },
               complete: () => {
                 wx.hideLoading()
