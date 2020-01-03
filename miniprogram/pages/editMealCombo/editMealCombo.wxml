@@ -35,11 +35,12 @@
                   wx:for-items="{{dish.options}}" 
                   wx:key="id" wx:for-item='option' wx:for-index="optionIdx"
                   value="{{option._id}}" checked="{{option._isSelect}}">
-              <image class="dish_image" src="{{option.imageUrl}}"                            bindtap='onRemoveOption' 
-                data-dish-idx='{{dishIdx}}'
-                data-option-idx='{{optionIdx}}'
+              <image class="dish_image" src="{{option.imageUrl}}"           
                 >
-                <view class='dish_delete'>
+                <view class='dish_delete' 
+                      bindtap='onRemoveOption'                
+                      data-dish-idx='{{dishIdx}}'
+                      data-option-idx='{{optionIdx}}' >
                   删除
                 </view>
               </image>

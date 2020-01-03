@@ -277,7 +277,7 @@ Page({
   },
   
   /**
-   * 删除当前Combno
+   * 删除当前Combo
    */
   onDeleteCombo: function(e){
     let that = this
