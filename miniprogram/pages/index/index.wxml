@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="title">第二御厨房</view>
+  <view class="title">来恰饭饭</view>
   <view class="guide_buttons">
   <button 
       class='userinfo-avatar'
@@ -8,6 +8,11 @@
       bindgetuserinfo="getUserInfo"
       style="background-image: url({{avatarUrl}})"
       size="default"
-    >授权</button>
+    >请授权</button>
+  <view class="description">
+    订饭饭是一个解决你午餐吃什么的小程序。
+    通过它，即使是公司盒饭也能让你天天不重样吃出精彩来。
+    为了正常使用订餐功能我们需要你的授权。
+  </view>
   </view>
 </view>

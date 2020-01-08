@@ -37,6 +37,11 @@ const NEW_COMBO = {
     enName: 'meat-vege-2',
     price: 9,
     options: new Array()
+  }, {
+      name: '素菜',
+      enName: 'vege-1',
+      price: 9,
+      options: new Array()
   }],
   menuId: '',
 }

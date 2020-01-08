@@ -17,7 +17,7 @@
     </view>
   </scroll-view>
   <view class='add_menu'>
-    <button class='add_menu_button' style="display: {{userRole == 'ADMIN'?flex:none}};" bindtap='onAddMenu' size='default' type='primary'>
+    <button class='add_menu_button' style="display: {{userInfo.userRole == 'ADMIN'?'flex':'none'}};" bindtap='onAddMenu' size='default' type='primary'>
       添加
     </button>
   </view>

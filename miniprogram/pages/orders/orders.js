@@ -15,8 +15,8 @@ const _ = db.command
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 
-const startDate = new Date("2019-10-01")
-const endDate = new Date("2030-10-01")
+const startDate = new Date()
+const endDate = new Date()
 Page({
 
   /**
@@ -45,8 +45,8 @@ Page({
     dbApi.query(TABLES.ORDER,
       {
         userId: userInfo._id ? userInfo._id : userInfo.openId,
-        shipDate: _.gt(new Date(this.data.startDate).getTime()),
-        shipDate: _.lt(new Date(this.data.endDate).getTime())
+        shipDate: _.gte(new Date(this.data.startDate).getTime()),
+        shipDate: _.lte(new Date(this.data.endDate).getTime())
       }
       , res => {
         // debugLog('res', res)

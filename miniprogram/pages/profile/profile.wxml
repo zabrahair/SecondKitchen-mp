@@ -27,7 +27,7 @@
       </view>
       <view class="feature" 
       bindtap="onClickStatistic"
-      style="display: {{userRole == USER_ROLE.ADMIN || userRole == userRole == USER_ROLE.COMPANY || userRole == USER_ROLE.RESTAURANT? 'flex': 'none'}};">
+      style="display: {{(userRole == USER_ROLE.ADMIN || userRole == USER_ROLE.COMPANY || userRole == USER_ROLE.RESTAURANT)?'flex':'none'}};">
         <view class='left' >统计订餐</view>
         <view class='right'>></view>
       </view>         

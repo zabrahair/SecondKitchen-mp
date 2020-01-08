@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 cloud.init({
-  env: 'second-kitchen-backend'
+  env: 'laiqiafanfan-z3fxt'
 })
 
 const db = cloud.database()

@@ -49,11 +49,14 @@
                 {{order.comboName}}
               </view>
               <view class='order_date'>
-                {{order.createLocalTime}}
+                {{order.shipDateString}}
               </view>
               <view class='order_price'>
-                总价： ￥{{order.price}}
+                订餐人： {{order.realName}}
               </view>
+              <!-- <view class='order_price'>
+                总价： ￥{{order.price}}
+              </view> -->
               <view class='order_status'>
                 {{order.status}}
               </view>        
@@ -62,9 +65,9 @@
               <view class='dish_name'>
                 {{dish.name}}
               </view>
-              <view class='dish_price'>
+              <!-- <view class='dish_price'>
                 ￥{{dish.price}}
-              </view>
+              </view> -->
             </view>
           </view>        
         </scroll-view>

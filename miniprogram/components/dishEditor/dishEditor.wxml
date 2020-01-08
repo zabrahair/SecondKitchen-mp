@@ -7,7 +7,7 @@
   </view>
   <view class='content'>
     <view class='dish_editor'>
-      <view class="add_dish_image" style="background-image: url('{{dish.imageUrl}}')" bindtap='upLoadDishImage'>
+      <view class="add_dish_image" style="background-image: url('{{dish.imageUrl}}')" bindtap='upLoadDishImage' mode='aspectFill'>
         +
       </view>    
         <input class='dish_name add_dish_input' name='name' 

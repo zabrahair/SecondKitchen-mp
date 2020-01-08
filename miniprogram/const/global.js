@@ -16,9 +16,9 @@ const pageParams = {
 }
 
 const orderStatus = {
-  FINISHED: 'finished',
-  ORDERED: 'ordered',
-  SHIPPING: 'shipping'
+  FINISHED: '完成',
+  ORDERED: '已下单',
+  SHIPPING: '配送中'
 }
 
 const valueCSS = {
@@ -46,7 +46,7 @@ module.exports = {
   storageKeys: storageKeys,
   userInfoObj: userInfoObj,
   pageParams: pageParams,
-  maxOrdersPerDay: 10,
+  maxOrdersPerDay: 1,
   orderStatus: orderStatus,
   ALL_COMPANIES: '所有企业',
   valueCSS: valueCSS,

@@ -62,3 +62,16 @@
   width: 48vw;
   height: 10vw;
 }
+
+.description {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  color: black;
+  font-size: 5vw;
+  background-color: rgba(255,255,255,0.7);
+  padding: 3vw;
+}

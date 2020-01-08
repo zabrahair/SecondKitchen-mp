@@ -19,8 +19,9 @@ const db = wx.cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
 
-const startDate = new Date("2019-10-01")
-const endDate = new Date("2030-10-01")
+var startDate = new Date()
+var endDate = new Date()
+endDate.setDate(new Date().getDate() + 1)
 
 Page({
 
@@ -81,7 +82,7 @@ Page({
     }
 
     let whereFilters = {
-      shipDateString: _.and(_.gt(this.data.startDate), _.lt(this.data.endDate))
+      shipDateString: _.and(_.gte(this.data.startDate), _.lte(this.data.endDate))
     }
 
 

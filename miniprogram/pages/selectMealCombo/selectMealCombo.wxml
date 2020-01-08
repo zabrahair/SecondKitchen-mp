@@ -38,9 +38,9 @@
   </scroll-view>
   <view class="order_summary">
     <view class="total_price">
-      <view class="capital">
+      <!-- <view class="capital">
         合计 ￥
-      </view>
+      </view> -->
       <view class="price">
         {{combo.price}}
       </view>
