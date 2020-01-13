@@ -41,9 +41,9 @@
       <!-- <view class="capital">
         合计 ￥
       </view> -->
-      <view class="price">
+      <!-- <view class="price">
         {{combo.price}}
-      </view>
+      </view> -->
     </view>
     <view class="send_order">
       <button bindtap="onSendOrder" class="btn_send_order" type="primary" >下订单</button>

@@ -42,18 +42,22 @@ Page({
     companiesPickerObj: {},
     companiesPicker: [],
     selectCompanyIndex: 0,
+    userInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let userInfo = utils.getUserInfo(globalData)
+    this.setData({
+      userInfo: userInfo
+    })
   },
 
   refreshStatistics: function(){
     // Clear last data
-    debugLog('endDate', this.data.startDate)
+    debugLog('startDate', this.data.startDate)
     debugLog('endDate', this.data.endDate)
     this.setData({
       orders: [],

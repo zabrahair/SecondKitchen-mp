@@ -115,7 +115,7 @@ Page({
                 success: res => {
                   debugLog('login', res)
                   // debugLog('[云函数] [login] user openid: ', res.result.openid)
-                  userInfo['openid'] = res.result.openid
+                  userInfo['openId'] = res.result.openid
                   userInfo['appId'] = res.result.appid;
                   debugLog('userInfo3', userInfo)
                   that.setData({

@@ -54,7 +54,7 @@ App({
                 success: res => {
                   // debugLog('', res)
                   // debugLog('[云函数] [login] user openid: ', res.result.openid)
-                  that.globalData['openid'] = res.result.openid
+                  that.globalData['openId'] = res.result.openid
                   let userInfo = that.globalData['userInfo'];
                   userInfo['openId'] = res.result.openid;
                   userInfo['appId'] = res.result.appid;

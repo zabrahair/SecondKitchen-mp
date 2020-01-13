@@ -39,7 +39,9 @@ Page({
       "status": gConst.orderStatus.ORDERED 
     },
     isOrderFinished: false,
-    startDate: utils.formatDate(defaultShipDate)
+    startDate: utils.formatDate(defaultShipDate),
+    userInfo: null,
+    userRole: USER_ROLE.NORMAL
   },
 
   /**
@@ -49,8 +51,12 @@ Page({
     let that = this
     debugLog('options', options)
     let comboId = options.comboId
-    let userInfo = globalData.userInfo
-
+    let userInfo = utils.getUserInfo(globalData)
+    userRole: userInfo.userRole,
+    this.setData({
+      userInfo: userInfo,
+      userRole: userInfo.userRole,
+    })
 
     dbApi.query(
       TABLES.COMBO
@@ -85,6 +91,18 @@ Page({
   selShipDate: function(e){
     let shipDate = e.detail.value
     shipDate = new Date(shipDate);
+    let shipDateString = utils.formatDate(shipDate)
+    let defaultShipDateStr = utils.formatDate(defaultShipDate)
+    debugLog('shipDate', shipDateString)
+    debugLog('defaultShipDate', defaultShipDateStr)
+    if (shipDateString < defaultShipDateStr){
+      wx.showToast({
+        title: MSG.DATE_SELECTED_NOT_CORRECT,
+        icon: 'success',
+        duration: 1500,
+      })
+      return 
+    }
     let orderObj = this.data.orderObj
     orderObj.shipDate = shipDate.getTime()
     orderObj.shipDateString = utils.formatDate(new Date(shipDate))

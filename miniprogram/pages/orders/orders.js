@@ -17,8 +17,9 @@ const dbApi = require('../../api/db.js')
 
 const startDate = new Date()
 const endDate = new Date()
-Page({
+endDate.setDate(new Date().getDate() + 1)
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -42,14 +43,19 @@ Page({
    */
   refreshOrders: function(){
     let userInfo = utils.getUserInfo(globalData)
+    debugLog('Running... refreshOrders', {
+      startDate: this.data.startDate,
+      endDate: this.data.endDate,
+      userInfo: userInfo._openid})
+    
     dbApi.query(TABLES.ORDER,
       {
-        userId: userInfo._id ? userInfo._id : userInfo.openId,
-        shipDate: _.gte(new Date(this.data.startDate).getTime()),
-        shipDate: _.lte(new Date(this.data.endDate).getTime())
+        _openid: userInfo._openid ? userInfo._openid : userInfo.openId,
+        shipDateString: _.gte(this.data.startDate),
+        shipDateString: _.lte(this.data.endDate)
       }
       , res => {
-        // debugLog('res', res)
+        debugLog('res', res)
         this.setData({
           orders: res
         })
