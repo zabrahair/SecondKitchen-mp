@@ -24,8 +24,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {},
-    userRole: null,
+    userInfo: utils.getUserInfo(globalData),
+    userRole: utils.getUserInfo(globalData).userRole,
     USER_ROLE: USER_ROLE
   },
 

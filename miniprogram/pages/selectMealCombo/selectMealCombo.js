@@ -93,8 +93,8 @@ Page({
     shipDate = new Date(shipDate);
     let shipDateString = utils.formatDate(shipDate)
     let defaultShipDateStr = utils.formatDate(defaultShipDate)
-    debugLog('shipDate', shipDateString)
-    debugLog('defaultShipDate', defaultShipDateStr)
+    // debugLog('shipDate', shipDateString)
+    // debugLog('defaultShipDate', defaultShipDateStr)
     if (shipDateString < defaultShipDateStr){
       wx.showToast({
         title: MSG.DATE_SELECTED_NOT_CORRECT,
