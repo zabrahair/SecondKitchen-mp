@@ -166,6 +166,7 @@ Page({
     let orderObj = this.data.orderObj
     let dishes = orderObj.dishes
     // debugLog('dishes', dishes)
+    let userRole = this.data.userInfo.userRole
     this.setData({
       isOrderFinished: true
     })
@@ -190,7 +191,10 @@ Page({
         shipDateString: orderObj.shipDateString
       }, res=>{
         debugLog('check order per day', res)
-        if(res.length < gConst.maxOrdersPerDay){
+        if (res.length < gConst.maxOrdersPerDay 
+        || userRole == USER_ROLE.ADMIN 
+        || userRole == USER_ROLE.COMPANY 
+        || userRole == USER_ROLE.RESTAURANT){
           dbApi.create(TABLES.ORDER, this.data.orderObj, res => {
             debugLog('res', res)
             wx.switchTab({
