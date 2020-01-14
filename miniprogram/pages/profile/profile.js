@@ -33,6 +33,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let userInfo = utils.getUserInfo(globalData)
+    if (userInfo || userINfo.openId) {
+      return
+    }
     this.setData({
       userInfo: utils.getUserInfo(globalData),
       userRole: utils.getUserInfo(globalData).userRole,
@@ -43,6 +47,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    let userInfo = utils.getUserInfo(globalData)
+    if (userInfo || userINfo.openId) {
+      return
+    }
     this.setData({
       userInfo: utils.getUserInfo(globalData),
       userRole: utils.getUserInfo(globalData).userRole,

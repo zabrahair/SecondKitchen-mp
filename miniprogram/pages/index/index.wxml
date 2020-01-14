@@ -14,5 +14,6 @@
     通过它，即使是公司盒饭也能让你天天不重样吃出精彩来。
     为了正常使用订餐功能我们需要你的授权。
   </view>
+  <button class="btn_go_around" bindtap="goRound" size="default" type='primary'>随便逛逛</button>
   </view>
 </view>

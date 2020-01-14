@@ -43,6 +43,9 @@ Page({
    */
   refreshOrders: function(){
     let userInfo = utils.getUserInfo(globalData)
+    if (userInfo || userINfo.openId) {
+      return
+    }
     debugLog('Running... refreshOrders', {
       startDate: this.data.startDate,
       endDate: this.data.endDate,

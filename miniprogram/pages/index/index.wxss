@@ -75,3 +75,13 @@
   background-color: rgba(255,255,255,0.7);
   padding: 3vw;
 }
+
+.btn_go_around {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 1.5vh;
+}

@@ -5,12 +5,12 @@
   </view>
   <view class='content'>
     <view class="conditions">
-      <picker mode="date" value="{{startDate}}" start="2019-10-01" end="2030-10-01" bindchange="selStartDate">
+      <picker mode="date" value="{{startDate}}" start="2019/10/01" end="2030/10/01" bindchange="selStartDate">
         <view class="date_picker" >
           开始日期: {{startDate}}
         </view>
       </picker>
-      <picker mode="date" value="{{endStart}}" start="2019-10-01" end="2030-10-01" bindchange="selEndDate">
+      <picker mode="date" value="{{endStart}}" start="2019/10/01" end="2030/10/01" bindchange="selEndDate">
         <view class="date_picker">
           结束日期: {{endDate}}
         </view>

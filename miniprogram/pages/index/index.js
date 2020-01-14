@@ -157,5 +157,14 @@ Page({
         }
       }
     })
+  },
+
+  /**
+   * 让用户到处看看
+   */
+  goRound: function(e){
+    wx.switchTab({
+      url: '../menuList/menuList'
+    })   
   }
 })

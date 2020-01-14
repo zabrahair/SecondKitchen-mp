@@ -49,6 +49,9 @@ Page({
    */
   onShow: function () {
     let userInfo = utils.getUserInfo(globalData)
+    if(userInfo || userINfo.openId) {
+      return
+    }
     this.setData({
       userInfo: userInfo,
       userRole: userInfo.userRole,

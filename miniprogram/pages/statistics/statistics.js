@@ -189,10 +189,10 @@ Page({
   },
 
   selStartDate: function(e){
-    let startDate = e.detail.value;
+    let startDate = utils.formatDate(new Date(e.detail.value))
     if (startDate <= this.data.endDate){
       this.setData({
-        startDate: e.detail.value
+        startDate: startDate
       })
       this.refreshStatistics()
     } else {
@@ -206,10 +206,10 @@ Page({
   },
 
   selEndDate: function (e) {
-    let endDate = e.detail.value;
+    let endDate = utils.formatDate(new Date(e.detail.value))
     if (this.data.startDate <= endDate) {
       this.setData({
-        endDate: e.detail.value
+        endDate: endDate
       })
       this.refreshStatistics()
     }else{
