@@ -41,7 +41,9 @@ Page({
     isOrderFinished: false,
     startDate: utils.formatDate(defaultShipDate),
     userInfo: null,
-    userRole: USER_ROLE.NORMAL
+    userRole: USER_ROLE.NORMAL,
+    weekDayCn: new Date().getDay(),
+    insistSelectWeekend: 0,
   },
 
   /**
@@ -50,12 +52,17 @@ Page({
   onLoad: function (options) {
     let that = this
     debugLog('options', options)
+    debugLog('defaultShipDate', defaultShipDate)
+    this.checkWeekEnd(defaultShipDate);
+    debugLog('weekDayCn', this.data.weekDayCn)
     let comboId = options.comboId
     let userInfo = utils.getUserInfo(globalData)
     userRole: userInfo.userRole,
     this.setData({
       userInfo: userInfo,
       userRole: userInfo.userRole,
+      weekDayCn: this.data.weekDayCn,
+      insistSelectWeekend: 0,
     })
 
     dbApi.query(
@@ -91,6 +98,10 @@ Page({
   selShipDate: function(e){
     let shipDate = e.detail.value
     shipDate = new Date(shipDate);
+    // 如果是周末，加到周一
+    shipDate = this.checkWeekEnd(shipDate)
+
+    let weekDayCn = gConst.WEEK_DAYS[shipDate.getDay()].cn;
     let shipDateString = utils.formatDate(shipDate)
     let defaultShipDateStr = utils.formatDate(defaultShipDate)
     // debugLog('shipDate', shipDateString)
@@ -103,13 +114,60 @@ Page({
       })
       return 
     }
+
     let orderObj = this.data.orderObj
     orderObj.shipDate = shipDate.getTime()
-    orderObj.shipDateString = utils.formatDate(new Date(shipDate))
+    orderObj.shipDateString = shipDateString
     this.setData({
       shipDate: utils.formatDate(shipDate),
-      orderObj: orderObj
+      orderObj: orderObj,
+      weekDayCn: weekDayCn,
     })
+
+  },
+
+  checkWeekEnd: function (pShipDate){
+    let swiftDays = 0
+    let shipDate = pShipDate
+    debugLog('typeof(shipDate)', Object.prototype.toString.call(shipDate));
+    if (Object.prototype.toString.call(shipDate) != '[object Date]'){
+      debugLog('shipDate', shipDate)
+      shipDate = new Date(pShipDate);
+    }
+    debugLog('typeof(shipDate)', shipDate.getDay())
+    // Sunday swift to Monday,如果用户坚持选了两次周末就让他选吧。
+    if (shipDate.getDay() == 0 && this.data.insistSelectWeekend < 1) {
+      wx.showToast({
+        title: MSG.ONLY_WEEKDAY_CAN_ORDER,
+        icon: 'success',
+        duration: 1500,
+      })
+      swiftDays = 1
+      shipDate.setDate(shipDate.getDate() + swiftDays)
+      this.setData({
+        insistSelectWeekend: this.data.insistSelectWeekend + 1
+      })
+    }
+    // Saturday swift to Monday，如果用户坚持选了两次周末就让他选吧。
+    if (shipDate.getDay() == 6 && this.data.insistSelectWeekend < 1) {
+      wx.showToast({
+        title: MSG.ONLY_WEEKDAY_CAN_ORDER,
+        icon: 'success',
+        duration: 1500,
+      })
+      swiftDays = 2
+      shipDate.setDate(shipDate.getDate() + swiftDays)
+      this.setData({
+        insistSelectWeekend: this.data.insistSelectWeekend + 1
+      })
+    }
+    debugLog('shipDate.getDay()', gConst.WEEK_DAYS[shipDate.getDay()]);
+    this.setData({
+      shipDate: shipDate,
+      weekDayCn: gConst.WEEK_DAYS[shipDate.getDay()].cn,
+      shipDateString: utils.formatDate(shipDate),
+    })
+    return shipDate
   },
 
   /**
@@ -123,7 +181,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      insistSelectWeekend: 0,
+    })
   },
 
   /**
@@ -162,6 +222,20 @@ Page({
    * 发送订单
    */
   onSendOrder: function(event){
+    // 如果没有登陆
+    let userInfo = utils.getUserInfo(globalData)
+    if (userInfo == undefined || userInfo.openId == undefined) {
+      wx.showToast({
+        title: MSG.REGISTER_AND_ORDER,
+        icon: 'success',
+        duration: 1500,
+      })
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+      return
+    }
+
     // debugLog('event', event)
     let orderObj = this.data.orderObj
     let dishes = orderObj.dishes

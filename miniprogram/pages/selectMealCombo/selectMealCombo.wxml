@@ -6,7 +6,7 @@
     </view>
     <picker class="shipping_date" mode="date" value="{{shipDate}}" start="{{startDate}}" end="2030-10-01" bindchange="selShipDate">
       <view class="date_picker" >
-        送餐日期: {{shipDate}}
+        送餐日期: {{shipDateString}} {{weekDayCn}}
       </view>
     </picker>
   </view>

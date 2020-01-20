@@ -34,7 +34,7 @@ Page({
    */
   onLoad: function (options) {
     let userInfo = utils.getUserInfo(globalData)
-    if (userInfo || userINfo.openId) {
+    if (userInfo == undefined || userInfo.openId == undefined) {
       return
     }
     this.setData({
@@ -48,7 +48,7 @@ Page({
    */
   onReady: function () {
     let userInfo = utils.getUserInfo(globalData)
-    if (userInfo || userINfo.openId) {
+    if (userInfo == undefined || userInfo.openId == undefined) {
       return
     }
     this.setData({

@@ -43,7 +43,7 @@ Page({
    */
   refreshOrders: function(){
     let userInfo = utils.getUserInfo(globalData)
-    if (userInfo || userINfo.openId) {
+    if ( userInfo == undefined || userInfo.openId == undefined) {
       return
     }
     debugLog('Running... refreshOrders', {

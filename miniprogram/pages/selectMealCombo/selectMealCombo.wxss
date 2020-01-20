@@ -86,14 +86,14 @@
   align-items: center;
   align-self: flex-end;
 
-  width: 50vw;
-  height: 8vh;
+  width: 55vw;
+  height: 5.5vh;
   padding-left: 5vw;
 
   background-color: rgba(0,0,0,0.6);
   border-top-left-radius: 5vw;
   border-bottom-left-radius: 5vw;
-  font-size: 5vw;
+  font-size: 4vw;
   color: white;
 }
 

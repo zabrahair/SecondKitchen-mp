@@ -40,6 +40,16 @@ const EMPTY_DISH = {
   price: null,
 }
 
+const WEEK_DAYS = [
+  { en: 'Sunday', abbr: 'Sun', cn: '周日'},
+  { en: 'Monday', abbr: 'Mon', cn: '周一' },
+  { en: 'Tuesday', abbr: 'Tue', cn: '周二' },
+  { en: 'Wednesday', abbr: 'Wed', cn: '周三' },
+  { en: 'Thursday', abbr: 'Thu', cn: '周四' },
+  { en: 'Friday', abbr: 'Fri', cn: '周五' },
+  { en: 'Saturday', abbr: 'Sat', cn: '周六' },
+]
+
 module.exports = {
   UNSELECT: UNSELECT,
   SELECTED: SELECTED,
@@ -51,5 +61,8 @@ module.exports = {
   ALL_COMPANIES: '所有企业',
   valueCSS: valueCSS,
   OPERATION: OPERATION,
-  EMPTY_DISH: EMPTY_DISH
+  EMPTY_DISH: EMPTY_DISH,
+  NO_COMPANY_ID: 'NO_COMPANY_ID',
+  NO_COMPANY_NAME: '临时订饭',
+  WEEK_DAYS: WEEK_DAYS
 }

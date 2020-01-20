@@ -128,5 +128,5 @@ module.exports = {
   pickerMaker: pickerMaker,
   getUserInfo: getUserInfo,
   setUserInfo: setUserInfo,
-  extractFileInfo: extractFileInfo
+  extractFileInfo: extractFileInfo,
 }

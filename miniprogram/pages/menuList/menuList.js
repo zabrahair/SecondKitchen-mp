@@ -49,15 +49,16 @@ Page({
    */
   onShow: function () {
     let userInfo = utils.getUserInfo(globalData)
-    if(userInfo || userINfo.openId) {
-      return
-    }
     this.setData({
       userInfo: userInfo,
       userRole: userInfo.userRole,
     })
     let companyId = userInfo.companyId;
     let companyName = userInfo.companyName
+    if (userInfo == undefined || userInfo.openId == undefined) {
+      companyId = gConst.NO_COMPANY_ID;
+      companyName = gConst.NO_COMPANY_NAME;
+    }
     if (companyName == gConst.ALL_COMPANIES){
       dbApi.query(TABLES.COMBO, {
       }, res => {
@@ -115,6 +116,10 @@ Page({
   },
 
   onClickMenu: function(e){
+    let userInfo = utils.getUserInfo(globalData)
+    if (userInfo == undefined || userInfo.openId == undefined) {
+      return
+    }
     let comboId = e.target.dataset.comboId;
     debugLog('comboId', comboId);
     if(this.data.userRole == USER_ROLE.ADMIN){
