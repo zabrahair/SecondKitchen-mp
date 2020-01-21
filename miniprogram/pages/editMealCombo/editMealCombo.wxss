@@ -15,9 +15,9 @@
 
 .header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 
   width: 100vw;
@@ -26,6 +26,28 @@
   background-image: url('https://nippontrend.com/S2710/upload/2017022704931_1.jpg');
   background-repeat: no-repeat;
   background-size: 100vw 30vh;
+}
+
+.orders_company_picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  justify-self: flex-end;
+  align-self: flex-end;
+
+  width: 40vw;
+  height: 5vh; 
+  font-size: 4vw;
+  color: white;
+  padding: 1vw;
+  padding-left: 2vw;
+
+  border-bottom: 1px solid black;
+  background-color: rgba(0,0,0,0.6);
+  border-top-left-radius: 5vw;
+  border-bottom-left-radius: 5vw;
 }
 
 .combo_dishes {
@@ -313,6 +335,21 @@
   height: 6vh;
   margin-left: 1vw;
   font-size: 5vw;
+}
+
+.btn_dulicate_combo {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 40vw;
+  height: 6vh;
+  margin-left: 1vw;
+  font-size: 5vw;
+  color: brown;
+  border: 1px solid brown;
 }
 
 .dish_selector {

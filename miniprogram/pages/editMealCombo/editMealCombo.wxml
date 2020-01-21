@@ -7,6 +7,11 @@
       placeholder-class='combo_title_placeholder' 
       value='{{combo.name}}' bindblur='onTitleChange'/>
     </view>
+    <picker class="orders_company_picker" bindchange="onCompanyChange" value="{{selectCompanyIndex}}" range="{{companiesPicker}}">
+      <view class="picker">
+        选择企业：{{combo.companyName}}
+      </view>
+    </picker>    
   </view>
   <scroll-view class="combo_dishes" scroll-y='true'>
     <view class="dish" 
@@ -62,6 +67,7 @@
     </view>
     <view class="operators">
       <button bindtap="onDeleteCombo" class="btn_delete_combo" type="warn" size='mini'> 删除 </button>
+      <button bindtap="onDuplicateCombo" class="btn_dulicate_combo" type="normal" size='mini'> 复制 </button>
       <button bindtap="onSaveCombo" class="btn_save_combo" type="primary" size='mini'> 保存 </button>
     </view>
   </view>

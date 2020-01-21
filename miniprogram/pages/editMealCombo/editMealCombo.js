@@ -13,6 +13,7 @@ const TABLES = require('../../const/collections.js')
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 const orderApi = require('../../api/order.js')
+const companyApi = require('../../api/company.js')
 
 const NEW_COMBO = {
   name: '',
@@ -59,7 +60,10 @@ Page({
     isShownDishSelector: false,
     curDishEnName: '',
     curDishIdx: '',
-    operation: gConst.OPERATION.UPDATE
+    operation: gConst.OPERATION.UPDATE,
+    companiesPickerObj: {},
+    companiesPicker: [],
+    selectCompanyIndex: 0,
   },
 
   /**
@@ -68,6 +72,16 @@ Page({
   onLoad: function (options) {
     let that = this
     let comboId = options.comboId
+
+    // 获得公司列表
+    companyApi.query({}, res => {
+      let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
+      // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
+      this.setData({
+        companiesPickerObj: companiesPickerAllInfo.pickerObjs,
+        companiesPicker: companiesPickerAllInfo.pickerList
+      })
+    })
 
     if(comboId != undefined && comboId != ''){
       // update combo
@@ -264,7 +278,6 @@ Page({
         }
       })
     }
-
   },
   /**
    * 套餐名称发生变化
@@ -321,5 +334,53 @@ Page({
     this.setData({
       combo: combo
     }) 
-  }
+  },
+
+  /**
+   * 复制当前菜单
+   */
+  onDuplicateCombo: function(e){
+    // debugLog('onSaveCombo', e)
+    let combo = this.data.combo
+    delete combo._id
+
+    wx.cloud.callFunction({
+      name: 'createCombo',
+      data: {
+        combo: combo
+      },
+      success: res => {
+        debugLog('createCombo.success.res', res)
+        wx.showToast({
+          title: '套餐复制成功',
+          duration: 1500,
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '套餐复制失败',
+          duration: 1500,
+        })
+        console.error('[云函数] 调用失败：', err)
+      }
+    })
+  },
+
+  onCompanyChange: function (e) {
+    let selectCompanyIndex = e.detail.value
+    debugLog('selectCompanyIndex', selectCompanyIndex)
+    let selectCompanyName = this.data.companiesPicker[selectCompanyIndex]
+    debugLog('selectCompanyPickerObj', this.data.companiesPickerObj[selectCompanyName])
+    let combo = this.data.combo
+    combo.companyName = this.data.companiesPickerObj[selectCompanyName].name
+    combo.companyId = this.data.companiesPickerObj[selectCompanyName]._id
+    this.setData({
+      selectCompanyIndex: e.detail.value,
+      combo: combo,
+    })
+
+  },
 })
