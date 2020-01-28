@@ -158,7 +158,7 @@ Page({
           // If not found the user insert a new one.
           if (result.length <= 0) {
             userInfo = utils.getUserInfo(globalData);
-            userInfo['_id'] = formValues['companyName']
+            userInfo['_id'] = userInfo.openid
             userInfo['companyName'] = formValues['companyName']
             userInfo['companyId'] = formValues['companyId']
             userInfo['userRole'] = formValues['userRole']
