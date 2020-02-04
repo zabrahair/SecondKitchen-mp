@@ -1,6 +1,7 @@
 <view class='container'>
   <view class='header'>
-    <view class='company_name'>
+    <view class="company_name">
+      {{userInfo.companyName}}
     </view>
   </view>
   <view class='content' > 
@@ -25,10 +26,7 @@
     </scroll-view>
   </view>
   <view class='operators' style='width: 100vw;'>           
-  <button class='edit_member' size='default' bindtap='onAddmember' type='primary'>
-    添加
-  </button>
-</view> 
+  </view> 
 </view>
 <member-editor
   class='member_editor' 

@@ -30,6 +30,10 @@ Page({
     operatorType: gConst.OPERATION.UPDATE,
     curDishId: '',
     curDish: {},
+
+    userInfo: utils.getUserInfo(globalData),
+    userRole: utils.getUserInfo(globalData).userRole,
+    USER_ROLE: USER_ROLE,
   },
 
   /**
@@ -57,6 +61,8 @@ Page({
    */
   onShow: function () {
     let that = this
+    this.refreshUserInfo()
+    
     dishApi.queryDishes({}, result => {
       debugLog('refresh dishes count', result.length);
       that.setData({
@@ -65,6 +71,19 @@ Page({
     })
   },
 
+  /**
+   * 刷新当前用户信息
+   */
+  refreshUserInfo: function(){
+    let userInfo = utils.getUserInfo(globalData)
+    if (userInfo == undefined || userInfo.openId == undefined) {
+      return
+    }
+    this.setData({
+      userInfo: utils.getUserInfo(globalData),
+      userRole: utils.getUserInfo(globalData).userRole,
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -100,17 +119,6 @@ Page({
 
   },
 
-  /**
-   * on click add dish button
-   */
-  onAddDish: function (e) {
-    this.setData({
-      curDishId: '',
-      isShownDishEditor: true,
-      operatorType: gConst.OPERATION.INSERT,
-      curDish: gConst.EMPTY_DISH,
-    })
-  },
 
   /**
    * on click edit dish button

@@ -53,19 +53,6 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "pages/index-demo/index",
-					"pathName": "pages/index-demo/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "pages/userConsole-demo/userConsole",
 					"pathName": "pages/userConsole-demo/userConsole",
 					"query": "",
@@ -96,20 +83,6 @@
 					"id": -1,
 					"name": "pages/profile/profile",
 					"pathName": "pages/profile/profile",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/logs/logs",
-					"pathName": "pages/logs/logs",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/menu/menu",
-					"pathName": "pages/menu/menu",
 					"query": "",
 					"scene": null
 				},
