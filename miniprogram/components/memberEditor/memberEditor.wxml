@@ -1,0 +1,41 @@
+<!--components/memberSelector/memberSelector.wxml-->
+<view class='container' hidden='{{!isShown}}'>
+  <view class='header'>
+    <view class='editor_name'>
+      编辑成员
+    </view>
+  </view>
+  <view class='content'>
+    <view class='member_editor'>
+      <view class="add_member_image" style="background-image: url('{{member.avatarUrl}}')" bindtap='upLoadMemberImage' mode='aspectFill'>
+        
+      </view>  
+      <view class='member_name'>  
+        <text class='capital'>他(她)的称呼:</text>
+        <input class='member_input' name='name' 
+        placeholder='编辑实名' placeholder-class="add_member_input_ph" 
+        bindblur="onNameInputBlur" value='{{member.contactName}}'/>  
+      </view>  
+    </view>
+    <view class='member_operators'>
+      <view class='operators' 
+        wx:if="{{operatorType == OPERATION.UPDATE}}">  
+        <view class='edit_member'><button  style='border: 1px solid red;' size='default' bindtap='onMemberDelete' type='warn'>
+          删除
+        </button>
+        </view>
+        <view class='edit_member'>
+          <button size='default' bindtap='onMemberUpdate' type='primary'>
+          保存
+          </button>
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <image src='../../images/close.png' class='close_button' bindtap="onClose">
+  </image>
+</view>
+
+
+

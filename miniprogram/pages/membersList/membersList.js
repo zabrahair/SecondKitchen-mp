@@ -11,7 +11,6 @@ const TABLES = require('../../const/collections.js')
 
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
-const dishApi = require('../../api/dish.js')
 
 /**
  * 成员列表页功能
@@ -25,11 +24,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dishes: null,
-    isShownDishEditor: false,
+    members: null,
+    curMemberId: '',
+    curMember: {},
+
+    isShownMemberEditor: false,
     operatorType: gConst.OPERATION.UPDATE,
-    curDishId: '',
-    curDish: {},
 
     userInfo: utils.getUserInfo(globalData),
     userRole: utils.getUserInfo(globalData).userRole,
@@ -46,7 +46,7 @@ Page({
   /**
    * 刷新菜品列表
    */
-  refreshDishes: function () {
+  refreshMemberes: function () {
 
   },
   /**
@@ -61,14 +61,51 @@ Page({
    */
   onShow: function () {
     let that = this
-    this.refreshUserInfo()
-    
-    dishApi.queryDishes({}, result => {
-      debugLog('refresh dishes count', result.length);
-      that.setData({
-        dishes: result
+    that.refreshUserInfo()
+    let companyId = that.data.userInfo.companyId
+    let userRole = that.data.userInfo.userRole
+    that.getUsers(companyId, userRole);
+  },
+
+  /**
+   * 获得用户列表
+   */
+  getUsers: function(companyId, userRole){
+    let that = this
+    let filters = {}
+    if(companyId){
+      if (userRole != USER_ROLE.ADMIN){
+        filters = {
+          companyId: companyId
+        }
+      }
+
+      wx.cloud.callFunction({
+        name: 'queryUsers',
+        data: {
+          filters: filters
+        },
+        success: res => {
+          debugLog('queryUsers.success.res', res)
+          that.setData({
+            members: res.result.data
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '用户列表获取失败',
+          })
+          errorLog('[云函数] 调用失败：', err)
+        }
+      }) 
+    }else{
+      wx.showToast({
+        title: '请登陆后再试。',
+        duration: 1000,
       })
-    })
+      return;
+    }
+     
   },
 
   /**
@@ -121,61 +158,51 @@ Page({
 
 
   /**
-   * on click edit dish button
+   * on click edit Member button
    */
-  onEditDish: function (e) {
-    debugLog('onEditDish.e', e)
-    let dishId = e.currentTarget.dataset.dishId
-    let dishIdx = e.currentTarget.dataset.dishIdx
-    let curDish = this.data.dishes[dishIdx]
+  onEditMember: function (e) {
+    debugLog('onEditMember.e', e)
+    let memberId = e.currentTarget.dataset.memberId
+    let memberIdx = e.currentTarget.dataset.memberIdx
+    let curMember = this.data.members[memberIdx]
     this.setData({
-      curDishId: dishId,
-      curDish: curDish,
-      isShownDishEditor: true,
+      curMemberId: memberId,
+      curMember: curMember,
+      isShownMemberEditor: true,
       operatorType: gConst.OPERATION.UPDATE
     })
   },
 
   /**
-   * Update Dish
+   * Update Member
    */
-  onDishUpdate: function (e) {
-    debugLog('onDishUpdate', e)
+  onMemberUpdate: function (e) {
+    debugLog('onMemberUpdate', e)
     this.onShow();
     this.setData({
-      isShownDishEditor: false
+      isShownMemberEditor: false
+    })
+  },
+
+
+  /**
+   * Delete Member
+   */
+  onMemberDelete: function (e) {
+    debugLog('onMemberDelete', e)
+    this.onShow();
+    this.setData({
+      isShownMemberEditor: false
     })
   },
 
   /**
- * Create Dish
- */
-  onDishCreate: function (e) {
-    debugLog('onDishCreate', e)
-    this.onShow();
-    this.setData({
-      isShownDishEditor: false
-    })
-  },
-
-  /**
-   * Delete Dish
+   * Close Member Editor
    */
-  onDishDelete: function (e) {
-    debugLog('onDishDelete', e)
-    this.onShow();
+  closeMemberEditor: function (e) {
+    // debugLog('closeMemberEditor.event', e)
     this.setData({
-      isShownDishEditor: false
-    })
-  },
-
-  /**
-   * Close Dish Editor
-   */
-  closeDishEditor: function (e) {
-    // debugLog('closeDishEditor.event', e)
-    this.setData({
-      isShownDishEditor: false
+      isShownMemberEditor: false
     })
   },
 })

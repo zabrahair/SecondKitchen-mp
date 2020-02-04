@@ -95,57 +95,83 @@ Component({
      * 菜品更新
      */
     onDishUpdate: function(e){
-      this.triggerEvent('updateDish', { a: 1 })
-      wx.cloud.callFunction({
-        name: 'updateDish',
-        data: {
-          dishId: this.properties.dishId,
-          dish: this.properties.dish
-        },
-        success: res => {
-          debugLog('updateDish.success.res', res)
-          wx.showToast({
-            title: '菜品更新成功',
-            duration: 1500,
-          })
-          wx.navigateBack({
-            delta: 1
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            title: '菜品更新失败',
-          })
-          console.error('[云函数] 调用失败：', err)
+      let that = this
+      wx.showModal({
+        title: MSG.UPDATE_CONFIRM_TITLE,
+        content: MSG.UPDATE_CONFIRM_MESSAGE,
+        success(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: 'updateDish',
+              data: {
+                dishId: that.properties.dishId,
+                dish: that.properties.dish
+              },
+              success: res => {
+                that.triggerEvent('updateDish')
+                debugLog('updateDish.success.res', res)
+                wx.showToast({
+                  title: '菜品更新成功',
+                  duration: 1500,
+                })
+                // wx.navigateBack({
+                //   delta: 1
+                // })
+              },
+              fail: err => {
+                that.triggerEvent('updateDish')
+                wx.showToast({
+                  title: '菜品更新失败',
+                })
+                console.error('[云函数] 调用失败：', err)
+              }
+            }) 
+          } else if (res.cancel) {
+            debugLog('用户点击取消')
+          }
         }
-      })      
+      })
+           
     },
 
     /**
      * 菜品添加
      */
     onDishCreate: function (e) {
-      this.triggerEvent('createDish', { a: 2 })
-      wx.cloud.callFunction({
-        name: 'createDish',
-        data: {
-          dish: this.properties.dish
-        },
-        success: res => {
-          debugLog('createDish.success.res', res)
-          wx.showToast({
-            title: '菜品创建成功',
-            duration: 1500,
-          })
-          wx.navigateBack({
-            delta: 1
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            title: '菜品创建失败',
-          })
-          console.error('[云函数] 调用失败：', err)
+      let that = this
+      wx.showModal({
+        title: MSG.CREATE_CONFIRM_TITLE,
+        content: MSG.CREATE_CONFIRM_MESSAGE,
+        success(res) {
+          if(res.confirm){
+            wx.cloud.callFunction({
+              name: 'createDish',
+              data: {
+                dish: that.properties.dish
+              },
+              success: res => {
+                that.triggerEvent('createDish')
+                debugLog('createDish.success.res', res)
+                wx.showToast({
+                  title: '菜品创建成功',
+                  duration: 1500,
+                })
+                // wx.navigateBack({
+                //   delta: 1
+                // })
+              },
+              fail: err => {
+                that.triggerEvent('createDish')
+                wx.showToast({
+                  title: '菜品创建失败',
+                })
+                console.error('[云函数] 调用失败：', err)
+              }
+            })
+          } else if(res.cancel) {
+            debugLog('用户点击取消')
+          }
+
         }
       })
     },
@@ -154,27 +180,39 @@ Component({
      * 菜品删除
      */
     onDishDelete: function (e) {
-      this.triggerEvent('deleteDish', { a: 3 })
-      wx.cloud.callFunction({
-        name: 'removeDish',
-        data: {
-          dishId: this.properties.dishId
-        },
-        success: res => {
-          debugLog('removeDish.success.res', res)
-          wx.showToast({
-            title: '菜品删除成功',
-            duration: 1500,
-          })
-          wx.navigateBack({
-            delta: 1
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            title: '菜品删除失败',
-          })
-          console.error('[云函数] 调用失败：', err)
+      let that = this
+      wx.showModal({
+        title: MSG.REMOVE_CONFIRM_TITLE,
+        content: MSG.REMOVE_CONFIRM_MESSAGE,
+        success(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: 'removeDish',
+              data: {
+                dishId: that.properties.dishId
+              },
+              success: res => {
+                that.triggerEvent('deleteDish')
+                debugLog('removeDish.success.res', res)
+                wx.showToast({
+                  title: '菜品删除成功',
+                  duration: 1500,
+                })
+                // wx.navigateBack({
+                //   delta: 1
+                // })
+              },
+              fail: err => {
+                that.triggerEvent('deleteDish')
+                wx.showToast({
+                  title: '菜品删除失败',
+                })
+                console.error('[云函数] 调用失败：', err)
+              }
+            })
+          } else if (res.cancel) {
+            debugLog('用户点击取消')
+          }
         }
       })
     },

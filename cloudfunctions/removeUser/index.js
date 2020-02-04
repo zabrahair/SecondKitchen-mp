@@ -7,12 +7,12 @@ cloud.init({
 const db = cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
-const TABLE = 'users'
+const TABLE = 'user'
 
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  let id = event._id
+  let id = event.id
   console.log('event', JSON.stringify(event, null, 4))
   try {
     let result = await db.collection(TABLE).doc(id).remove()

@@ -6,7 +6,7 @@ cloud.init({
 const db = cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
-const TABLE = 'users'
+const TABLE = 'user'
 
 // 云函数入口函数
 exports.main = async (event, context) => {
