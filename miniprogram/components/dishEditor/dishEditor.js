@@ -72,7 +72,7 @@ Component({
 
   observers: {
     'isShown': function(isShown){
-      debugLog('observers.isShown', isShown)
+      // debugLog('observers.isShown', isShown)
       // debugLog('observers.properties', this.properties)
     },
     'dishId': function (dishId) {
@@ -80,6 +80,9 @@ Component({
     },
     'dish': function (dish) {
       // debugLog('observers.dish', dish)
+      this.setData({
+        selectCategory: ''
+      })
       this.getCategory(dish)
     }
   },
@@ -98,8 +101,8 @@ Component({
      */
     onDishUpdate: function(e){
       let that = this
-      debugLog('that.data.dish', that.data.dish)
-      debugLog('that.properties.dish', that.properties.dish)
+      // debugLog('that.data.dish', that.data.dish)
+      // debugLog('that.properties.dish', that.properties.dish)
       wx.showModal({
         title: MSG.UPDATE_CONFIRM_TITLE,
         content: MSG.UPDATE_CONFIRM_MESSAGE,
@@ -128,7 +131,7 @@ Component({
                 wx.showToast({
                   title: '菜品更新失败',
                 })
-                console.error('[云函数] 调用失败：', err)
+                errorLog('[云函数] 调用失败：', err)
               }
             }) 
           } else if (res.cancel) {
@@ -157,7 +160,7 @@ Component({
               },
               success: res => {
                 that.triggerEvent('createDish')
-                debugLog('createDish.success.res', res)
+                // debugLog('createDish.success.res', res)
                 wx.showToast({
                   title: '菜品创建成功',
                   duration: 1500,
@@ -171,7 +174,7 @@ Component({
                 wx.showToast({
                   title: '菜品创建失败',
                 })
-                console.error('[云函数] 调用失败：', err)
+                errorLog('[云函数] 调用失败：', err)
               }
             })
           } else if(res.cancel) {
@@ -199,7 +202,7 @@ Component({
               },
               success: res => {
                 that.triggerEvent('deleteDish')
-                debugLog('removeDish.success.res', res)
+                // debugLog('removeDish.success.res', res)
                 wx.showToast({
                   title: '菜品删除成功',
                   duration: 1500,
@@ -213,7 +216,7 @@ Component({
                 wx.showToast({
                   title: '菜品删除失败',
                 })
-                console.error('[云函数] 调用失败：', err)
+                errorLog('[云函数] 调用失败：', err)
               }
             })
           } else if (res.cancel) {
@@ -246,25 +249,25 @@ Component({
               cloudPath,
               filePath,
               success: res => {
-                debugLog('uploadFile', res)
+                // debugLog('uploadFile', res)
                 wx.cloud.getTempFileURL({
                   fileList: [res.fileID]
                 }).then(res => {
                   // get temp file URL
-                  debugLog('upload http url', res)
+                  // debugLog('upload http url', res)
                   const dishImageUrl = res.fileList[0].tempFileURL
                   dish.imageUrl = dishImageUrl
-                  debugLog('dishImageUrl', dishImageUrl)
+                  // debugLog('dishImageUrl', dishImageUrl)
                   that.setData({
                     dish: dish
                   })
-                  debugLog('data.dish', that.data.dish)
+                  // debugLog('data.dish', that.data.dish)
                 }).catch(error => {
                   // handle error
                 })
               },
               fail: e => {
-                console.error('DISH[上传文件] 失败：', e)
+                errorLog('DISH[上传文件] 失败：', e)
                 wx.showToast({
                   icon: 'none',
                   title: '上传失败',
@@ -288,38 +291,38 @@ Component({
       }
     },
     onNameInputBlur: function(e){
-      debugLog('onNameInputBlur.e', e)
+      // debugLog('onNameInputBlur.e', e)
       let dish = this.data.dish
       dish.name = e.detail.value
       this.setData({
         dish: dish
       })
-      debugLog('onNameInputBlur.NOW.DISH', this.data.dish)
+      // debugLog('onNameInputBlur.NOW.DISH', this.data.dish)
     },
     onCategoryInputBlur: function(e){
-      debugLog('onCategoryInputBlur.e', e)
+      // debugLog('onCategoryInputBlur.e', e)
       let dish = this.data.dish
       dish.category = e.detail.value
       this.setData({
         dish: dish
       })
-      debugLog('onCategoryInputBlur.NOW.DISH', this.data.dish)
+      // debugLog('onCategoryInputBlur.NOW.DISH', this.data.dish)
     },
     onPriceInputBlur: function(e){
-      debugLog('onPriceInputBlur.e', e)
+      // debugLog('onPriceInputBlur.e', e)
       let dish = this.data.dish
       dish.price = e.detail.value
       this.setData({
         dish: dish
       })
-      debugLog('onPriceInputBlur.NOW.DISH', this.data.dish)
+      // debugLog('onPriceInputBlur.NOW.DISH', this.data.dish)
     },
     /**
      * add select category in exists categories
      */
     selectCategory: function(e){
       let that = this
-      debugLog('selectCategory.e', e)
+      // debugLog('selectCategory.e', e)
       let dish = this.data.dish
       let category = gConst.DISH_CATEGORIES[e.detail.value]
       that.setData({
@@ -370,7 +373,7 @@ Component({
       let that = this
       if (Array.isArray(dish.category)) {
         for (let i in dish.category) {
-          debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
+          // debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
           if (gConst.DISH_CATEGORIES.includes(dish.category[i])) {
             that.setData({
               selectedCategory: dish.category[i]
@@ -381,7 +384,7 @@ Component({
         }
       } else {
         if (typeof dish.category == "string") {
-          debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
+          // debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
           if (gConst.DISH_CATEGORIES.includes(dish.category)) {
             that.setData({
               selectedCategory: dish.category

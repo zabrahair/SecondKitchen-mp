@@ -13,6 +13,14 @@ const TABLES = require('../../const/collections.js')
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 const dishApi = require('../../api/dish.js')
+// DB Related
+const db = wx.cloud.database()
+const $ = db.command.aggregate
+const _ = db.command
+
+var categoriesFilter = ['全部']
+categoriesFilter = categoriesFilter.concat(gConst.DISH_CATEGORIES)
+categoriesFilter.push('其他')
 
 Page({
 
@@ -25,6 +33,8 @@ Page({
     operatorType: gConst.OPERATION.UPDATE,
     curDishId: '',
     curDish: {},
+    categoriesFilter: categoriesFilter, 
+    curFilterCategory: categoriesFilter[0],
   },
 
   /**
@@ -52,8 +62,17 @@ Page({
    */
   onShow: function () {
     let that = this
-    dishApi.queryDishes({}, result => {
-      debugLog('refresh dishes count', result.length);
+    let filters = {}
+    if (that.data.curFilterCategory == '全部'){
+      
+    } else if (that.data.curFilterCategory == '其他'){
+      filters['category'] = _.or(gConst.DISH_CATEGORIES)
+    } else {
+      filters['category'] = that.data.curFilterCategory
+    }
+    // debugLog('onShow.filters', filters)
+    dishApi.queryDishes(filters, result => {
+      // debugLog('refresh dishes count', result.length);
       that.setData({
         dishes: result
       })
@@ -111,7 +130,7 @@ Page({
    * on click edit dish button
    */
   onEditDish: function(e){
-    debugLog('onEditDish.e', e)
+    // debugLog('onEditDish.e', e)
     let dishId = e.currentTarget.dataset.dishId
     let dishIdx = e.currentTarget.dataset.dishIdx
     let curDish = this.data.dishes[dishIdx]
@@ -127,7 +146,7 @@ Page({
    * Update Dish
    */
   onDishUpdate: function(e){
-    debugLog('onDishUpdate', e)
+    // debugLog('onDishUpdate', e)
     this.onShow();
     this.setData({
       isShownDishEditor: false
@@ -138,7 +157,7 @@ Page({
  * Create Dish
  */
   onDishCreate: function (e) {
-    debugLog('onDishCreate', e)
+    // debugLog('onDishCreate', e)
     this.onShow();
     this.setData({
       isShownDishEditor: false
@@ -149,7 +168,7 @@ Page({
    * Delete Dish
    */
   onDishDelete: function (e) {
-    debugLog('onDishDelete', e)
+    // debugLog('onDishDelete', e)
     this.onShow();
     this.setData({
       isShownDishEditor: false
@@ -163,6 +182,21 @@ Page({
     // debugLog('closeDishEditor.event', e)
     this.setData({
       isShownDishEditor: false
+    })
+  },
+
+  /**
+   * add select category in exists categories
+   */
+  selectCategory: function (e) {
+    let that = this
+    // debugLog('selectCategory.e', e)
+    let dish = this.data.dish
+    let category = categoriesFilter[e.detail.value]
+    that.setData({
+      curFilterCategory: category
+    }, res => {
+      that.onShow()
     })
   },
 })

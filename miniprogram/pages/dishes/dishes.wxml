@@ -3,6 +3,17 @@
   <view class='header'>
     <view class='company_name'>
     </view>
+    <view class="filters">
+      <view class="category_filter">
+        <text class='capital'></text>
+        <picker class='category_picker' 
+        bindchange="selectCategory" value="{{index}}" range="{{categoriesFilter}}">
+          <view class="picker">
+            过滤分类：{{curFilterCategory}}
+          </view>
+        </picker>      
+      </view>
+    </view>
   </view>
   <view class='content' > 
     <scroll-view view class='dishes_list' scroll-y='true'>
