@@ -1,0 +1,147 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 30vh;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('https://wx2.sinaimg.cn/large/006Nm6ZJgy1fhfzwnrvpvj30p00owdsx.jpg');
+
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 70vh;
+}
+
+.memberes_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;  
+
+  width: 100vw;
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.member {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  align-items: flex-end;
+
+  width: 90vw;
+  height: 20vh; 
+  margin-left: 1vw;
+  padding-left: 1vw;
+  margin-right: 1vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  border-bottom: 1px solid gray;  
+
+  font-size: 4vw;
+
+}
+
+.member_image {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  align-items: flex-end; 
+
+  width: 15vh;
+  height: 15vh; 
+  border: 1px solid darkgrey; 
+}
+
+.operators {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end; 
+
+  width: 20vw;
+  height: 15vh;
+  margin-left: 0vw;
+}
+
+.member_name {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.member_catalog {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.member_price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+}
+
+.edit_member {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:center;
+  align-items: center;
+  
+  /* width: 15vw; */
+  /* height: 5vh;  */
+  /* font-size: 1px; */
+  border: 1px solid grey;
+
+}
+
+
+.member_editor {
+  position: absolute;
+  top: 0vh;
+  left: 0vw;
+}

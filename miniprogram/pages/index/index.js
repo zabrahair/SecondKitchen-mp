@@ -17,12 +17,6 @@ Page({
     USER_ROLE: USER_ROLE,
     avatarUrl: ''
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
 
   onLoad: function () {
     this.login();

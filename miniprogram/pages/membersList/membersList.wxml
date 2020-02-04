@@ -1,0 +1,43 @@
+<view class='container'>
+  <view class='header'>
+    <view class='company_name'>
+    </view>
+  </view>
+  <view class='content' > 
+    <scroll-view view class='memberes_list' scroll-y='true'>
+      <view class='member' wx:for-items='{{memberes}}' wx:key="_id" wx:for-item='member' wx:for-index='memberIdx'>
+        <image class="member_image" mode='aspectFill' src="{{member.imageUrl}}">
+        </image>      
+        <view class='member_info'>
+          <view class='member_name'>
+            菜名：{{member.name}}
+          </view>
+          <view class='member_price'>
+            价格：{{member.price}} 元
+          </view>     
+        </view>
+        <view class='operators'>           
+          <button class='edit_member' size='mini' bindtap='onEditmember' type='normal' data-member-id='{{member._id}}' data-member-idx='{{memberIdx}}' lang='zh_CN'>
+            编辑
+          </button>               
+        </view> 
+      </view>    
+    </scroll-view>
+  </view>
+  <view class='operators' style='width: 100vw;'>           
+  <button class='edit_member' size='default' bindtap='onAddmember' type='primary'>
+    添加
+  </button>
+</view> 
+</view>
+<member-editor
+  class='member_editor' 
+  bindclose='closememberEditor'
+  bindupdatemember='onmemberUpdate'
+  bindcreatemember='onmemberCreate'
+  binddeletemember='onmemberDelete'
+  isShown="{{isShownmemberEditor}}"
+  operatorType="{{operatorType}}"
+  memberId="{{curmemberId}}"
+  member='{{curmember}}'>
+</member-editor>

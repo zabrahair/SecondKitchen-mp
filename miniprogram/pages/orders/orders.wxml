@@ -1,7 +1,7 @@
 <!--pages/orders/orders.wxml-->
 <view class="container">
   <view class="conditions">
-    <picker mode="date" value="{{startDate}}" start="{{startDate}}" end="2030-10-01" bindchange="selStartDate">
+    <picker mode="date" value="{{startDate}}" start="2020-01-01" end="2030-10-01" bindchange="selStartDate">
       <view class="date_picker" >
         开始日期: {{startDate}}
       </view>

@@ -189,6 +189,13 @@
 					"pathName": "pages/firstLogin/firstLogin",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/membersList/membersList",
+					"pathName": "pages/membersList/membersList",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

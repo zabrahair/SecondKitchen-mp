@@ -26,7 +26,8 @@ Page({
   data: {
     userInfo: utils.getUserInfo(globalData),
     userRole: utils.getUserInfo(globalData).userRole,
-    USER_ROLE: USER_ROLE
+    USER_ROLE: USER_ROLE,
+    isRegister: false,
   },
 
   /**
@@ -61,7 +62,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let userInfo = utils.getUserInfo(globalData)
+    if(userInfo.openId){
+      this.setData({
+        isRegister: true
+      })
+    }
   },
 
   /**
@@ -128,8 +134,26 @@ Page({
 
   onClickMenuEdit: function (e) {
 
-    wx.navigateTo({
+    wx.switchTab({
       url: '../../pages/menuList/menuList',
+    })
+  },
+
+  /**
+   * 注册
+   */
+  toRegister: function(e){
+    wx.navigateTo({
+      url: '../../pages/index/index',
+    })
+  },
+
+  /**
+   * 显示某个权限下可见的所有成员，并且对他们的部分信息进行编辑
+   */
+  onClickMemberList: function(e){
+    wx.navigateTo({
+      url: '../../pages/membersList/membersList',
     })
   }
 })

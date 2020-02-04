@@ -30,7 +30,13 @@
       style="display: {{(userRole == USER_ROLE.ADMIN || userRole == USER_ROLE.COMPANY || userRole == USER_ROLE.RESTAURANT)?'flex':'none'}};">
         <view class='left' >统计订餐</view>
         <view class='right'>></view>
-      </view>         
+      </view>   
+      <view class="feature" 
+      bindtap='onClickMemberList'
+      style="display: {{(userRole == USER_ROLE.ADMIN || userRole == USER_ROLE.COMPANY || userRole == USER_ROLE.RESTAURANT)?'flex':'none'}};">
+        <view class='left'>成员管理</view>
+        <view class='right'>></view>
+      </view>       
       <view class="feature" 
       style="display: {{userRole == USER_ROLE.ADMIN? 'flex': 'none'}};" bindtap="onClickMenuEdit">
         <view class='left'>查看订餐公司</view>
@@ -46,9 +52,10 @@
         <view class='right'>></view>
       </view>      
     </view>
-    <!-- <view class="login_buttons">
-      <button type='warn' class='btn_logout' bindtap="logout">登出</button>
-      <button type='primary' class='btn_login' bindtap='login'>登陆</button>
-    </view> -->
+    <view class="login_buttons">
+      <!-- <button type='warn' class='btn_logout' bindtap="logout">登出</button>
+      <button type='primary' class='btn_login' bindtap='login'>登陆</button> -->
+      <button type='primary' style="display: {{isRegister?'none':'block'}};" class='btn_register' bindtap='toRegister'>注册</button>
+    </view>
   </view>
 </view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "member-editor": "../../components/memberEditor/memberEditor"
+  },
+  "navigationBarTitleText": "成员管理列表"
+}
