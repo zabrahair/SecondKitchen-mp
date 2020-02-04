@@ -15,6 +15,9 @@
           </view>
           <view class='dish_price'>
             价格：{{dish.price}} 元
+          </view> 
+          <view class='dish_category'>
+            品类：{{dish.category}} 
           </view>     
         </view>
         <view class='operators'>           

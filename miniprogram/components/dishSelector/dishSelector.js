@@ -30,6 +30,10 @@ Component({
     dishIdx: {
       type: String,
       value: ''  
+    },
+    dishCategory: {
+      type: String,
+      value: ''
     }
   },
 
@@ -44,12 +48,12 @@ Component({
     attached: function () { 
       debugLog('lifetimes.attached', this.properties)
       let that = this
-      dishApi.queryDishes({}, result => {
-        // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
-        that.setData({
-          dishes: result
-        })
-      })      
+      // dishApi.queryDishes({}, result => {
+      //   // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
+      //   that.setData({
+      //     dishes: result
+      //   })
+      // })      
     },
 
     show: function(){
@@ -64,8 +68,18 @@ Component({
   },
 
   observers: {
-    'dishEnName, dishIdx': function (dishEnName, dishIdx){
+    'dishEnName, dishIdx, dishCategory': function (dishEnName, dishIdx, dishCategory){
+      let that = this
       debugLog('observers.dishEnName', dishEnName)
+      debugLog('observers.dishCategory', dishCategory)
+      dishApi.queryDishes({
+        category: dishCategory
+      }, result => {
+        // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
+        that.setData({
+          dishes: result
+        })
+      }) 
     }
   },
 
@@ -83,8 +97,8 @@ Component({
       debugLog('onTapDish.event', e)
       let optionIdx = e.currentTarget.dataset.optionIdx
       let dishOption = this.data.dishes[optionIdx]
-      debugLog('onTapDish.optionIdx', optionIdx)
-      debugLog('onTapDish.dishOption', dishOption)
+      // debugLog('onTapDish.optionIdx', optionIdx)
+      // debugLog('onTapDish.dishOption', dishOption)
       this.triggerEvent('tapNewDishOption', {
         dishIdx: that.properties.dishIdx,
         dishEnName: that.properties.dishEnName,

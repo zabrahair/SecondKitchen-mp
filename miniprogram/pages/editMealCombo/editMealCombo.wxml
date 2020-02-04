@@ -26,7 +26,8 @@
         <view class='add_option' 
           bindtap="onClickAddOption" 
           data-dish-idx='{{dishIdx}}'
-          data-dish-en-name='{{dish.enName}}'>
+          data-dish-en-name='{{dish.enName}}'
+          data-dish-category='{{dish.name}}'>
           <view class="dish_image">
             +
           </view>
@@ -78,5 +79,6 @@
   bindtapNewDishOption='addNewOption'
   isShown="{{isShownDishSelector}}"
   dishEnName="{{curDishEnName}}"
-  dishIdx="{{curDishIdx}}">
+  dishIdx="{{curDishIdx}}"
+  dishCategory="{{curDishCategory}}">
 </dish-selector>

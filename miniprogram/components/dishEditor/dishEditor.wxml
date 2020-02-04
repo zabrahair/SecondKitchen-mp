@@ -14,10 +14,16 @@
         placeholder='输入菜名' placeholder-class="add_dish_input_ph" 
         bindblur="onNameInputBlur" value='{{dish.name}}'>
         </input>
-        <input class='dish_name add_dish_input' name='category' 
+        <picker class='dish_name add_dish_input' 
+        bindchange="selectCategory" value="{{index}}" range="{{gConst.DISH_CATEGORIES}}">
+          <view class="picker">
+            当前选择：{{selectedCategory}}
+          </view>
+        </picker>
+        <!-- <input class='dish_name add_dish_input' name='category' 
         placeholder='输入分类' placeholder-class="add_dish_input_ph" 
         bindblur="onCategoryInputBlur" value='{{dish.category}}'>
-        </input>
+        </input> -->
         <input class='dish_price add_dish_input' name='price' 
         placeholder='输入价格' placeholder-class="add_dish_input_ph" 
         bindblur="onPriceInputBlur" value='{{dish.price}}'>

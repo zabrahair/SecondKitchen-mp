@@ -60,6 +60,7 @@ Page({
     isShownDishSelector: false,
     curDishEnName: '',
     curDishIdx: '',
+    curDishCategory: '',
     operation: gConst.OPERATION.UPDATE,
     companiesPickerObj: {},
     companiesPicker: [],
@@ -199,8 +200,8 @@ Page({
     this.setData({
       curDishEnName: dataset.dishEnName,
       curDishIdx: dataset.dishIdx,
+      curDishCategory: dataset.dishCategory,
       isShownDishSelector: true
-
     })
   },
 

@@ -126,7 +126,7 @@ Page({
     let formValues = e.detail.value
     // debugLog('onRegister.formValue', formValues);
     var userInfo = utils.getUserInfo(globalData)
-    debugLog('userInfo', userInfo)
+    // debugLog('userInfo', userInfo)
     formValues['userRole'] = that.data.userRole
     Object.assign(userInfo, formValues)
     delete userInfo['_openid']
@@ -144,7 +144,7 @@ Page({
     this.vertifyCompany(companyName, formValues.companyVertify, res => {
       delete formValues['companyVertify']
       if (res.isVertified == true) {
-        debugLog('openId', userInfo.openId)
+        // debugLog('openId', userInfo.openId)
         formValues['companyName'] = res.vertifiedCompany.name
         formValues['companyId'] = res.vertifiedCompany._id
         formValues['userRole'] = res.userRole
@@ -154,7 +154,7 @@ Page({
         userApi.queryUser({
           _id: userInfo.openid
         }, result => {
-          debugLog('queryUserResult', result)
+          // debugLog('queryUserResult', result)
           // If not found the user insert a new one.
           if (result.length <= 0) {
             userInfo = utils.getUserInfo(globalData);
@@ -162,9 +162,9 @@ Page({
             userInfo['companyName'] = formValues['companyName']
             userInfo['companyId'] = formValues['companyId']
             userInfo['userRole'] = formValues['userRole']
-            debugLog('create a new user', userInfo)
+            // debugLog('create a new user', userInfo)
             userApi.createUser(userInfo, result => {
-              debugLog('insertResult', result)
+              // debugLog('insertResult', result)
               utils.setUserInfo(userInfo, globalData)
               wx.switchTab({
                 url: '../menuList/menuList'
@@ -174,7 +174,7 @@ Page({
             userInfo = result[0]
             // else updat the user info with login time
             // debugLog('else updat the user info with login time','')
-            debugLog('updateUser', formValues)
+            // debugLog('updateUser', formValues)
             userApi.updateUser(userInfo._id,
               formValues,
               result => {

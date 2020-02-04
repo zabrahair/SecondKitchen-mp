@@ -64,5 +64,6 @@ module.exports = {
   EMPTY_DISH: EMPTY_DISH,
   NO_COMPANY_ID: 'NO_COMPANY_ID',
   NO_COMPANY_NAME: '临时订饭',
-  WEEK_DAYS: WEEK_DAYS
+  WEEK_DAYS: WEEK_DAYS,
+  DISH_CATEGORIES: ['大荤','小荤','素菜','主食','汤'],
 }

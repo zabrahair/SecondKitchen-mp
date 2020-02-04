@@ -44,6 +44,7 @@ Component({
   data: {
     OPERATION: gConst.OPERATION,
     dish: gConst.EMPTY_DISH,
+    gConst: gConst
   },
 
   lifetimes: {
@@ -79,6 +80,7 @@ Component({
     },
     'dish': function (dish) {
       // debugLog('observers.dish', dish)
+      this.getCategory(dish)
     }
   },
 
@@ -96,11 +98,14 @@ Component({
      */
     onDishUpdate: function(e){
       let that = this
+      debugLog('that.data.dish', that.data.dish)
+      debugLog('that.properties.dish', that.properties.dish)
       wx.showModal({
         title: MSG.UPDATE_CONFIRM_TITLE,
         content: MSG.UPDATE_CONFIRM_MESSAGE,
         success(res) {
           if (res.confirm) {
+            that.appendDishCategory(that.data.dish, that.data.selectedCategory)
             wx.cloud.callFunction({
               name: 'updateDish',
               data: {
@@ -144,6 +149,7 @@ Component({
         content: MSG.CREATE_CONFIRM_MESSAGE,
         success(res) {
           if(res.confirm){
+            that.appendDishCategory(that.data.dish)
             wx.cloud.callFunction({
               name: 'createDish',
               data: {
@@ -307,6 +313,96 @@ Component({
         dish: dish
       })
       debugLog('onPriceInputBlur.NOW.DISH', this.data.dish)
+    },
+    /**
+     * add select category in exists categories
+     */
+    selectCategory: function(e){
+      let that = this
+      debugLog('selectCategory.e', e)
+      let dish = this.data.dish
+      let category = gConst.DISH_CATEGORIES[e.detail.value]
+      that.setData({
+        selectedCategory: category
+      })
+    },
+
+    /**
+     * add new select  category
+     *
+     */
+    appendDishCategory: function(dish, category){
+      let that = this
+      if (Array.isArray(dish.category)) {
+        let isFound = false;
+        for (let i in dish.category) {
+          if (category == dish.category[i]) {
+            isFound = true
+            break
+          }
+        }
+        if (!isFound) {
+          dish.category.push(category)
+          that.setData({
+            dish: dish
+          })
+        }
+
+      } else {
+        let categoriesArray = [];
+        if (typeof dish.category == "string") {
+          if (dish.category != category) {
+            categoriesArray.push(dish.category)
+          }
+
+        }
+        categoriesArray.push(category)
+        dish.category = categoriesArray
+        that.setData({
+          dish: dish
+        })
+      }      
+    },
+    /**
+     * Get category from categories Array
+     */
+    getCategory: function(dish){
+      let that = this
+      if (Array.isArray(dish.category)) {
+        for (let i in dish.category) {
+          debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
+          if (gConst.DISH_CATEGORIES.includes(dish.category[i])) {
+            that.setData({
+              selectedCategory: dish.category[i]
+            }, res=>{
+              return dish.category[i]
+            })
+          }
+        }
+      } else {
+        if (typeof dish.category == "string") {
+          debugLog('gConst.DISH_CATEGORIES.includes(dish.category)', gConst.DISH_CATEGORIES.includes(dish.category))
+          if (gConst.DISH_CATEGORIES.includes(dish.category)) {
+            that.setData({
+              selectedCategory: dish.category
+            }, res=>{
+              return dish.category
+            })
+          }else{
+            that.setData({
+              selectedCategory: gConst.DISH_CATEGORIES[0]
+            }, res => {
+              return dish.category
+            })            
+          }
+        }else{
+          that.setData({
+            selectedCategory: gConst.DISH_CATEGORIES[0]
+          }, res => {
+            return dish.category
+          })
+        }
+      }       
     }
   },
 })

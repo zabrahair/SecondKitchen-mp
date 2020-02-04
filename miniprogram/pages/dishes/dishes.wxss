@@ -126,6 +126,19 @@
   height: 5vh; 
 }
 
+.dish_category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end; 
+
+  width: 40vw;
+  height: 5vh; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .edit_dish {
   display: flex;
   flex-direction: row;
