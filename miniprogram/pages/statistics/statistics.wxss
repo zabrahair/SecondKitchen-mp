@@ -249,7 +249,7 @@
   justify-content: space-between;
   align-items: center;
 
-  width: 80vw;
+  width: 40vw;
 }
 
 order_status {

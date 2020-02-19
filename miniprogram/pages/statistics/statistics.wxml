@@ -54,9 +54,9 @@
               <view class='order_price'>
                 订餐人： {{order.realName}}
               </view>
-              <!-- <view class='order_price'>
+              <view class='order_price'>
                 总价： ￥{{order.price}}
-              </view> -->
+              </view>
               <view class='order_status'>
                 {{order.status}}
               </view>        
