@@ -65,13 +65,13 @@ Page({
 
   getUserInfo: function (e) {
     var that = this;
-    debugLog('auth.event', e.detail)
+    // debugLog('auth.event', e.detail)
     let avatarUrl = e.detail.userInfo.avatarUrl
     let userInfo = e.detail.userInfo
     that.setData({
       avatarUrl: avatarUrl
     })
-    debugLog('userInfo1', userInfo)
+    // debugLog('userInfo1', userInfo)
     this.login()
   },
 
@@ -87,44 +87,44 @@ Page({
     })
     wx.getSetting({
       success: res => {
-        debugLog('getSetting', res)
+        // debugLog('getSetting', res)
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           // 在没有 open-type=getUserInfo 版本的兼容处理
           wx.getUserInfo({
             success: res => {
-              debugLog('getUserInfo', res)
+              // debugLog('getUserInfo', res)
               userInfo = res.userInfo;
-              debugLog('userInfo2', userInfo)
+              // debugLog('userInfo2', userInfo)
               that.setData({
                 userInfo: userInfo
               })
               globalData.userInfo = userInfo
-              debugLog('getUserInfo', globalData.userInfo)
+              // debugLog('getUserInfo', globalData.userInfo)
               // 登陆当前用户
               // 调用云函数
               wx.cloud.callFunction({
                 name: 'login',
                 data: {},
                 success: res => {
-                  debugLog('login', res)
+                  // debugLog('login', res)
                   // debugLog('[云函数] [login] user openid: ', res.result.openid)
                   userInfo['openId'] = res.result.openid
                   userInfo['appId'] = res.result.appid;
-                  debugLog('userInfo3', userInfo)
+                  // debugLog('userInfo3', userInfo)
                   that.setData({
                     userInfo: userInfo
                   })
                   userApi.queryUser({
                     _id: userInfo.openId
                   }, result => {
-                    debugLog('queryUser', result)
-                    debugLog('userInfo4', userInfo)
+                    // debugLog('queryUser', result)
+                    // debugLog('userInfo4', userInfo)
                     if (result.length > 0) {
-                      debugLog('1')
+                      // debugLog('1')
                       app.globalData.userInfo = result[0]
                       wx.setStorageSync('userInfo', result[0])
-                      debugLog('2')
+                      // debugLog('2')
                       that.setData({
                         userInfo: result[0]
                       })
@@ -135,7 +135,7 @@ Page({
                         userInfo: userInfo
                       })
                     }
-                    debugLog('globalData.userInfo', globalData.userInfo)
+                    // debugLog('globalData.userInfo', globalData.userInfo)
                     that.checkUserExisted()
                   })
 

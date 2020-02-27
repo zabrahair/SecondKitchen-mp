@@ -208,18 +208,22 @@
 .order_info {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 
   width: 100vw;
-  height: 6vh;
+  min-height: 7vh;
 
   font-size: 3vw;
   font-weight: bold;
 
   border-bottom: 1px solid azure;
+}
+
+.order .cancel_order {
+  border: 1px solid red;
+  align-self: flex-end;
 }
 
 .order_name {

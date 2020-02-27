@@ -41,7 +41,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    dishes: {}
+    dishes: []
   },
 
   lifetimes: {
@@ -72,14 +72,26 @@ Component({
       let that = this
       debugLog('observers.dishEnName', dishEnName)
       debugLog('observers.dishCategory', dishCategory)
-      dishApi.queryDishes({
-        category: dishCategory
-      }, result => {
-        // debugLog('Dish Page onLoad', JSON.stringify(result), 2);
-        that.setData({
-          dishes: result
-        })
-      }) 
+      that.setData({
+        dishes: []
+      }
+      ,()=>{
+          utils.loadPagesData((pageIdx, loadTimer) => {
+            dishApi.queryDishes({
+              category: dishCategory
+            }, pageIdx, result => {
+              // debugLog('Dish Page onLoad', result);
+              if (result.length > 0) {
+                let dishes = that.data.dishes ? that.data.dishes : []
+                that.setData({
+                  dishes: dishes.concat(result)
+                })
+              } else {
+                clearInterval(loadTimer)
+              }
+            })
+          })
+      })
     }
   },
 

@@ -42,78 +42,120 @@ Page({
     companiesPickerObj: {},
     companiesPicker: [],
     selectCompanyIndex: 0,
-    userInfo: null
+    userInfo: null,
+    pageIdx: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
     let userInfo = utils.getUserInfo(globalData)
     this.setData({
       userInfo: userInfo
     })
+    that.fetchCompanys()
   },
 
-  refreshStatistics: function(){
-    // Clear last data
-    debugLog('startDate', this.data.startDate)
-    debugLog('endDate', this.data.endDate)
-    this.setData({
-      orders: [],
-      countDishes: []
-    })
-
+  /**
+   * 获取公司列表
+   */
+  fetchCompanys: function(callback){
+    let that = this
     // Company Picker List Get
-    let userRole = this.data.userInfo.userRole
+    let userRole = that.data.userInfo.userRole
     if (userRole != USER_ROLE.ADMIN) {
-      let companyName = this.data.userInfo.companyName
+      let companyName = that.data.userInfo.companyName
       let companiesPicker = new Array(1);
       companiesPicker[0] = companyName
       debugLog('companiesPicker', companiesPicker)
-      this.setData({
+      that.setData({
         companiesPicker: companiesPicker
       })
-    }else{
-      companyApi.query({}, res => {
-        let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
-        // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
-        this.setData({
-          companiesPickerObj: companiesPickerAllInfo.pickerObjs,
-          companiesPicker: companiesPickerAllInfo.pickerList
+    } else {
+      that.setData({
+        companiesPickerObj: {},
+        companiesPicker: [],
+      }
+      ,()=>{
+        utils.loadPagesData((pageIdx, loadTimer) => {
+          companyApi.query({}, pageIdx, res => {
+            if (res.length > 0) {
+              let companiesPickerAllInfo = utils.pickerMaker(res, 'name')
+              // debugLog('companiesPickerAllInfo', companiesPickerAllInfo)
+              that.setData({
+                companiesPickerObj: Object.assign(that.data.companiesPickerObj, companiesPickerAllInfo.pickerObjs),
+                companiesPicker: that.data.companiesPicker.concat(companiesPickerAllInfo.pickerList)
+              })
+            } else {
+              clearInterval(loadTimer)
+            }
+          })
         })
+      })
+
+
+    }
+  },
+
+  refreshStatistics: function(pageIdx, callback){
+    // debugLog('pageIdx', pageIdx)
+    // Clear last data
+    // debugLog('startDate', this.data.startDate)
+    // debugLog('endDate', this.data.endDate)
+    let that = this
+    if (pageIdx == 0){
+      that.setData({
+        orders: [],
+        countDishes: []
       })
     }
 
     let whereFilters = {
-      shipDateString: _.and(_.gte(this.data.startDate), _.lte(this.data.endDate))
+      shipDateString: _.and(_.gte(that.data.startDate), _.lte(that.data.endDate)),
+      isRemoved: _.or([_.exists(false), false]),
     }
 
-
     // debugLog('whereFilters-1', whereFilters)
-    let curCompany = this.data.companiesPicker[this.data.selectCompanyIndex]
+    let curCompany = that.data.companiesPicker[that.data.selectCompanyIndex]
     if (curCompany != gConst.ALL_COMPANIES){
       whereFilters['companyName'] = curCompany
     }
     // debugLog('whereFilters-2', whereFilters)
-
-    // Order List 
-    orderApi.query(whereFilters, res => {
-      // debugLog('orders', res)
-      let orders = res
-      this.setData({
-        orders: orders
+    // debugLog('pageIdx', pageIdx)
+    if(that.data.tabStatus.ORDERS == 'selected'){
+      // Order List 
+      orderApi.query(whereFilters, pageIdx, res => {
+        // debugLog('orders', res)
+        debugLog('orders.length', res.length)
+        let orders = res
+        if (orders.length>0){
+          that.setData({
+            orders: that.data.orders.concat(orders)
+          }, () => {
+            utils.runCallback(callback)(true)
+          })
+        }
       })
-    })
+    }
 
-    // Dishes Count aggregate
-    orderApi.countDishes(whereFilters, res => {
-      // debugLog('countDishes', res)
-      let countDishes = res.list
-      this.setData({
-        countDishes: countDishes
+
+    if (that.data.tabStatus.DISHES == 'selected') {
+      // Dishes Count aggregate
+      debugLog('whereFilters', whereFilters)
+      orderApi.countDishes(whereFilters, pageIdx, res => {
+        debugLog('countDishes', res)
+        let countDishes = res.list
+        if (countDishes.length > 0) {
+          that.setData({
+            countDishes: that.data.countDishes.concat(countDishes)
+          }, () => {
+            utils.runCallback(callback)(true)
+          })
+        }
       })
-    })
+    }
   },
 
   /**
@@ -127,10 +169,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this
+    let userInfo = utils.getUserInfo(globalData)
     this.setData({
-      userInfo: globalData.userInfo,
+      userInfo: userInfo
     })
-    this.refreshStatistics();
+    that.refreshStatistics(0)
   },
 
   /**
@@ -151,14 +195,23 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    debugLog('onPullDownRefresh', 'refresh')
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this
+    debugLog('onReachBottom', 'refresh')
+    let pageIdx = that.data.pageIdx + 1
+    that.refreshStatistics(pageIdx, isLoaded => {
+      if (isLoaded) {
+        that.setData({
+          pageIdx: pageIdx
+        })
+      }
+    });
   },
 
   /**
@@ -172,20 +225,24 @@ Page({
    * 点击Tab标签
    */
   onClickTab: function (event, data){
-    debugLog('event', event);
-    debugLog('data', data);
+    // debugLog('event', event);
+    // debugLog('data', data);
+    let that = this
     let tabName = event.target.dataset.tabName;
-    utils.resetStatus(this.data.tabStatus, tabName, gConst.UNSELECT, gConst.SELECTED)
-    this.setData({
-      tabStatus: this.data.tabStatus
+    utils.resetStatus(that.data.tabStatus, tabName, gConst.UNSELECT, gConst.SELECTED)
+    that.setData({
+      tabStatus: that.data.tabStatus
+    }, () => {
+      that.refreshStatistics(0)
     })
   },
 
   onOrdersCompanyChange: function (e) {
-    this.setData({
+    let that = this
+    that.setData({
       selectCompanyIndex: e.detail.value
     })
-    this.refreshStatistics()
+    that.refreshStatistics(0)
   },
 
   selStartDate: function(e){
@@ -194,7 +251,7 @@ Page({
       this.setData({
         startDate: startDate
       })
-      this.refreshStatistics()
+      this.refreshStatistics(0)
     } else {
       wx.showToast({
         title: '时间不合理',
@@ -211,7 +268,7 @@ Page({
       this.setData({
         endDate: endDate
       })
-      this.refreshStatistics()
+      this.refreshStatistics(0)
     }else{
       wx.showToast({
         title: '时间不合理',
@@ -220,4 +277,13 @@ Page({
       })
     }
   },
+
+  removeOrder: function (e) {
+    let that = this
+    let dataset = utils.getEventDataset(e)
+    let orderId = dataset.orderId
+    orderApi.removeOrder(orderId, res => {
+      that.refreshOrders()
+    })
+  }
 })

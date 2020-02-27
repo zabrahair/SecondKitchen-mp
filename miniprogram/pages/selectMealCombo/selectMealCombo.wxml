@@ -1,7 +1,7 @@
 <!--pages/selectMealCombo/selectMealCombo.wxml-->
 <view class="container">
   <view class="header">
-    <view class="combo_title">
+    <view class="combo_title" style="width: {{(combo.name.length+1)*6}}vw;">
       {{combo.name}}
     </view>
     <picker class="shipping_date" mode="date" value="{{shipDate}}" start="{{startDate}}" end="2030-10-01" bindchange="selShipDate">
@@ -17,7 +17,6 @@
       </view>
         <scroll-view  class="options" scroll-x="true" >
         <radio-group  class="options" bindchange="onDishSelect" data-dish-idx='{{dish.enName}}' data-dish-idx='{{dishIdx}}'>
-          
             <view class="dish_option dish_{{item.id}}"
                   wx:for-items="{{dish.options}}" wx:for-index="optionIdx" wx:key="_id" wx:for-item='option' 
                   value="{{item.id}}" checked="{{item.isSelect}}">
@@ -29,8 +28,6 @@
               <radio  class="dish_radio" value='{{optionIdx}}'>
               </radio>
             </view>
-          
-
         </radio-group> 
         </scroll-view>
       
@@ -46,7 +43,7 @@
       </view>
     </view>
     <view class="send_order">
-      <button bindtap="onSendOrder" class="btn_send_order" type="primary" >下订单</button>
+      <button bindtap="onSendOrder" disabled="{{isProcessOrder}}" class="btn_send_order" type="primary" >下订单</button>
     </view>
   </view>
 </view>

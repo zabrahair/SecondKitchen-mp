@@ -12,9 +12,21 @@ const TABLE = 'user'
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   let filters = event.filters
+  let pPageIdx = event.pageIdx
+  let pageIdx = 0
+  if (pPageIdx) {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
+  let countOfPage = 100
   console.log('event', JSON.stringify(event, null, 4))
   try {
-    let result = await db.collection(TABLE).where(filters).get()
+    let result = await db.collection(TABLE)
+      .where(filters)
+      .skip(pageIdx * countOfPage)
+      .limit(countOfPage)
+      .get()
     console.log('query users result:', JSON.stringify(result, null, 4))
     return result;
   } catch (e) {

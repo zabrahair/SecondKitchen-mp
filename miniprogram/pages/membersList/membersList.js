@@ -34,13 +34,14 @@ Page({
     userInfo: utils.getUserInfo(globalData),
     userRole: utils.getUserInfo(globalData).userRole,
     USER_ROLE: USER_ROLE,
+    pageIdx: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.onShow();
+    // this.onShow();
   },
 
   /**
@@ -64,32 +65,46 @@ Page({
     that.refreshUserInfo()
     let companyId = that.data.userInfo.companyId
     let userRole = that.data.userInfo.userRole
-    that.getUsers(companyId, userRole);
+    let pageIdx = that.data.pageIdx
+    that.getUsers(companyId, userRole, pageIdx);
   },
 
   /**
    * 获得用户列表
    */
-  getUsers: function(companyId, userRole){
+  getUsers: function(companyId, userRole, pageIdx){
     let that = this
     let filters = {}
+    if (pageIdx == 0) {
+      that.setData({
+        members: []
+      })
+    }
     if(companyId){
       if (userRole != USER_ROLE.ADMIN){
         filters = {
           companyId: companyId
         }
       }
-
+      
       wx.cloud.callFunction({
         name: 'queryUsers',
         data: {
-          filters: filters
+          filters: filters,
+          pageIdx: pageIdx,
         },
         success: res => {
-          debugLog('queryUsers.success.res', res)
-          that.setData({
-            members: res.result.data
-          })
+          debugLog('pageIdx',pageIdx)
+          // debugLog('queryUsers.success.res', res.result.data)
+          let list = res.result.data
+          let members = that.data.members ? that.data.members : []
+          if (list.length > 0) {
+            that.setData({
+              members: members.concat(list)
+            })
+          } else {
+          }
+
         },
         fail: err => {
           wx.showToast({
@@ -97,7 +112,7 @@ Page({
           })
           errorLog('[云函数] 调用失败：', err)
         }
-      }) 
+      })
     }else{
       wx.showToast({
         title: '请登陆后再试。',
@@ -136,17 +151,28 @@ Page({
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
   onPullDownRefresh: function () {
-
+    debugLog('onPullDownRefresh', 'refresh')
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this
+    let companyId = that.data.userInfo.companyId
+    let userRole = that.data.userInfo.userRole
+    debugLog('onReachBottom', 'refresh')
+    let pageIdx = that.data.pageIdx + 1
+    that.getUsers(companyId, userRole, pageIdx, isLoaded => {
+      if (isLoaded) {
+        that.setData({
+          pageIdx: pageIdx
+        })
+      }
+    });
   },
 
   /**

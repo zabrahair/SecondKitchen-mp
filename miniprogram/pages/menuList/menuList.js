@@ -18,7 +18,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    combos: null,
+    combos: [],
     userRole: USER_ROLE,
     userInfo: null
   },
@@ -48,6 +48,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this
     let userInfo = utils.getUserInfo(globalData)
     this.setData({
       userInfo: userInfo,
@@ -59,25 +60,50 @@ Page({
       companyId = gConst.NO_COMPANY_ID;
       companyName = gConst.NO_COMPANY_NAME;
     }
-    if (companyName == gConst.ALL_COMPANIES){
-      dbApi.query(TABLES.COMBO, {
-      }, res => {
-        // debugLog('res:', res)
-        this.setData({
-          combos: res
+    that.setData({
+      combos: []
+    },()=>{
+      if (companyName == gConst.ALL_COMPANIES) {
+        debugLog('companyName', companyName)
+        utils.loadPagesData((pageIdx, loadTimer) => {
+          dbApi.query(TABLES.COMBO
+            , {}
+            , pageIdx
+            , res => {
+              // debugLog('res', res)
+              if (res.length > 0) {
+                let combos = that.data.combos ? that.data.combos : []
+                this.setData({
+                  combos: combos.concat(res)
+                })
+              } else {
+                clearInterval(loadTimer)
+              }
+            })
         })
-      })
-    }else{
-      dbApi.query(TABLES.COMBO, {
-        companyId: companyId
-      }, res => {
-        // debugLog('res:', res)
-        this.setData({
-          combos: res
-        })
-      })
-    }
+      } else {
+        debugLog('companyName', companyName)
+        utils.loadPagesData((pageIdx, loadTimer) => {
+          dbApi.query(TABLES.COMBO
+            , {
+              companyId: companyId
+            }
+            , pageIdx
+            , res => {
+              // debugLog('res', res)
+              if (res.length > 0) {
+                let combos = that.data.combos ? that.data.combos : []
+                this.setData({
+                  combos: combos.concat(res)
+                })
+              } else {
+                clearInterval(loadTimer)
+              }
 
+            })
+        })
+      }
+    })
   },
 
   /**
@@ -118,7 +144,7 @@ Page({
   onClickMenu: function(e){
     let userInfo = utils.getUserInfo(globalData)
     if (userInfo == undefined || userInfo.openId == undefined) {
-      return
+      // return
     }
     let comboId = e.target.dataset.comboId;
     debugLog('comboId', comboId);

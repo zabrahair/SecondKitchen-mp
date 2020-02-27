@@ -42,23 +42,28 @@
         <view class="total_info">
           <view class='orders_count'>订单总数： {{orders.length}}单</view>
         </view>  
-        <scroll-view class="list_area" scroll-y='true'>
-          <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
+        <scroll-view class="list_area" scroll-y='true'
+          bindscrolltolower="onReachBottom">
+          <view class="order" 
+            wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
             <view class='order_info'>
               <view class="order_name">
-                {{order.comboName}}
+                套餐名：{{order.comboName}}
               </view>
               <view class='order_date'>
-                {{order.shipDateString}}
+                送餐日期：{{order.shipDateString}}
               </view>
               <view class='order_price'>
-                订餐人： {{order.realName}}
+                订餐人：{{order.realName}}
               </view>
+              <view wx:if="{{order.orderNo}}" class='order_date'>
+                订单号：{{order.orderNo}}
+              </view>              
               <view class='order_price'>
                 总价： ￥{{order.price}}
               </view>
               <view class='order_status'>
-                {{order.status}}
+                状态：{{order.status}}
               </view>        
             </view>
             <view class="order_content" wx:for-items="{{order.dishes}}" wx:key="id" wx:for-item="dish">
@@ -69,6 +74,7 @@
                 ￥{{dish.price}}
               </view> -->
             </view>
+            <button type='warn' class="cancel_order" size="mini" bindtap="removeOrder" data-order-id="{{order._id}}">取消订单</button>
           </view>        
         </scroll-view>
       </view>
@@ -77,23 +83,25 @@
           一共{{countDishes.length}}种菜被预定。
         </view>      
         <view class="list_area" >
-          <scroll-view class='dishes_list' scroll-y='true'>
-                <view class='dish' wx:for-items='{{countDishes}}' wx:key="_id" wx:for-item='dish'>
-                  <image class="dish_image" mode='aspectFill' src="{{dish._id.imageUrl}}">
-                  </image>      
-                  <view class='dish_info'>
-                    <view class='dish_name'>
-                      菜名：{{dish._id.name}}
-                    </view>
-                    <view class='dish_price'>
-                      价格：{{dish._id.price}} 元
-                    </view>     
-                  </view>
-                  <view class='dishes_count'>           
-                      {{dish.count}} 份              
-                  </view> 
-                </view>    
-              </scroll-view>
+          <scroll-view class='dishes_list' scroll-y='true' 
+            bindscrolltolower="onReachBottom">
+            <view class='dish' 
+              wx:for-items='{{countDishes}}' wx:key="_id" wx:for-item='dish'>
+              <image class="dish_image" mode='aspectFill' src="{{dish._id.imageUrl}}">
+              </image>      
+              <view class='dish_info'>
+                <view class='dish_name'>
+                  菜名：{{dish._id.name}}
+                </view>
+                <view class='dish_price'>
+                  价格：{{dish._id.price}} 元
+                </view>     
+              </view>
+              <view class='dishes_count'>           
+                  {{dish.count}} 份              
+              </view> 
+            </view>    
+          </scroll-view>
         </view>
       </view>     
     </view> 

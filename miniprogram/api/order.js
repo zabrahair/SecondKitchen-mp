@@ -9,13 +9,38 @@ const db = wx.cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
 
-const query = function (whereFilters, callback){
-  dbApi.query(TABLES.ORDER, whereFilters, callback)
+const query = function (whereFilters, pPageIdx, callback){
+  let where = {}
+  let pageIdx = 0
+  if (typeof pPageIdx == 'function') {
+    callback = pPageIdx
+  }
+  if (pPageIdx && typeof pPageIdx != 'function') {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
+  where = {
+    isRemoved: _.or([_.exists(false), false])
+  }
+  Object.assign(where, whereFilters)
+  dbApi.query(TABLES.ORDER, where, pageIdx, callback)
 }
 
-const countDishes = function (whereFilters, callback){
+const countDishes = function (whereFilters, pPageIdx, callback){
+  let where = {}
+  let pageIdx = 0
+  if (typeof pPageIdx == 'function') {
+    callback = pPageIdx
+  }
+  if (pPageIdx && typeof pPageIdx != 'function') {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
+  Object.assign(where, whereFilters)
   dbApi.groupCount(TABLES.ORDER
-    , whereFilters
+    , where
     , '$dishes'
     , {
       _id: {
@@ -29,10 +54,59 @@ const countDishes = function (whereFilters, callback){
       _id: 1,
       count: 1
     }
-    , callback);
+    , pageIdx
+    ,callback);
 }
 
+const countUserOrdered = function (whereFilters, callback) {
+  let where = {
+    isRemoved: _.or([_.exists(false), false])
+  }
+  Object.assign(where, whereFilters)
+  dbApi.groupCount(TABLES.ORDER
+    , where
+    , '$_id'
+    , {
+      _id: '$_openid',
+      count: $.sum(1)
+    }
+    , {
+      _id: 1,
+      count: 1
+    }
+    , res=>{
+      debugLog('countUserOrdered.res', res)
+      if(res && res.list && res.list.length > 0){
+        if (callback && typeof callback == 'function') {
+          callback(res.list[0].count)
+        }
+      }else{
+        callback(0)
+      }      
+    });
+}
+
+function removeOrder(orderId, callback){
+  dbApi.update(TABLES.ORDER
+    , orderId
+    ,{
+      isRemoved: true
+    }
+    , res => {
+      debugLog('removeOrder.res', res)
+      if (res) {
+        if (callback && typeof callback == 'function') {
+          callback(res)
+        }
+      } else {
+        callback(null)
+      }
+    });
+}
 module.exports = {
   countDishes: countDishes,
   query: query,
+  countUserOrdered: countUserOrdered,
+  removeOrder: removeOrder,
+
 }

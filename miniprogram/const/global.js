@@ -56,7 +56,7 @@ module.exports = {
   storageKeys: storageKeys,
   userInfoObj: userInfoObj,
   pageParams: pageParams,
-  maxOrdersPerDay: 1,
+  maxOrdersPerDay: 2,
   orderStatus: orderStatus,
   ALL_COMPANIES: '所有企业',
   valueCSS: valueCSS,

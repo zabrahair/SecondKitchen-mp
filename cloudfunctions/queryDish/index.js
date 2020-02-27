@@ -12,9 +12,21 @@ const DISH_TABLE = 'dish'
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   let filters = event.filters
+  let pPageIdx = event.pageIdx
+  let pageIdx = 0
+  if (pPageIdx) {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
+  let countOfPage = 100
   console.log('event', JSON.stringify(event, null, 4))
   try {
-    let result = await db.collection(DISH_TABLE).where(filters).get()
+    let result = await db
+      .collection(DISH_TABLE)
+      .skip(pageIdx * countOfPage)
+      .limit(countOfPage)
+      .where(filters).get()
     console.log('queryDishResult:', JSON.stringify(result, null, 4))
     return result;
   } catch (e) {

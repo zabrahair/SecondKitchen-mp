@@ -12,23 +12,26 @@
       </view>
     </picker>
   </view>
-  <view class="orders_list">
+  <scroll-view class="orders_list" scroll-y='true' bindscrolltolower="onReachBottom">
     <view class="order" wx:for-items="{{orders}}" wx:key="id" wx:for-item="order">
       <view class='order_info'>
         <view class="order_name">
-          {{order.comboName}}
+          套餐名：{{order.comboName}}
         </view>
         <view class='order_date'>
           <view>送餐时间:</view><view><formatDate date='{{order.shipDate}}'/></view>
         </view>
         <view class='order_price'>
-          订餐人： {{order.realName}}
-        </view>     
+          订餐人：{{order.realName}}
+        </view>
+        <view wx:if="{{order.orderNo}}" class='order_date'>
+          <view>订单号:</view><view>{{order.orderNo}}</view>
+        </view>             
         <view class='order_price'>
           总价： ￥{{order.price}}
         </view>
         <view class='order_status'>
-          {{order.status}}
+          状态：{{order.status}}
         </view>        
       </view>
       <view class="order_content" wx:for-items="{{order.dishes}}" wx:key="id" wx:for-item="dish">
@@ -39,6 +42,7 @@
           ￥{{dish.price}}
         </view> -->
       </view>
+      <button type='warn' class="cancel_order" size="mini" bindtap="removeOrder" data-order-id="{{order._id}}">取消订单</button>
     </view>
-  </view>
+  </scroll-view>
 </view>

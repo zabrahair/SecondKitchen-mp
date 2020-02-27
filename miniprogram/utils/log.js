@@ -21,5 +21,6 @@ const error = function (message, object, tabs) {
 }
 
 module.exports = {
-  debug: debug
+  debug: debug,
+  error: error,
 }

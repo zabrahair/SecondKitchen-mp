@@ -42,7 +42,8 @@
   justify-content: flex-start;
   align-items: center;
 
-  overflow-y: scroll;
+  width: 100vw;
+  height: 95vh;
 
 }
 
@@ -61,13 +62,12 @@
 .order_info {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 
   width: 100vw;
-  height: 7vh;
+  min-height: 7vh;
 
   font-size: 3vw;
   font-weight: bold;
@@ -147,6 +147,10 @@ order_status {
   flex-wrap: nowrap;
   justify-content: flex-end;
   align-items: center;
-
   width: 45vw;  
+}
+
+.cancel_order {
+  border: 1px solid red;
+  align-self: flex-end;
 }

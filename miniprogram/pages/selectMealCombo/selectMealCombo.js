@@ -13,8 +13,9 @@ const TABLES = require('../../const/collections.js')
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
 const orderApi = require('../../api/order.js')
+const companyApi = require('../../api/company.js')
 const defaultShipDate = new Date()
-defaultShipDate.setDate(defaultShipDate.getDate()+1)
+defaultShipDate.setDate(defaultShipDate.getDate() + 1)
 
 Page({
 
@@ -24,6 +25,7 @@ Page({
   data: {
     shipDate: utils.formatDate(defaultShipDate),
     combo: null,
+    companyType: null,
     orderObj: {
       "comboId": "",
       "comboName": "振瀚A套餐",
@@ -34,16 +36,16 @@ Page({
       "shipDate": defaultShipDate.getTime(),
       "shipDateString": utils.formatDate(defaultShipDate),
       "dishes": [
-        
       ],  
       "status": gConst.orderStatus.ORDERED 
     },
     isOrderFinished: false,
-    startDate: utils.formatDate(defaultShipDate),
+    startDate: utils.formatDate(new Date()),
     userInfo: null,
     userRole: USER_ROLE.NORMAL,
     weekDayCn: new Date().getDay(),
     insistSelectWeekend: 0,
+    isProcessOrder: false,
   },
 
   /**
@@ -51,52 +53,96 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    debugLog('options', options)
-    debugLog('defaultShipDate', defaultShipDate)
+    // debugLog('options', options)
+    // debugLog('defaultShipDate', defaultShipDate)
     this.checkWeekEnd(defaultShipDate);
-    debugLog('weekDayCn', this.data.weekDayCn)
+    // debugLog('weekDayCn', this.data.weekDayCn)
     let comboId = options.comboId
     let userInfo = utils.getUserInfo(globalData)
-    userRole: userInfo.userRole,
-    this.setData({
-      userInfo: userInfo,
-      userRole: userInfo.userRole,
-      weekDayCn: this.data.weekDayCn,
-      insistSelectWeekend: 0,
-    })
-
-    dbApi.query(
-      TABLES.COMBO
-      , {_id: comboId}
-      , res=>{
-        let combo = res[0]
-        // debugLog('combo', res)
-        let dishesCnt = res[0].dishes.length
-        // debugLog('dishesCnt', dishesCnt)
-        let orderObj = this.data.orderObj
-        // debugLog('orderObj', orderObj)
-        orderObj.dishes = new Array(dishesCnt)
-        orderObj.comboId = combo._id
-        orderObj.comboName = combo.name
-        orderObj.userId = userInfo._id ? userInfo._id : userInfo.openId
-        orderObj.realName = userInfo.realName ? userInfo.realName : userInfo.nickName
-        orderObj.companyId = userInfo.companyId ? userInfo.companyId : ''
-        orderObj.companyName = userInfo.companyName ? userInfo.companyName : ''
-        orderObj.price = combo.price
-        orderObj.shipDate = defaultShipDate.getTime()
-        orderObj.shipDateString = utils.formatDate(new Date(defaultShipDate))
-        that.setData({
-          combo: combo,
-          orderObj: orderObj
+    that.setDefaultDate(that, ()=>{
+      that.setData({
+        userInfo: userInfo,
+        userRole: userInfo.userRole,
+        weekDayCn: that.data.weekDayCn,
+        insistSelectWeekend: 0,
+      })
+      dbApi.query(
+        TABLES.COMBO
+        , { _id: comboId }
+        , 0
+        , res => {
+          let combo = res[0]
+          // debugLog('combo', res)
+          let dishesCnt = res[0].dishes.length
+          // debugLog('dishesCnt', dishesCnt)
+          let orderObj = this.data.orderObj
+          // debugLog('orderObj', orderObj)
+          orderObj.dishes = new Array(dishesCnt)
+          orderObj.comboId = combo._id
+          orderObj.comboName = combo.name
+          orderObj.userId = userInfo._id ? userInfo._id : userInfo.openId
+          orderObj.realName = userInfo.contactName ? userInfo.contactName : userInfo.nickName
+          orderObj.companyId = userInfo.companyId ? userInfo.companyId : ''
+          orderObj.companyName = userInfo.companyName ? userInfo.companyName : ''
+          orderObj.price = combo.price
+          // orderObj.shipDate = defaultShipDate.getTime()
+          // orderObj.shipDateString = utils.formatDate(new Date(defaultShipDate))
+          that.setData({
+            combo: combo,
+            orderObj: orderObj
+          })
         })
     })
+
+  },
+
+  setDefaultDate: function(that, callback){
+    let userInfo = utils.getUserInfo(globalData)
+    let innerDefaultShipDate = defaultShipDate
+    let orderObj = that.data.orderObj
+    try{
+      companyApi.getCompanyType({_id:userInfo.companyId}, companyType=>{
+        // debugLog('companyType', companyType)
+        that.setData({
+          companyType: companyType
+        })
+        if (companyType == USER_ROLE.RESTAURANT) {
+          innerDefaultShipDate = new Date()
+          // 如果希望默认时间是当前，就把1改成0
+          innerDefaultShipDate.setDate(innerDefaultShipDate.getDate() + 1)
+          if (that.data.orderObj) {
+            orderObj.shipDate = innerDefaultShipDate.getTime()
+            orderObj.shipDateString = utils.formatDate(innerDefaultShipDate)
+          }
+          that.checkWeekEnd(innerDefaultShipDate)
+          that.setData({
+            orderObj: orderObj,
+            shipDate: utils.formatDate(innerDefaultShipDate),
+            shipDateString: utils.formatDate(innerDefaultShipDate),
+          }, () => {
+            callback()
+          })
+
+        }
+      })
+
+    } catch (err) { errorLog('setDefaultDate.err', err.stack)}
+    finally{
+      that.checkWeekEnd(innerDefaultShipDate)
+      that.setData({
+        shipDate: utils.formatDate(innerDefaultShipDate),
+        shipDateString: utils.formatDate(innerDefaultShipDate),
+      }, () => {
+        callback()
+      })
+    }
   },
 
   /**
    * 当送餐日期发生变化
    */
   selShipDate: function(e){
-    let shipDate = e.detail.value
+    let shipDate = utils.getEventDetailValue(e)
     shipDate = new Date(shipDate);
     // 如果是周末，加到周一
     shipDate = this.checkWeekEnd(shipDate)
@@ -106,7 +152,7 @@ Page({
     let defaultShipDateStr = utils.formatDate(defaultShipDate)
     // debugLog('shipDate', shipDateString)
     // debugLog('defaultShipDate', defaultShipDateStr)
-    if (shipDateString < defaultShipDateStr){
+    if (shipDateString < defaultShipDateStr && that.data){
       wx.showToast({
         title: MSG.DATE_SELECTED_NOT_CORRECT,
         icon: 'success',
@@ -129,45 +175,50 @@ Page({
   checkWeekEnd: function (pShipDate){
     let swiftDays = 0
     let shipDate = pShipDate
-    debugLog('typeof(shipDate)', Object.prototype.toString.call(shipDate));
-    if (Object.prototype.toString.call(shipDate) != '[object Date]'){
-      debugLog('shipDate', shipDate)
-      shipDate = new Date(pShipDate);
-    }
-    debugLog('typeof(shipDate)', shipDate.getDay())
-    // Sunday swift to Monday,如果用户坚持选了两次周末就让他选吧。
-    if (shipDate.getDay() == 0 && this.data.insistSelectWeekend < 1) {
-      wx.showToast({
-        title: MSG.ONLY_WEEKDAY_CAN_ORDER,
-        icon: 'success',
-        duration: 1500,
-      })
-      swiftDays = 1
-      shipDate.setDate(shipDate.getDate() + swiftDays)
+    try{
+      // debugLog('typeof(shipDate)', Object.prototype.toString.call(shipDate));
+      if (Object.prototype.toString.call(shipDate) != '[object Date]') {
+        // debugLog('shipDate', shipDate)
+        shipDate = new Date(pShipDate);
+      }
+      // debugLog('typeof(shipDate)', shipDate.getDay())
+      // Sunday swift to Monday,如果用户坚持选了两次周末就让他选吧。
+      if (shipDate.getDay() == 0 && this.data.insistSelectWeekend < 1) {
+        wx.showToast({
+          title: MSG.ONLY_WEEKDAY_CAN_ORDER,
+          icon: 'success',
+          duration: 1500,
+        })
+        swiftDays = 1
+        shipDate.setDate(shipDate.getDate() + swiftDays)
+        this.setData({
+          insistSelectWeekend: this.data.insistSelectWeekend + 1
+        })
+      }
+      // Saturday swift to Monday，如果用户坚持选了两次周末就让他选吧。
+      if (shipDate.getDay() == 6 && this.data.insistSelectWeekend < 1) {
+        wx.showToast({
+          title: MSG.ONLY_WEEKDAY_CAN_ORDER,
+          icon: 'success',
+          duration: 1500,
+        })
+        swiftDays = 2
+        shipDate.setDate(shipDate.getDate() + swiftDays)
+        this.setData({
+          insistSelectWeekend: this.data.insistSelectWeekend + 1
+        })
+      }
+      // debugLog('shipDate.getDay()', gConst.WEEK_DAYS[shipDate.getDay()]);
       this.setData({
-        insistSelectWeekend: this.data.insistSelectWeekend + 1
+        shipDate: shipDate,
+        weekDayCn: gConst.WEEK_DAYS[shipDate.getDay()].cn,
+        shipDateString: utils.formatDate(shipDate),
       })
+      return shipDate
+    }catch(e){
+      return ''
     }
-    // Saturday swift to Monday，如果用户坚持选了两次周末就让他选吧。
-    if (shipDate.getDay() == 6 && this.data.insistSelectWeekend < 1) {
-      wx.showToast({
-        title: MSG.ONLY_WEEKDAY_CAN_ORDER,
-        icon: 'success',
-        duration: 1500,
-      })
-      swiftDays = 2
-      shipDate.setDate(shipDate.getDate() + swiftDays)
-      this.setData({
-        insistSelectWeekend: this.data.insistSelectWeekend + 1
-      })
-    }
-    debugLog('shipDate.getDay()', gConst.WEEK_DAYS[shipDate.getDay()]);
-    this.setData({
-      shipDate: shipDate,
-      weekDayCn: gConst.WEEK_DAYS[shipDate.getDay()].cn,
-      shipDateString: utils.formatDate(shipDate),
-    })
-    return shipDate
+    
   },
 
   /**
@@ -181,9 +232,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      insistSelectWeekend: 0,
+    let that = this
+    let userInfo = utils.getUserInfo(globalData)
+    that.setDefaultDate(that, ()=>{
+      that.setData({
+        userInfo: userInfo,
+        insistSelectWeekend: 0,
+      })
     })
+
   },
 
   /**
@@ -204,24 +261,55 @@ Page({
    * 当选择Dish的Option的时候
    */
   onDishSelect: function(event){
-    debugLog('onDishSelect.event', event)
+    // debugLog('onDishSelect.event', event)
     let dishIdx = event.target.dataset.dishIdx
     let optionIdx = event.detail.value
-    debugLog('dishIdx', dishIdx)
-    debugLog('optionIdx', optionIdx)
+    // debugLog('dishIdx', dishIdx)
+    // debugLog('optionIdx', optionIdx)
     let orderObj = this.data.orderObj
     orderObj.dishes[dishIdx] = this.data.combo.dishes[dishIdx].options[optionIdx]
     this.setData({
       orderObj: orderObj
     })
-    debugLog('orderObj', orderObj)
+    // debugLog('orderObj', orderObj)
+  },
 
+  /**
+   * 订单生成中
+   */
+  generatingOrder: function(){
+    let that = this
+    wx.showLoading({
+      title: '订单生成中',
+    })
+    that.setData({
+      isProcessOrder: true,
+    })
+  },
+
+  /**
+   * 订单生成完成
+   */
+  finishGenOrder: function(){
+    let that = this
+    wx.hideLoading()
+    that.setData({
+      isProcessOrder: false,
+    })
   },
 
   /**
    * 发送订单
    */
   onSendOrder: function(event){
+    debugLog('onSendOrder start')
+    let that = this
+    // 开始生成订单，关闭按钮再按
+    that.generatingOrder()
+    setTimeout(() => {
+      that.finishGenOrder()
+    }, 10000)
+
     // 如果没有登陆
     let userInfo = utils.getUserInfo(globalData)
     if (userInfo == undefined || userInfo.openId == undefined) {
@@ -233,15 +321,16 @@ Page({
       wx.redirectTo({
         url: '/pages/index/index',
       })
+      that.finishGenOrder()
       return
     }
 
     // debugLog('event', event)
-    let orderObj = this.data.orderObj
+    let orderObj = that.data.orderObj
     let dishes = orderObj.dishes
     // debugLog('dishes', dishes)
-    let userRole = this.data.userInfo.userRole
-    this.setData({
+    let userRole = that.data.userInfo.userRole
+    that.setData({
       isOrderFinished: true
     })
     for(let i = 0; i < dishes.length; i++){
@@ -252,42 +341,49 @@ Page({
           icon: 'success',
           duration: 1500,
         })
-        this.setData({
+        that.finishGenOrder()
+        that.setData({
           isOrderFinished: false
         })
       }
     }
 
-    if(this.data.isOrderFinished){
-      debugLog('orderObj', orderObj)
-      dbApi.query(TABLES.ORDER, {
-        userId: orderObj.userId,
-        shipDateString: orderObj.shipDateString
-      }, res=>{
-        debugLog('check order per day', res)
-        if (res.length < gConst.maxOrdersPerDay 
-        || userRole == USER_ROLE.ADMIN 
-        || userRole == USER_ROLE.COMPANY 
-        || userRole == USER_ROLE.RESTAURANT){
-          dbApi.create(TABLES.ORDER, this.data.orderObj, res => {
-            debugLog('res', res)
-            wx.switchTab({
-              url: '../orders/orders',
+    // 生成订单号
+    utils.genOrderNo(orderObj.companyName, orderObj.shipDateString, orderNo=>{
+      debugLog('genOrderNo', orderNo)
+      orderObj.orderNo = orderNo
+      if (that.data.isOrderFinished) {
+        debugLog('orderObj.shipDateString', orderObj.shipDateString)
+        orderApi.countUserOrdered({
+          _openid: userInfo._openid,
+          shipDateString: orderObj.shipDateString
+        }, count => {
+          debugLog('check order per day', count)
+          if (count < gConst.maxOrdersPerDay
+            || userRole == USER_ROLE.ADMIN
+            || userRole == USER_ROLE.COMPANY
+            || userRole == USER_ROLE.RESTAURANT) {
+            debugLog('create.orderObj', orderObj)
+            dbApi.create(TABLES.ORDER, orderObj, res => {
+              debugLog('res', res)
+              wx.switchTab({
+                url: '../orders/orders',
+              })
             })
-          })
-        }else{
-          wx.showToast({
-            title: MSG.REACH_MAX_ORDERS_PER_ORDER,
-            icon: 'success',
-            duration: 1500,
-          })
-          this.setData({
-            isOrderFinished: false
-          })          
-        }
-      })
-    }
-
+          } else {
+            that.finishGenOrder()
+            wx.showToast({
+              title: MSG.REACH_MAX_ORDERS_PER_ORDER,
+              icon: 'success',
+              duration: 1500,
+            })
+            this.setData({
+              isOrderFinished: false
+            })
+          }
+        })
+      }
+    })
   },
 
   /**

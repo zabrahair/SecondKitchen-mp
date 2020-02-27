@@ -63,9 +63,14 @@ Page({
    */
   onShow: function () {
     let userInfo = utils.getUserInfo(globalData)
+    this.setData({
+      userInfo: utils.getUserInfo(globalData),
+      userRole: utils.getUserInfo(globalData).userRole,
+    })
+    debugLog('onShow reset userInfo')
     if(userInfo.openId){
       this.setData({
-        isRegister: true
+        isRegister: true,
       })
     }
   },

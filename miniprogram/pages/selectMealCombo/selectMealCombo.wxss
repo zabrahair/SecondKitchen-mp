@@ -74,7 +74,7 @@
   border-top-right-radius: 5vw;
   border-bottom-right-radius: 5vw;
 
-  font-size: 8vw;
+  font-size: 6vw;
   color: white;
 }
 
@@ -120,9 +120,7 @@
   height: 10vh;
   padding-top: 1vh;
   padding-left: 3vw;
-  font-size: 6vw;
-
-
+  font-size: 4vw;
 }
 
 .options {

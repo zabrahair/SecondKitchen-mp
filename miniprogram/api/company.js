@@ -9,10 +9,31 @@ const db = wx.cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
 
-const query = function (whereObj, callback) {
-  dbApi.query(TABLES.COMPANY, whereObj, callback)
+const query = function (whereObj, pPageIdx, callback) {
+  let pageIdx = 0
+  if (pPageIdx) {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
+  dbApi.query(TABLES.COMPANY, whereObj, pageIdx, callback)
+}
+
+const getCompanyType = function(whereObj, callback){
+  query(whereObj, res=>{
+    if(res && res.length > 0){
+      let companyType = res[0].type
+      if (callback && typeof callback == 'function') {
+        callback(companyType)
+      }
+    }else{
+      callback(null)
+    }
+
+  })
 }
 
 module.exports = {
-  query: query
+  getCompanyType: getCompanyType,
+  query: query,
 }

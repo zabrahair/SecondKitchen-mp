@@ -11,7 +11,7 @@ const queryUser = function (filters, callback) {
   db.collection(TABLES.USER).where(filters).get({
     success: res => {
       let result = res.data;
-      debugLog('user', result);
+      // debugLog('user', result);
       callback(result)
     },
     fail: err => {
@@ -66,14 +66,14 @@ const updateUser = function (id, updateObj, callback) {
     createLocalTime: nowTimeString
   })
   delete updateObj._id
-  debugLog('id', id)
-  debugLog('updateObj', updateObj)
+  // debugLog('id', id)
+  // debugLog('updateObj', updateObj)
   // 根据条件更新所有用户
   db.collection(TABLES.USER).doc(id).update({
     data: updateObj,
     success: res => {
       let result = res;
-      debugLog('user', result);
+      // debugLog('user', result);
       callback(result)
     },
     fail: err => {

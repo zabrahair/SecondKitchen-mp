@@ -2,11 +2,21 @@ const debugLog = require('../utils/log.js').debug;
 const errorLog = require('../utils/log.js').error;
 const TABLES = require('../const/collections.js');
 
-const queryDishes = function(filters, callback){
+const queryDishes = function(filters, pPageIdx, callback){
+  let pageIdx = 0
+  if (typeof pPageIdx == 'function') {
+    callback = pPageIdx
+  }
+  if (pPageIdx && typeof pPageIdx != 'function') {
+    pageIdx = pPageIdx
+  } else {
+    pageIdx = 0
+  }
   wx.cloud.callFunction({
     name: 'queryDish',
     data: {
-      filters: filters
+      filters: filters,
+      pageIdx: pageIdx,
     },
     success: res => {
       // debugLog('queryDish.success.res', res)

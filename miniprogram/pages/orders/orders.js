@@ -14,6 +14,7 @@ const _ = db.command
 
 const USER_ROLE = require('../../const/userRole.js')
 const dbApi = require('../../api/db.js')
+const orderApi = require('../../api/order.js')
 
 const startDate = new Date()
 const endDate = new Date()
@@ -28,6 +29,7 @@ Page({
     endDate: utils.formatDate(endDate),
     orders: null,
     userInfo: null,
+    pageIdx: 0,
   },
 
   /**
@@ -41,27 +43,43 @@ Page({
   /**
    * 刷新订单内容
    */
-  refreshOrders: function(){
+  refreshOrders: function(pageIdx, callback){
+    let that = this
+
+    if (pageIdx == 0) {
+      that.setData({
+        orders: [],
+        countDishes: []
+      })
+    }
+
     let userInfo = utils.getUserInfo(globalData)
     if ( userInfo == undefined || userInfo.openId == undefined) {
       return
     }
-    debugLog('Running... refreshOrders', {
-      startDate: this.data.startDate,
-      endDate: this.data.endDate,
-      userInfo: userInfo._openid})
+    // debugLog('Running... refreshOrders', {
+    //   startDate: this.data.startDate,
+    //   endDate: this.data.endDate,
+    //   userInfo: userInfo._openid})
     
     dbApi.query(TABLES.ORDER,
       {
         _openid: userInfo._openid ? userInfo._openid : userInfo.openId,
-        shipDateString: _.gte(this.data.startDate),
-        shipDateString: _.lte(this.data.endDate)
+        shipDateString: _.gte(that.data.startDate),
+        shipDateString: _.lte(that.data.endDate),
+        isRemoved: _.or([_.exists(false),false]),
       }
+      , pageIdx
       , res => {
         debugLog('res', res)
-        this.setData({
-          orders: res
-        })
+        if(res.length>0){
+          that.setData({
+            orders: res
+          }, () => {
+            utils.runCallback(callback)(true)
+          })
+        }
+
         // debugLog('date', new Date(res[0].shipDate))
       })
   },
@@ -98,14 +116,23 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    debugLog('onPullDownRefresh', 'refresh')
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this
+    debugLog('onReachBottom', 'refresh')
+    let pageIdx = that.data.pageIdx + 1
+    that.refreshOrders(pageIdx, isLoaded => {
+      if (isLoaded) {
+        that.setData({
+          pageIdx: pageIdx
+        })
+      }
+    });
   },
 
   /**
@@ -116,22 +143,33 @@ Page({
   },
 
   selStartDate: function(e){
+    let that = this
     debugLog('event',e)
     let startDate = new Date(e.detail.value)
-    this.setData({
+    that.setData({
       startDate: utils.formatDate(startDate)
     })
-    this.refreshOrders();
+    that.refreshOrders();
   },
 
   selEndDate: function(e){
-    debugLog('event', e)
+    let that = this
+    // debugLog('event', e)
     let endDate = new Date(e.detail.value)
     this.setData({
       endDate: utils.formatDate(endDate)
     })
     this.refreshOrders();
 
+  },
+
+  removeOrder: function(e){
+    let that = this
+    let dataset = utils.getEventDataset(e)
+    let orderId = dataset.orderId
+    orderApi.removeOrder(orderId, res=>{
+      that.refreshOrders()
+    })
   }
 
 })

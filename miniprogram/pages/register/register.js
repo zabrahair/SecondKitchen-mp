@@ -144,7 +144,7 @@ Page({
     this.vertifyCompany(companyName, formValues.companyVertify, res => {
       delete formValues['companyVertify']
       if (res.isVertified == true) {
-        // debugLog('openId', userInfo.openId)
+        // debugLog('vertifyCompany.res', res)
         formValues['companyName'] = res.vertifiedCompany.name
         formValues['companyId'] = res.vertifiedCompany._id
         formValues['userRole'] = res.userRole
@@ -164,7 +164,8 @@ Page({
             userInfo['userRole'] = formValues['userRole']
             // debugLog('create a new user', userInfo)
             userApi.createUser(userInfo, result => {
-              // debugLog('insertResult', result)
+              // debugLog('createUser.userInfo', userInfo)
+              userInfo.userRole = formValues['userRole']
               utils.setUserInfo(userInfo, globalData)
               wx.switchTab({
                 url: '../menuList/menuList'
@@ -180,7 +181,8 @@ Page({
               result => {
                 // debugLog('updateResult', result)
                 // globalData.userInfo = userInfo
-                // wx.setStorageSync(storeKeys.userInfo, userInfo)
+                userInfo.userRole = formValues['userRole']
+                utils.setUserInfo(userInfo, globalData)
                 wx.switchTab({
                   url: '../menuList/menuList'
                 })

@@ -1,11 +1,12 @@
 <view class='container'>
   <view class='header'>
-    <view class="company_name">
+    <view class="company_name" style="width: {{(userInfo.companyName.length+1)*6}}vw;">
       {{userInfo.companyName}}
     </view>
   </view>
   <view class='content' > 
-    <scroll-view view class='memberes_list' scroll-y='true'>
+    <scroll-view class='memberes_list' 
+      scroll-y='true' bindscrolltolower="onReachBottom">
       <view class='member' wx:for-items='{{members}}' wx:key="_id" wx:for-item='member' wx:for-index='memberIdx'>
         <image class="member_image" mode='aspectFill' src="{{member.avatarUrl}}">
         </image>      

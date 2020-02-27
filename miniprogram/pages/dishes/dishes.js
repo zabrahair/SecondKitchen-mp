@@ -33,6 +33,7 @@ Page({
     operatorType: gConst.OPERATION.UPDATE,
     curDishId: '',
     curDish: {},
+    dishes: [],
     categoriesFilter: categoriesFilter, 
     curFilterCategory: categoriesFilter[0],
   },
@@ -71,10 +72,17 @@ Page({
       filters['category'] = that.data.curFilterCategory
     }
     // debugLog('onShow.filters', filters)
-    dishApi.queryDishes(filters, result => {
-      // debugLog('refresh dishes count', result.length);
-      that.setData({
-        dishes: result
+    utils.loadPagesData((pageIdx, loadTimer)=>{
+      dishApi.queryDishes(filters, pageIdx, result => {
+        // debugLog('refresh dishes count', result.length);
+        if (result.length > 0) {
+          let dishes = that.data.dishes ? that.data.dishes : []
+          that.setData({
+            dishes: dishes.concat(result)
+          })
+        } else {
+          clearInterval(loadTimer)
+        }
       })
     })
   },

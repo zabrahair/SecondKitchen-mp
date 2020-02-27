@@ -96,6 +96,7 @@ Page({
       dbApi.query(
         TABLES.COMBO
         , { _id: comboId }
+        , 0
         , res => {
           let combo = res[0]
           // // debugLog('dbApi.query', combo)
