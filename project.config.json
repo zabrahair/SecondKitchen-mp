@@ -169,6 +169,13 @@
 					"pathName": "pages/membersList/membersList",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/aTestPage/aTestPage",
+					"pathName": "pages/aTestPage/aTestPage",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

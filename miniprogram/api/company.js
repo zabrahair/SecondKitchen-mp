@@ -9,9 +9,12 @@ const db = wx.cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
 
-const query = function (whereObj, pPageIdx, callback) {
+const query = function (whereObj, pPageIdx=0, callback) {
   let pageIdx = 0
-  if (pPageIdx) {
+  if (typeof pPageIdx == 'function') {
+    callback = pPageIdx
+  }
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0

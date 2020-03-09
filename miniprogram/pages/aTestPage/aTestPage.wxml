@@ -1,0 +1,6 @@
+<!--miniprogram/pages/aTestPage.wxml-->
+<view >
+  <button bindtap="onTapAction" data-action-type = 'toPay'>
+  支付
+  </button>
+</view>

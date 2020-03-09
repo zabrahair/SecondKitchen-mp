@@ -4,11 +4,6 @@
     <view class="combo_title" style="width: {{(combo.name.length+1)*6}}vw;">
       {{combo.name}}
     </view>
-    <picker class="shipping_date" mode="date" value="{{shipDate}}" start="{{startDate}}" end="2030-10-01" bindchange="selShipDate">
-      <view class="date_picker" >
-        送餐日期: {{shipDateString}} {{weekDayCn}}
-      </view>
-    </picker>
   </view>
   <scroll-view class="combo_options" scroll-y="true">
     <view class="dish" wx:for-items="{{combo.dishes}}" wx:for-index="dishIdx" wx:key='{{enName}}'wx:for-item='dish'>

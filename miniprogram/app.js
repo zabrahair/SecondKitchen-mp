@@ -14,7 +14,7 @@ const updateManager = wx.getUpdateManager()
  */
 updateManager.onCheckForUpdate(function (res) {
   // 请求完新版本信息的回调
-  debugLog("onCheckForUpdate",res.hasUpdate)
+  // debugLog("onCheckForUpdate",res.hasUpdate)
 })
 
 updateManager.onUpdateReady(function () {
@@ -89,7 +89,7 @@ App({
                   userApi.queryUser({
                     _id: userInfo.openId
                   }, result => {
-                    debugLog('result',result)
+                    // debugLog('result',result)
                     if (result.length >= 0) {
                       wx.setStorageSync('userInfo', result[0])
                       that.globalData['userInfo'] = result[0]

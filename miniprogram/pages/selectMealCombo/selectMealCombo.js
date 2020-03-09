@@ -15,7 +15,7 @@ const dbApi = require('../../api/db.js')
 const orderApi = require('../../api/order.js')
 const companyApi = require('../../api/company.js')
 const defaultShipDate = new Date()
-defaultShipDate.setDate(defaultShipDate.getDate() + 1)
+defaultShipDate.setDate(defaultShipDate.getDate() + 0)
 
 Page({
 
@@ -109,7 +109,7 @@ Page({
         if (companyType == USER_ROLE.RESTAURANT) {
           innerDefaultShipDate = new Date()
           // 如果希望默认时间是当前，就把1改成0
-          innerDefaultShipDate.setDate(innerDefaultShipDate.getDate() + 1)
+          innerDefaultShipDate.setDate(innerDefaultShipDate.getDate() + 0)
           if (that.data.orderObj) {
             orderObj.shipDate = innerDefaultShipDate.getTime()
             orderObj.shipDateString = utils.formatDate(innerDefaultShipDate)
@@ -349,23 +349,24 @@ Page({
     }
 
     // 生成订单号
-    utils.genOrderNo(orderObj.companyName, orderObj.shipDateString, orderNo=>{
-      debugLog('genOrderNo', orderNo)
+    // debugLog('orderObj',orderObj)
+    utils.genOrderNoDT(orderObj.companyName, utils.formatTime(new Date()), orderNo=>{
+      // debugLog('genOrderNoDT', orderNo)
       orderObj.orderNo = orderNo
       if (that.data.isOrderFinished) {
-        debugLog('orderObj.shipDateString', orderObj.shipDateString)
+        // debugLog('orderObj.shipDateString', orderObj.shipDateString)
         orderApi.countUserOrdered({
           _openid: userInfo._openid,
           shipDateString: orderObj.shipDateString
         }, count => {
-          debugLog('check order per day', count)
+          // debugLog('check order per day', count)
           if (count < gConst.maxOrdersPerDay
             || userRole == USER_ROLE.ADMIN
             || userRole == USER_ROLE.COMPANY
             || userRole == USER_ROLE.RESTAURANT) {
-            debugLog('create.orderObj', orderObj)
+            // debugLog('create.orderObj', orderObj)
             dbApi.create(TABLES.ORDER, orderObj, res => {
-              debugLog('res', res)
+              // debugLog('res', res)
               wx.switchTab({
                 url: '../orders/orders',
               })

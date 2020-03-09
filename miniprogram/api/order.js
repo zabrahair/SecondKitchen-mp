@@ -15,7 +15,7 @@ const query = function (whereFilters, pPageIdx, callback){
   if (typeof pPageIdx == 'function') {
     callback = pPageIdx
   }
-  if (pPageIdx && typeof pPageIdx != 'function') {
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0
@@ -33,7 +33,7 @@ const countDishes = function (whereFilters, pPageIdx, callback){
   if (typeof pPageIdx == 'function') {
     callback = pPageIdx
   }
-  if (pPageIdx && typeof pPageIdx != 'function') {
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0
@@ -74,8 +74,9 @@ const countUserOrdered = function (whereFilters, callback) {
       _id: 1,
       count: 1
     }
+    , null
     , res=>{
-      debugLog('countUserOrdered.res', res)
+      // debugLog('countUserOrdered.res', res)
       if(res && res.list && res.list.length > 0){
         if (callback && typeof callback == 'function') {
           callback(res.list[0].count)

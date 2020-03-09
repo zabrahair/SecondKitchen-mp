@@ -37,7 +37,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    this.refreshOrders();
+    this.refreshOrders(0);
     // debugLog('new date();',JSON.stringify(new Date()))
   },
   /**
@@ -65,13 +65,13 @@ Page({
     dbApi.query(TABLES.ORDER,
       {
         _openid: userInfo._openid ? userInfo._openid : userInfo.openId,
-        shipDateString: _.gte(that.data.startDate),
-        shipDateString: _.lte(that.data.endDate),
+        createLocalTime: _.gte(that.data.startDate),
+        createLocalTime: _.lte(that.data.endDate),
         isRemoved: _.or([_.exists(false),false]),
       }
       , pageIdx
       , res => {
-        debugLog('res', res)
+        // debugLog('res', res)
         if(res.length>0){
           that.setData({
             orders: res
@@ -95,7 +95,7 @@ Page({
    */
   onShow: function () {
     let that = this
-    this.refreshOrders();
+    this.refreshOrders(0);
   },
 
   /**
@@ -149,7 +149,7 @@ Page({
     that.setData({
       startDate: utils.formatDate(startDate)
     })
-    that.refreshOrders();
+    that.refreshOrders(0);
   },
 
   selEndDate: function(e){
@@ -168,7 +168,7 @@ Page({
     let dataset = utils.getEventDataset(e)
     let orderId = dataset.orderId
     orderApi.removeOrder(orderId, res=>{
-      that.refreshOrders()
+      that.refreshOrders(0)
     })
   }
 

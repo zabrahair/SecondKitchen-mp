@@ -19,8 +19,11 @@ Page({
   },
 
   onLoad: function () {
-    this.login();
-    
+    let that = this
+    that.login();
+    // setTimeout(()=>{
+    //   that.goRound()
+    // }, 1000)
   },
 
 
@@ -145,6 +148,11 @@ Page({
                   // console.error('[云函数] [login] 调用失败', err)
                 }
               })
+            }
+            ,fail: err=>{
+              wx.switchTab({
+                url: '../menuList/menuList'
+              }) 
             }
           })
 

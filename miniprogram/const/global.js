@@ -62,8 +62,8 @@ module.exports = {
   valueCSS: valueCSS,
   OPERATION: OPERATION,
   EMPTY_DISH: EMPTY_DISH,
-  NO_COMPANY_ID: 'NO_COMPANY_ID',
-  NO_COMPANY_NAME: '临时订饭',
+  NO_COMPANY_ID: 'lUp9OWoXcuSct4FWXTMqiXrWRAv5huKxvnQx37SfbTD9vUY7',
+  NO_COMPANY_NAME: '新理想大厦',
   WEEK_DAYS: WEEK_DAYS,
   DISH_CATEGORIES: ['大荤','小荤','素菜','主食','汤'],
 }

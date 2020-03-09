@@ -12,7 +12,7 @@
       </picker>
     </view> -->
     <view class="field company_name">
-      <input class='input' name="companyVertify" placeholder="输入验证码" placeholder-class="field_placeholder"/>
+      <input class='input' name="companyVertify" placeholder="输入公司代码" placeholder-class="field_placeholder"/>
     </view>
     <view class="field contact_name">
       <input name="contactName" class='input {{isValueCorrect}}' placeholder="输入联系人"  placeholder-class="field_placeholder" value='{{contactName}}'/>

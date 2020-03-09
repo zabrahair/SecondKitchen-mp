@@ -69,7 +69,7 @@ Page({
       let companyName = that.data.userInfo.companyName
       let companiesPicker = new Array(1);
       companiesPicker[0] = companyName
-      debugLog('companiesPicker', companiesPicker)
+      // debugLog('companiesPicker', companiesPicker)
       that.setData({
         companiesPicker: companiesPicker
       })
@@ -113,7 +113,7 @@ Page({
     }
 
     let whereFilters = {
-      shipDateString: _.and(_.gte(that.data.startDate), _.lte(that.data.endDate)),
+      createLocalTime: _.and(_.gte(that.data.startDate), _.lte(that.data.endDate)),
       isRemoved: _.or([_.exists(false), false]),
     }
 

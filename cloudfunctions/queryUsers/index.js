@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
   let filters = event.filters
   let pPageIdx = event.pageIdx
   let pageIdx = 0
-  if (pPageIdx) {
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0

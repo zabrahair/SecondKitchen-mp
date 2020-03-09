@@ -9,12 +9,12 @@ const db = wx.cloud.database()
 const $ = db.command.aggregate
 const _ = db.command
 
-const query = function (table, filters, pPageIdx, callback) {
+const query = function (table, filters, pPageIdx=0, callback) {
   let pageIdx = 0
   if (typeof pPageIdx == 'function'){
     callback = pPageIdx
   }
-  if (pPageIdx && typeof pPageIdx != 'function'){
+  if (typeof pPageIdx == 'number'){
     pageIdx = pPageIdx
   }else{
     pageIdx = 0
@@ -133,15 +133,19 @@ const update = function (table, id, updateObj, callback) {
 }
 
 const groupCount = function(table, matchObj, unwindObj
-  , groupObj, projectObj, pPageIdx, callback){
+  , groupObj, projectObj, pPageIdx=0, callback){
   let pageIdx = 0
-  if (pPageIdx) {
+  if (typeof pPageIdx == 'function') {
+    callback = pPageIdx
+  }
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0
   }
   let countOfPage = 20
-
+  debugLog('groupCount', pPageIdx)
+  debugLog('groupCount', countOfPage * pageIdx)
   db.collection(table)
     .aggregate()
     .match(matchObj)

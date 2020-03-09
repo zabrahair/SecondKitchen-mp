@@ -7,7 +7,7 @@ const queryDishes = function(filters, pPageIdx, callback){
   if (typeof pPageIdx == 'function') {
     callback = pPageIdx
   }
-  if (pPageIdx && typeof pPageIdx != 'function') {
+  if (typeof pPageIdx == 'number') {
     pageIdx = pPageIdx
   } else {
     pageIdx = 0

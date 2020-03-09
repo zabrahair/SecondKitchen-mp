@@ -163,6 +163,42 @@ function genOrderNo(cmpName, shipDate, callback){
 }
 
 /**
+ * 生成订单号
+ */
+function genOrderNoDT(cmpName, orderDateTime, callback) {
+  let orderNo = null;
+  let orderPrefix = orderDateTime.replace(/\//gi, '')
+  orderPrefix = orderPrefix.replace(/:/gi, '')
+  orderPrefix = orderPrefix.replace(/\s/gi, '')
+  wx.cloud.callFunction({
+    name: 'getOrderCountDT',
+    data: {
+      createLocalTime: orderDateTime,
+      companyName: cmpName,
+    },
+    success: res => {
+      // debugLog('genOrderNo.success.res', res)
+      if (res.result && res.result.list && res.result.list.length > 0) {
+        if (callback && typeof callback == 'function') {
+          orderNo = orderPrefix + (res.result.list[0].count + 1).toString().padStart(4, '0')
+          callback(orderNo)
+        }
+      } else {
+        let lastNo = (Math.floor(Math.random() * 10000)).toString().padStart(4, '0')
+        orderNo = orderPrefix + lastNo
+        callback(orderNo)
+      }
+
+    },
+    fail: err => {
+      let lastNo = (Math.floor(Math.random() * 10000)).toString().padStart(4, '0')
+      orderNo = orderPrefix + lastNo
+      callback(orderNo)
+    }
+  })
+}
+
+/**
  * 获取Event事件的Detail.Value
  */
 function getEventDetailValue(e) {
@@ -233,6 +269,7 @@ module.exports = {
   setUserInfo: setUserInfo,
   extractFileInfo: extractFileInfo,
   genOrderNo: genOrderNo,
+  genOrderNoDT: genOrderNoDT,
   getEventDataset: getEventDataset,
   getEventDetailValue: getEventDetailValue,
   runCallback: runCallback,

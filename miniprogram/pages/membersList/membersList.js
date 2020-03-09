@@ -72,7 +72,7 @@ Page({
   /**
    * 获得用户列表
    */
-  getUsers: function(companyId, userRole, pageIdx){
+  getUsers: function(companyId, userRole, pageIdx, callback){
     let that = this
     let filters = {}
     if (pageIdx == 0) {
@@ -101,6 +101,8 @@ Page({
           if (list.length > 0) {
             that.setData({
               members: members.concat(list)
+            }, ()=>{
+              utils.runCallback(callback)(pageIdx)
             })
           } else {
           }
