@@ -8,6 +8,7 @@ const errorLog = require('../../utils/log.js').error;
 const gConst = require('../../const/global.js');
 const storeKeys = require('../../const/global.js').storageKeys;
 const utils = require('../../utils/util.js');
+const payment = require('../../utils/payment.js')
 const TABLES = require('../../const/collections.js')
 
 const USER_ROLE = require('../../const/userRole.js')
@@ -325,6 +326,7 @@ Page({
       return
     }
 
+    // 检查订单完整性
     // debugLog('event', event)
     let orderObj = that.data.orderObj
     let dishes = orderObj.dishes
@@ -348,40 +350,92 @@ Page({
       }
     }
 
-    // 生成订单号
-    // debugLog('orderObj',orderObj)
-    utils.genOrderNoDT(orderObj.companyName, utils.formatTime(new Date()), orderNo=>{
-      // debugLog('genOrderNoDT', orderNo)
-      orderObj.orderNo = orderNo
-      if (that.data.isOrderFinished) {
-        // debugLog('orderObj.shipDateString', orderObj.shipDateString)
-        orderApi.countUserOrdered({
-          _openid: userInfo._openid,
-          shipDateString: orderObj.shipDateString
-        }, count => {
-          // debugLog('check order per day', count)
-          if (count < gConst.maxOrdersPerDay
-            || userRole == USER_ROLE.ADMIN
-            || userRole == USER_ROLE.COMPANY
-            || userRole == USER_ROLE.RESTAURANT) {
-            // debugLog('create.orderObj', orderObj)
-            dbApi.create(TABLES.ORDER, orderObj, res => {
-              // debugLog('res', res)
-              wx.switchTab({
-                url: '../orders/orders',
-              })
+    // 根据金额判断支付是否需要
+    try{
+      // 生成订单号
+      // debugLog('orderObj',orderObj)
+      utils.genOrderNoDT(orderObj.companyName, utils.formatTime(new Date()), orderNo => {
+        // debugLog('genOrderNoDT', orderNo)
+        orderObj.orderNo = orderNo
+        if (that.data.isOrderFinished) {
+          let price = parseFloat(orderObj.price)
+          if(price > 0){
+        //    如果需要
+            // debugLog('orderObj', orderObj)
+            payment.toPay(orderObj, orderIsPaid => {
+              debugLog('orderIsPaid', orderIsPaid)
+
+              if(orderIsPaid){
+        //      支付成功的情况
+                wx.showToast({
+                  title: MSG.ORDER_PAYMENT_SUCCESS,
+                  icon: 'success',
+                  duration: 1500,
+                })
+                that.generateOrder(that, orderObj, (res, createdOrder)=>{
+                  debugLog('generateOrder.res', res)
+
+                })
+              }else{
+        //      支付失败的情况
+                wx.showToast({
+                  title: MSG.ORDER_PAYMENT_FAILED,
+                  icon: 'none',
+                  duration: 1500,
+                })
+              }
+
             })
-          } else {
-            that.finishGenOrder()
-            wx.showToast({
-              title: MSG.REACH_MAX_ORDERS_PER_ORDER,
-              icon: 'success',
-              duration: 1500,
-            })
-            this.setData({
-              isOrderFinished: false
+          }else{
+        //    如果不需要
+            that.generateOrder(that, orderObj, (res, createdOrder) => {
+              debugLog('generateOrder.res', res)
+
             })
           }
+        }
+      })
+    }catch(err ){
+      errorLog('onSendOrder.err', err.stack)
+    }
+
+    
+  },
+
+  /**
+   * 生成订单号码
+   */
+  generateOrder: function (that, orderObj, callback){
+    // 计算已经下单的数量，如果超量就不下单了。
+    // debugLog('orderObj.shipDateString', orderObj.shipDateString)
+    orderApi.countUserOrdered({
+      _openid: that.data.userInfo._openid,
+      shipDateString: orderObj.shipDateString
+    }, count => {
+      // debugLog('check order per day', count)
+      if (count < gConst.maxOrdersPerDay
+        || userRole == USER_ROLE.ADMIN
+        || userRole == USER_ROLE.COMPANY
+        || userRole == USER_ROLE.RESTAURANT) {
+        // debugLog('create.orderObj', orderObj)
+        dbApi.create(TABLES.ORDER, orderObj, res => {
+          // debugLog('res', res)
+          utils.runCallback(callback)(res, orderObj)
+          wx.switchTab({
+            url: '../orders/orders',
+          })
+
+        })
+      } else {
+        that.finishGenOrder()
+        utils.runCallback(callback)(null, null)
+        wx.showToast({
+          title: MSG.REACH_MAX_ORDERS_PER_ORDER,
+          icon: 'success',
+          duration: 1500,
+        })
+        this.setData({
+          isOrderFinished: false
         })
       }
     })

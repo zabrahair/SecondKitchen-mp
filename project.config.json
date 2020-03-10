@@ -94,10 +94,10 @@
 					"scene": null
 				},
 				{
-					"id": 10,
+					"id": 6,
 					"name": "pages/selectMealCombo/selectMealCombo",
 					"pathName": "pages/selectMealCombo/selectMealCombo",
-					"query": "comboId=463ebf46-6387-4348-a834-a21eb0b45a0c",
+					"query": "comboId=309effef-3540-426c-a456-dd696f9fd134",
 					"scene": null
 				},
 				{
@@ -133,13 +133,6 @@
 					"name": "pages/menuList/menuList",
 					"pathName": "pages/menuList/menuList",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 12,
-					"name": "pages/selectMealCombo/selectMealCombo",
-					"pathName": "pages/selectMealCombo/selectMealCombo",
-					"query": "comboId=2ee0b789-0caf-49eb-9e9d-e9fc607eb4d8",
 					"scene": null
 				},
 				{

@@ -12,4 +12,6 @@ module.exports = {
   UPDATE_CONFIRM_MESSAGE: '确定要更新吗？',
   CREATE_CONFIRM_TITLE: '创建确认',
   CREATE_CONFIRM_MESSAGE: '确定要创建吗？',
+  ORDER_PAYMENT_FAILED: '支付失败，请再试一次。',
+  ORDER_PAYMENT_SUCCESS: '支付成功。'
 }
